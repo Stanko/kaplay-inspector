@@ -64,20 +64,22 @@ available options are:
 
 ```ts
 interface InspectorOptions {
-  updateTimeout?: number; // in milliseconds
+  updateTimeout?: number; // in milliseconds, default: 100
+  isVisible?: boolean; // is inspector visible on load, default: true
+  className?: string; // optional CSS class to add to the root element
 }
 ```
 
 
 ## TODO
 
-* [ ] Show/Hide button
 * [ ] Bounding box - handle a case when anchor is a `Vec2`
 * [ ] Controllable theme - system/light/dark. At the moment it is always matching the system.
 * [ ] Filter/search
 * [ ] Persist search in URL or local storage
-* [ ] Build and deploy simple demo
 * [ ] Figure out why child bounding box are drawn in the wrong position
-* [ ] Check if all of CSS is namespaced
 * [ ] Add documentation about positioning the inspector
 * [ ] Collapse/Expand all button
+* [x] Check if all of CSS is namespaced
+* [x] Show/Hide button
+* [x] Build and deploy simple demo

@@ -53,7 +53,6 @@
   padding: 0;
   margin: 0;
   line-height: 1.2;
-  border-top: 1px solid var(--ki-gray-light);
 
   * {
     box-sizing: border-box;
@@ -101,6 +100,8 @@
     display: block;
   }
 
+  /* Main layout */
+
   .k-inspector__header {
     position: sticky;
     top: 0;
@@ -111,10 +112,21 @@
     z-index: 2;
     background-color: var(--ki-bg);
     border-bottom: 1px solid var(--ki-gray-light);
+    border-top: 1px solid var(--ki-gray-light);
   }
 
   .k-inspector__objects {
     padding: 0.5rem;
+  }
+
+  .k-inspector__hide {
+    margin-left: auto;
+  }
+
+  .k-inspector__show {
+    position: fixed;
+    bottom: 0.5rem;
+    right: 0.5rem;
   }
 
   /* Game object */

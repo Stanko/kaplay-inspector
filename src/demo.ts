@@ -25,7 +25,7 @@ k.add([
     anim: "main",
   }),
   k.anchor("center"),
-  k.pos(k.randi(k.width()), k.randi(k.height())),
+  k.pos(k.randi(40, k.width() - 40), k.randi(40, k.height() - 40)),
 ]);
 
 // ----- STARS ----- //
