@@ -28,7 +28,7 @@ export const Breadcrumbs = ({ obj, setRenderRoot }: BreadcrumbsProps) => {
     <div class="breadcrumbs">
       Back to
       {breadcrumbs.map((breadcrumb) => (
-        <button class="btn" onClick={() => setRenderRoot(breadcrumb.object)}>
+        <button class="ki-btn" onClick={() => setRenderRoot(breadcrumb.object)}>
           ID {breadcrumb.id}: {breadcrumb.tags || breadcrumb.compsLabel}
         </button>
       ))}

@@ -1,6 +1,6 @@
 # Kaplay Inspector
 
-A dev tool for [Kaplay](https://kaplayjs.com/) which allows you to explore and inspect the game object tree.
+A dev tool for [Kaplay](https://kaplayjs.com/) which allows you to explore and inspect the game object tree real time.
 
 ![Kaplay inspector in action](./public/screenshot.png)
 
@@ -56,7 +56,7 @@ You can pass options object to the init method as a second parameter:
 
 ```ts
 init(k, {
-  updateTimeout: 250,
+  updateTimeout: 100,
 })
 ```
 
@@ -79,3 +79,5 @@ interface InspectorOptions {
 * [ ] Build and deploy simple demo
 * [ ] Figure out why child bounding box are drawn in the wrong position
 * [ ] Check if all of CSS is namespaced
+* [ ] Add documentation about positioning the inspector
+* [ ] Collapse/Expand all button

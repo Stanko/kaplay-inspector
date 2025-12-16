@@ -27,8 +27,8 @@ export const Inspector = ({ updateTimeout = 250, k }: InspectorProps) => {
 
   return (
     <>
-      <div class="exp__header">
-        <button class="btn" onClick={handlePauseClick}>
+      <div class="k-inspector__header">
+        <button class="ki-btn" onClick={handlePauseClick}>
           Pause/Resume
         </button>
         &bull;
@@ -37,10 +37,10 @@ export const Inspector = ({ updateTimeout = 250, k }: InspectorProps) => {
         <div>{Math.round(k.debug.fps())} fps</div>
       </div>
 
-      <div class="exp__objects">
+      <div class="k-inspector__objects">
         <GameObject
           k={k}
-          className="obj--root"
+          className="game-object--root"
           obj={root}
           setRenderRoot={setRoot}
           isExpanded

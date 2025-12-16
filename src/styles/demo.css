@@ -1,0 +1,18 @@
+body {
+  background: rgb(40, 40, 40);
+}
+
+canvas {
+  margin: 0 auto;
+  display: block;
+  max-width: 60rem;
+  height: auto !important;
+  width: 100% !important;
+  position: sticky;
+  top: 0;
+}
+
+.k-inspector {
+  /*position: relative;*/
+  margin-top: auto;
+}

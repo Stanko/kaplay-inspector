@@ -61,52 +61,54 @@ export const GameObject = ({
 
   return (
     <div
-      class={cx("obj", className, {
-        "obj--no-children": !hasChildren,
+      class={cx("game-object", className, {
+        "game-object--no-children": !hasChildren,
       })}
       key={obj.id}
     >
       {isInspecting && <Breadcrumbs setRenderRoot={setRenderRoot} obj={obj} />}
       <div
-        class="obj__content"
+        class="game-object__content"
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
         <button
-          class={cx("obj__header", {
-            "obj__header--expandable": showExpandTree,
+          class={cx("game-object__header", {
+            "game-object__header--expandable": showExpandTree,
           })}
           onClick={handleToggleClick}
         >
-          <span class="obj__expand-icon">
+          <span class="game-object__expand-icon">
             {isExpanded ? <MinusIcon /> : <PlusIcon />}
           </span>
-          <div class="obj__id">ID {obj.id}:</div>
+          <div class="game-object__id">ID {obj.id}:</div>
           {tags ? (
-            <div class="obj__tags">{isRootObject ? "Root" : tags}</div>
+            <div class="game-object__tags">{isRootObject ? "Root" : tags}</div>
           ) : (
-            <div class="obj__comp-names">{compsLabel}</div>
+            <div class="game-object__comp-names">{compsLabel}</div>
           )}
           {obj.children.length > 0 && <div>({obj.children.length})</div>}
 
-          {isObjectDestroyed && <div class="obj__destroyed">DESTROYED</div>}
+          {isObjectDestroyed && (
+            <div class="game-object__destroyed">DESTROYED</div>
+          )}
         </button>
 
-        <div class="obj__buttons">
+        <div class="game-object__buttons">
           {!isRenderRoot && (
-            <button class="btn" onClick={() => setRenderRoot(obj)}>
+            <button class="ki-btn" onClick={() => setRenderRoot(obj)}>
               inspect
             </button>
           )}
-          <button class="btn " onClick={() => console.log(obj)}>
+          <button class="ki-btn " onClick={() => console.log(obj)}>
             log
           </button>
         </div>
 
         {isExpanded && (
-          <div class="obj__comps-wrapper">
-            <div class="obj__comps">
-              <div class="obj__comps-row">
+          <div class="game-object__comps-wrapper">
+            <div class="game-object__comps">
+              <div class="game-object__comps-row">
                 <label for={`paused-${obj.id}`}>
                   <b>paused</b>
                 </label>
@@ -121,7 +123,7 @@ export const GameObject = ({
               </div>
 
               {compsData.map((comp) => (
-                <div key={comp.tag} class="obj__comps-row">
+                <div key={comp.tag} class="game-object__comps-row">
                   <div>
                     <b>{comp.tag}</b>
                   </div>
@@ -134,7 +136,7 @@ export const GameObject = ({
       </div>
       {isExpanded && hasChildren && (
         <div
-          class="obj__children"
+          class="game-object__children"
           style={{ display: isExpanded ? "block" : "none" }}
         >
           {obj.children.map((child) => (

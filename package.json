@@ -1,5 +1,6 @@
 {
   "name": "@stanko/kaplay-inspector",
+  "description": "A dev tool for Kaplay which allows you to explore and inspect the game object tree real time.",
   "private": false,
   "version": "0.0.2",
   "type": "module",
