@@ -90,17 +90,14 @@ k.add([
 k.loadSprite("ship", "sprites/ship.png", {
   sliceX: 4,
   sliceY: 3,
-  anims: {
-    straight: { frames: [0], loop: false },
-    right: { frames: [4], loop: false },
-    left: { frames: [8], loop: false },
-  },
 });
 
 const ship = k.add([
   "ship",
   k.pos(k.width() / 2, 220),
-  k.sprite("ship"),
+  k.sprite("ship", {
+    frame: 0,
+  }),
   k.anchor("center"),
   {
     speed: 200,
@@ -138,6 +135,33 @@ ship.onUpdate(() => {
   } else if (ship.pos.y > k.height() - N) {
     ship.pos.y = k.height() - N;
   }
+
+  // ----- Sprite ----- //
+  let frame = 0; // straight
+
+  if (vec.x > 0) {
+    frame = 4; // right
+  } else if (vec.x < 0) {
+    frame = 8; // left
+  }
+
+  ship.frame = frame;
+
+  trail.hidden = vec.y > 0;
+
+  if (vec.y > 0) {
+    trail.hidden = true;
+  } else if (vec.y < 0) {
+    trail.hidden = false;
+    if (trail.getCurAnim()?.name !== "long") {
+      trail.play("long");
+    }
+  } else {
+    trail.hidden = false;
+    if (trail.getCurAnim()?.name !== "short") {
+      trail.play("short");
+    }
+  }
 });
 
 // ----- SHIP TRAIL ----- //
@@ -151,7 +175,7 @@ k.loadSprite("ship-trail", "sprites/ship-trail.png", {
   },
 });
 
-ship.add([
+const trail = ship.add([
   "ship__trail",
   k.sprite("ship-trail", {
     anim: "short",
