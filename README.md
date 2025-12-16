@@ -70,6 +70,10 @@ interface InspectorOptions {
 }
 ```
 
+### Positioning
+
+By default, the inspector has `position: fixed` and it sits at the bottom of the screen. If you want to move it around, the easiest way it to pass a custom class name through the options and position it yourself.
+
 
 ## TODO
 
@@ -78,8 +82,4 @@ interface InspectorOptions {
 * [ ] Filter/search
 * [ ] Persist search in URL or local storage
 * [ ] Figure out why child bounding box are drawn in the wrong position
-* [ ] Add documentation about positioning the inspector
 * [ ] Collapse/Expand all button
-* [x] Check if all of CSS is namespaced
-* [x] Show/Hide button
-* [x] Build and deploy simple demo
