@@ -21,7 +21,7 @@
     "prepublish": "npm run build-lib"
   },
   "peerDependencies": {
-    "kaplay": "^4000.0.0-alpha.20"
+    "kaplay": "^4000.0.0-alpha.24"
   },
   "dependencies": {
     "preact": "^10.28.0"

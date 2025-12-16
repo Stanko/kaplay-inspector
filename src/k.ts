@@ -14,6 +14,11 @@ export const k = kaplay({
   debug: true,
   crisp: true,
   canvas: document.querySelector(".game") as HTMLCanvasElement,
+  buttons: {
+    fire: {
+      keyboard: ["z", "space"],
+    },
+  },
 });
 
 init(k);

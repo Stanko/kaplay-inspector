@@ -1,4 +1,4 @@
-import type { GameObj, KAPLAYCtx, KEventController } from "kaplay";
+import type { GameObj, KAPLAYCtx, KAPLAYCtxT, KEventController } from "kaplay";
 import { useEffect, useRef, useState } from "preact/hooks";
 import { MinusIcon, PlusIcon } from "../components/icons";
 import { cx } from "../lib/cx";
@@ -12,7 +12,7 @@ export interface GameObjectProps {
   setRenderRoot: (obj: GameObj) => void;
   isExpanded?: boolean;
   isRenderRoot?: boolean;
-  k: KAPLAYCtx;
+  k: KAPLAYCtx | KAPLAYCtxT;
 }
 
 export const GameObject = ({
@@ -52,6 +52,12 @@ export const GameObject = ({
         obj.drawInspect();
         drawBoundingBox(obj, k);
       });
+      // obj.children.forEach((child) => {
+      //   child.onDraw(() => {
+      //     child.drawInspect();
+      //     drawBoundingBox(child, k);
+      //   });
+      // });
     }
   };
 
@@ -118,6 +124,20 @@ export const GameObject = ({
                     type="checkbox"
                     defaultChecked={obj.paused}
                     onChange={() => (obj.paused = !obj.paused)}
+                  />
+                </div>
+              </div>
+
+              <div class="game-object__comps-row">
+                <label for={`hidden-${obj.id}`}>
+                  <b>hidden</b>
+                </label>
+                <div>
+                  <input
+                    id={`hidden-${obj.id}`}
+                    type="checkbox"
+                    defaultChecked={obj.hidden}
+                    onChange={() => (obj.hidden = !obj.hidden)}
                   />
                 </div>
               </div>
