@@ -74,6 +74,28 @@ interface InspectorOptions {
 
 By default, the inspector has `position: fixed` and it sits at the bottom of the screen. If you want to move it around, the easiest way it to pass a custom class name through the options and position it yourself.
 
+Here is an example of what I do:
+
+```css
+body:has(.k-inspector__hide) {
+  display: grid;
+  grid-template-rows: 60vh 40vh;
+
+  canvas {
+    width: 100% !important;
+    height: 60vh !important;
+    object-fit: contain;
+    display: block;
+  }
+
+  .k-inspector {
+    position: relative;
+  }
+}
+```
+
+When inspector is visible (I check if the hide button is shown), show the game in the top and the inspector on the bottom (like in the screenshot above).
+
 
 ## TODO
 
@@ -81,5 +103,4 @@ By default, the inspector has `position: fixed` and it sits at the bottom of the
 * [ ] Controllable theme - system/light/dark. At the moment it is always matching the system.
 * [ ] Filter/search
 * [ ] Persist search in URL or local storage
-* [ ] Figure out why child bounding box are drawn in the wrong position
 * [ ] Collapse/Expand all button

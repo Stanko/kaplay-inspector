@@ -1,5 +1,5 @@
-import type { GameObj, KAPLAYCtx, KAPLAYCtxT, KEventController } from "kaplay";
-import { useEffect, useRef, useState } from "preact/hooks";
+import type { GameObj, KAPLAYCtx, KEventController } from "kaplay";
+import { useCallback, useEffect, useRef, useState } from "preact/hooks";
 import { MinusIcon, PlusIcon } from "../components/icons";
 import { cx } from "../lib/cx";
 import { drawBoundingBox } from "../lib/draw-bbox";
@@ -12,7 +12,7 @@ export interface GameObjectProps {
   setRenderRoot: (obj: GameObj) => void;
   isExpanded?: boolean;
   isRenderRoot?: boolean;
-  k: KAPLAYCtx | KAPLAYCtxT;
+  k: KAPLAYCtx;
 }
 
 export const GameObject = ({
@@ -24,7 +24,7 @@ export const GameObject = ({
   k,
 }: GameObjectProps) => {
   const [isExpanded, setIsExpanded] = useState(isExpandedExternal);
-  const mouseHoverController = useRef<KEventController>(null);
+  const updateControllers = useRef<KEventController[]>([]);
 
   const { compsData, tags, compsLabel } = getObjectInfo(obj);
   const isRootObject = obj.id === 0;
@@ -34,9 +34,32 @@ export const GameObject = ({
 
   const isInspecting = isRenderRoot && obj.id !== 0;
 
+  const cancelUpdateControllers = useCallback(() => {
+    updateControllers.current.forEach((controller) => controller.cancel());
+    updateControllers.current = [];
+  }, []);
+
+  const drawInspect = useCallback((obj: GameObj, isChild: boolean = false) => {
+    if (!obj.hidden) {
+      const updateController = obj.onDraw(() => {
+        // Kaplay calls drawInspect on all of the children, no need to call it again
+        if (!isChild) {
+          obj.drawInspect();
+        }
+        drawBoundingBox(obj, k);
+      });
+
+      updateControllers.current.push(updateController);
+
+      obj.children.forEach((child) => {
+        drawInspect(child, true);
+      });
+    }
+  }, []);
+
   useEffect(() => {
     return () => {
-      mouseHoverController.current?.cancel();
+      cancelUpdateControllers();
     };
   }, []);
 
@@ -45,24 +68,12 @@ export const GameObject = ({
   };
 
   const handleMouseEnter = () => {
-    mouseHoverController.current?.cancel();
-
-    if (!obj.hidden) {
-      mouseHoverController.current = obj.onDraw(() => {
-        obj.drawInspect();
-        drawBoundingBox(obj, k);
-      });
-      // obj.children.forEach((child) => {
-      //   child.onDraw(() => {
-      //     child.drawInspect();
-      //     drawBoundingBox(child, k);
-      //   });
-      // });
-    }
+    cancelUpdateControllers();
+    drawInspect(obj);
   };
 
   const handleMouseLeave = () => {
-    mouseHoverController.current?.cancel();
+    cancelUpdateControllers();
   };
 
   return (

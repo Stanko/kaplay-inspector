@@ -1,4 +1,4 @@
-import type { KAPLAYCtx, KAPLAYCtxT } from "kaplay";
+import type { KAPLAYCtx } from "kaplay";
 import { render } from "preact";
 import { Inspector } from "./components/inspector";
 
@@ -7,10 +7,7 @@ export interface InspectorOptions {
   isVisibleOnLoad?: boolean;
   className?: string;
 }
-export default function init(
-  k: KAPLAYCtx | KAPLAYCtxT,
-  props: InspectorOptions = {},
-) {
+export default function init(k: KAPLAYCtx, props: InspectorOptions = {}) {
   const {
     //
     className = "",

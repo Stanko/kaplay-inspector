@@ -1,6 +1,6 @@
-import type { GameObj, KAPLAYCtx, KAPLAYCtxT, Rect } from "kaplay";
+import type { GameObj, KAPLAYCtx, Rect } from "kaplay";
 
-export const drawBoundingBox = (obj: GameObj, k: KAPLAYCtx | KAPLAYCtxT) => {
+export const drawBoundingBox = (obj: GameObj, k: KAPLAYCtx) => {
   // TODO handle a case when anchor is a vec2
   const anchor = obj.anchor || "topleft";
 
@@ -35,8 +35,5 @@ export const drawBoundingBox = (obj: GameObj, k: KAPLAYCtx | KAPLAYCtxT) => {
         opacity: 0.75,
       },
     });
-
-    // TODO figure out why these positions are wrong
-    // obj.children.forEach((child) => drawBoundingBox(child, k));
   }
 };
