@@ -13,6 +13,7 @@ export const k = kaplay({
   texFilter: "nearest",
   debug: true,
   crisp: true,
+  canvas: document.querySelector(".game") as HTMLCanvasElement,
 });
 
 init(k);

@@ -1,5 +1,19 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
-  background: rgb(40, 40, 40);
+  background: rgb(30 30 30);
+  color: rgb(230 230 230);
+  font-family:
+    ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, Consolas,
+    "DejaVu Sans Mono", monospace;
+  padding-bottom: 45vh;
+  padding-bottom: 45svh;
+  height: auto !important;
+  font-size: 0.75rem;
 }
 
 canvas {
@@ -8,11 +22,31 @@ canvas {
   max-width: 60rem;
   height: auto !important;
   width: 100% !important;
-  position: sticky;
-  top: 0;
 }
 
-.k-inspector {
-  /*position: relative;*/
-  margin-top: auto;
+main {
+  max-width: 20rem;
+  margin: 1rem auto 0;
+}
+
+h1 {
+  font-size: 1rem;
+  font-weight: normal;
+  margin-bottom: 0.5rem;
+}
+
+a {
+  color: rgb(110 130 250);
+  text-decoration: none;
+}
+
+a:hover {
+  color: rgb(150 170 250);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+p {
+  color: rgb(150 150 150);
+  margin-bottom: 0.5rem;
 }
