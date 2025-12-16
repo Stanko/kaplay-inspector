@@ -1,0 +1,48 @@
+{
+  "name": "@stanko/kaplay-inspector",
+  "private": false,
+  "version": "0.0.2",
+  "type": "module",
+  "main": "./dist/init.js",
+  "types": "./dist/init.d.ts",
+  "files": [
+    "./dist",
+    "./public"
+  ],
+  "scripts": {
+    "start": "vite",
+    "dev": "vite",
+    "preview": "vite preview",
+    "copy-css": "cp ./src/styles/styles.css ./dist/",
+    "build": "tsc -b && rm -rf ./docs && vite build && touch ./docs/.nojekyll",
+    "build-lib": "rm -rf ./dist && tsc -p ./tsconfig-lib.json && npm run copy-css",
+    "prepare": "cp ./pre-commit ./.git/hooks/pre-commit && chmod +x ./.git/hooks/pre-commit",
+    "prepublish": "npm run build-lib"
+  },
+  "peerDependencies": {
+    "kaplay": "^4000.0.0-alpha.20"
+  },
+  "dependencies": {
+    "preact": "^10.27.2"
+  },
+  "devDependencies": {
+    "@preact/preset-vite": "^2.10.2",
+    "@types/node": "^24.10.1",
+    "typescript": "~5.9.3",
+    "vite": "^7.2.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/Stanko/kaplay-inspector.git"
+  },
+  "keywords": [
+    "kaplay",
+    "inspector",
+    "dev tools"
+  ],
+  "author": "Stanko",
+  "bugs": {
+    "url": "https://github.com/Stanko/kaplay-inspector/issues"
+  },
+  "homepage": "https://github.com/Stanko/kaplay-inspector"
+}
