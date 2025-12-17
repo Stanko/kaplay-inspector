@@ -52,6 +52,12 @@ if (
 }
 ```
 
+If typescript is complaining about importing CSS files, you probably need to add this to one of your `.d.ts` files.
+
+```ts
+declare module '*.scss';
+```
+
 ### Options
 
 You can pass options object to the init method as a second parameter:
@@ -127,4 +133,3 @@ Same as with colors, be sure to have a higher specificity selector if inspector'
 * [ ] Filter/search
 * [ ] Persist search in URL or local storage
 * [ ] Collapse/Expand all button
-* [ ] Clean up `inspect-comps.tsx`

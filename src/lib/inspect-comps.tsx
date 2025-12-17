@@ -3,7 +3,8 @@ import type { JSX } from "preact";
 import { stringify } from "./stringify";
 import { PositionControls } from "../components/position-controls";
 import { TextControls } from "../components/text-controls";
-import { Sprite } from "../components/sprite";
+import { SpriteControls } from "../components/sprite-controls";
+import { Color } from "../components/color-controls";
 
 const componentMap: Record<
   string,
@@ -11,7 +12,8 @@ const componentMap: Record<
 > = {
   pos: PositionControls,
   text: TextControls,
-  sprite: Sprite,
+  sprite: SpriteControls,
+  color: Color,
 };
 
 export const inspectComps = (obj: GameObj) => {
@@ -35,6 +37,14 @@ export const inspectComps = (obj: GameObj) => {
         // and because we are displaying the name in the left column already,
         // we don't need to display it again.
         value: value ? value.replace(`${tag}: `, "") : "",
+      });
+    } else {
+      data.push({
+        tag,
+        // Commented out on purpose
+        // For now, only the name of the component is shown,
+        // until I try it out and figure if it would be useful to display the full component state
+        // value: stringify(comp),
       });
     }
   }

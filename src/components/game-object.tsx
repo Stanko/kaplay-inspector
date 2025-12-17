@@ -6,6 +6,7 @@ import { drawBoundingBox } from "../lib/draw-bbox";
 import { getObjectInfo } from "../lib/get-object-info";
 import { Breadcrumbs } from "./breadcrumbs";
 import type { KAPLAYCtxType } from "../init";
+import { BooleanComp } from "./boolean-comp";
 
 export interface GameObjectProps {
   className?: string;
@@ -100,9 +101,11 @@ export const GameObject = ({
           })}
           onClick={handleToggleClick}
         >
-          <span class="game-object__expand-icon">
-            {isExpanded ? <MinusIcon /> : <PlusIcon />}
-          </span>
+          {isExpanded ? (
+            <MinusIcon className="game-object__expand-icon" />
+          ) : (
+            <PlusIcon className="game-object__expand-icon" />
+          )}
           <div class="game-object__id">ID {obj.id}:</div>
           {tags ? (
             <div class="game-object__tags">{isRootObject ? "Root" : tags}</div>
@@ -130,33 +133,8 @@ export const GameObject = ({
         {isExpanded && (
           <div class="game-object__comps-wrapper">
             <div class="game-object__comps">
-              <div class="game-object__comps-row">
-                <label for={`paused-${obj.id}`}>
-                  <b>paused</b>
-                </label>
-                <div>
-                  <input
-                    id={`paused-${obj.id}`}
-                    type="checkbox"
-                    defaultChecked={obj.paused}
-                    onChange={() => (obj.paused = !obj.paused)}
-                  />
-                </div>
-              </div>
-
-              <div class="game-object__comps-row">
-                <label for={`hidden-${obj.id}`}>
-                  <b>hidden</b>
-                </label>
-                <div>
-                  <input
-                    id={`hidden-${obj.id}`}
-                    type="checkbox"
-                    defaultChecked={obj.hidden}
-                    onChange={() => (obj.hidden = !obj.hidden)}
-                  />
-                </div>
-              </div>
+              <BooleanComp obj={obj} propName="paused" />
+              <BooleanComp obj={obj} propName="hidden" />
 
               {compsData.map((comp) => (
                 <div key={comp.tag} class="game-object__comps-row">

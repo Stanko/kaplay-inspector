@@ -1,6 +1,7 @@
 import { useEffect, useState } from "preact/hooks";
 import type { InspectorOptions, KAPLAYCtxType } from "../init";
 import { GameObject } from "./game-object";
+import { useObjectBoolean } from "./boolean-comp";
 
 export interface InspectorProps extends InspectorOptions {
   k: KAPLAYCtxType;
@@ -27,6 +28,8 @@ export const Inspector = ({
   const [renderIndex, setRenderIndex] = useState(0);
   const [isVisible, setIsVisible] = useState(isVisibleOnLoad);
 
+  const paused = useObjectBoolean(k.getTreeRoot(), "paused");
+
   // Force re-render every updateTimeout milliseconds
   useEffect(() => {
     const interval = setInterval(() => {
@@ -36,10 +39,10 @@ export const Inspector = ({
     return () => clearInterval(interval);
   }, [renderIndex, updateTimeout]);
 
-  const handlePauseClick = () => {
-    const root = k.getTreeRoot();
-    root.paused = !root.paused;
-  };
+  // const handlePauseClick = () => {
+  //   const root = k.getTreeRoot();
+  //   root.paused = !root.paused;
+  // };
 
   const toggleVisibility = () => {
     setIsVisible(!isVisible);
@@ -56,8 +59,8 @@ export const Inspector = ({
   return (
     <>
       <div class="k-inspector__header">
-        <button class="ki-btn" onClick={handlePauseClick}>
-          Pause/Resume
+        <button class="ki-btn" onClick={() => paused.onChange(!paused.checked)}>
+          {paused.checked ? "Resume Game" : "Pause Game"}
         </button>
         &bull;
         <div>{k.get("*", { recursive: true }).length} objects</div>

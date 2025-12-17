@@ -1,10 +1,15 @@
-export const PlusIcon = () => {
+type IconProps = {
+  className?: string;
+};
+
+export const PlusIcon = ({ className = "" }: IconProps) => {
   return (
     <svg
       width="16"
       height="16"
       viewBox="0 0 16 16"
       xmlns="http://www.w3.org/2000/svg"
+      class={className}
     >
       <g
         fill="none"
@@ -20,7 +25,7 @@ export const PlusIcon = () => {
   );
 };
 
-export const MinusIcon = () => {
+export const MinusIcon = ({ className = "" }: IconProps) => {
   return (
     <svg
       width="16"
@@ -28,6 +33,7 @@ export const MinusIcon = () => {
       viewBox="0 0 16 16"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      class={className}
     >
       <g
         fill="none"
@@ -43,7 +49,7 @@ export const MinusIcon = () => {
   );
 };
 
-export const ArrowUpIcon = () => {
+export const ArrowUpIcon = ({ className = "" }: IconProps) => {
   return (
     <svg
       width="16"
@@ -51,6 +57,7 @@ export const ArrowUpIcon = () => {
       viewBox="0 0 16 16"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      class={className}
     >
       <g
         fill="none"
@@ -64,7 +71,7 @@ export const ArrowUpIcon = () => {
   );
 };
 
-export const ArrowDownIcon = () => {
+export const ArrowDownIcon = ({ className = "" }: IconProps) => {
   return (
     <svg
       width="16"
@@ -72,6 +79,7 @@ export const ArrowDownIcon = () => {
       viewBox="0 0 16 16"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      class={className}
     >
       <g
         fill="none"
@@ -85,7 +93,7 @@ export const ArrowDownIcon = () => {
   );
 };
 
-export const ArrowLeftIcon = () => {
+export const ArrowLeftIcon = ({ className = "" }: IconProps) => {
   return (
     <svg
       width="16"
@@ -93,6 +101,7 @@ export const ArrowLeftIcon = () => {
       viewBox="0 0 16 16"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      class={className}
     >
       <g
         fill="none"
@@ -106,7 +115,7 @@ export const ArrowLeftIcon = () => {
   );
 };
 
-export const ArrowRightIcon = () => {
+export const ArrowRightIcon = ({ className = "" }: IconProps) => {
   return (
     <svg
       width="16"
@@ -114,6 +123,7 @@ export const ArrowRightIcon = () => {
       viewBox="0 0 16 16"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      class={className}
     >
       <g
         fill="none"

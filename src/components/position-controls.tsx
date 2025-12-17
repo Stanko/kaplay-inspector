@@ -1,5 +1,6 @@
 import type { GameObj } from "kaplay";
 import { roundToDecimal } from "../lib/round-to-decimal";
+import { HoldButton } from "./hold-button";
 import {
   ArrowDownIcon,
   ArrowLeftIcon,
@@ -19,21 +20,21 @@ export const PositionControls = ({ obj }: PositionControlsProps) => {
 
   return (
     <div class="pos-controls">
-      <button class="ki-btn" onClick={() => (obj.pos.x -= 1)}>
+      <HoldButton className="ki-btn" onClickAndHold={() => (obj.pos.x -= 1)}>
         <ArrowLeftIcon />
-      </button>
-      <button class="ki-btn" onClick={() => (obj.pos.x += 1)}>
+      </HoldButton>
+      <HoldButton className="ki-btn" onClickAndHold={() => (obj.pos.x += 1)}>
         <ArrowRightIcon />
-      </button>
+      </HoldButton>
       <div class="pos-controls__value">x: {roundToDecimal(obj.pos.x, 2)}</div>
       <div class="pos-controls__value">y: {roundToDecimal(obj.pos.y, 2)}</div>
 
-      <button class="ki-btn" onClick={() => (obj.pos.y -= 1)}>
+      <HoldButton className="ki-btn" onClickAndHold={() => (obj.pos.y -= 1)}>
         <ArrowUpIcon />
-      </button>
-      <button class="ki-btn" onClick={() => (obj.pos.y += 1)}>
+      </HoldButton>
+      <HoldButton className="ki-btn" onClickAndHold={() => (obj.pos.y += 1)}>
         <ArrowDownIcon />
-      </button>
+      </HoldButton>
     </div>
   );
 };

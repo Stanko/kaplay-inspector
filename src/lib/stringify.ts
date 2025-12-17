@@ -1,6 +1,6 @@
 export const stringify = (obj: any, maxDepth = 1, currentDepth = 0): string => {
   if (typeof obj !== "object" || obj === null) {
-    return obj.toString();
+    return JSON.stringify(obj);
   }
 
   const lines = Object.entries(obj).map(([key, value]) => {
