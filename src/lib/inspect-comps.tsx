@@ -1,64 +1,72 @@
-import type { GameObj } from "kaplay";
+import type { GameObj, InternalGameObjRaw } from "kaplay";
 import type { JSX } from "preact";
 import { stringify } from "./stringify";
 import { PositionControls } from "../components/position-controls";
 import { TextControls } from "../components/text-controls";
+import { Sprite } from "../components/sprite";
+
+const componentMap: Record<
+  string,
+  (props: { obj: GameObj }) => JSX.Element | null
+> = {
+  pos: PositionControls,
+  text: TextControls,
+  sprite: Sprite,
+};
 
 export const inspectComps = (obj: GameObj) => {
-  const info: Record<string, string> = {};
+  const object = obj as InternalGameObjRaw;
 
-  for (const [tag, comp] of obj._compStates) {
-    info[tag] = comp.inspect?.() ?? null;
+  const data: { tag: string; value?: string | JSX.Element | null }[] = [];
+
+  for (const [tag, comp] of object._compStates) {
+    if (componentMap[tag]) {
+      const CompComponent = componentMap[tag];
+      data.push({
+        tag,
+        value: <CompComponent obj={obj} />,
+      });
+    } else if (comp.inspect) {
+      const value = comp.inspect();
+      data.push({
+        tag,
+        // Remove component name if it is present in the inspect result.
+        // Native Kaplay components are doing this,
+        // and because we are displaying the name in the left column already,
+        // we don't need to display it again.
+        value: value ? value.replace(`${tag}: `, "") : "",
+      });
+    }
   }
 
-  for (const [i, comp] of obj._anonymousCompStates.entries()) {
+  for (const [i, comp] of object._anonymousCompStates.entries()) {
     if (comp.inspect) {
-      info[i] = comp.inspect();
+      data.push({
+        tag: `anonymous ${i}`,
+        value: comp.inspect(),
+      });
       continue;
     }
 
     for (const [key, value] of Object.entries(comp)) {
       if (typeof value === "function") {
-        info[key] = `${key}: function`;
+        data.push({
+          tag: key,
+          value: "function",
+        });
       } else if (typeof value === "object") {
-        info[key] = `${key}: ${stringify(value)}`;
-      } else {
-        info[key] = `${key}: ${value}`;
-      }
-    }
-  }
-
-  const lines: { tag: string; value?: string | JSX.Element }[] = [];
-
-  for (const tag in info) {
-    if (info[tag]) {
-      if (tag === "pos") {
-        // Custom component for position
-        lines.push({
-          tag,
-          value: <PositionControls obj={obj} />,
+        data.push({
+          tag: key,
+          value: stringify(value),
         });
       } else {
-        lines.push({
-          tag,
-          value: info[tag].replace(`${tag}: `, ""),
-        });
-      }
-    } else {
-      if (tag === "text") {
-        // Custom component for text
-        lines.push({
-          tag,
-          value: <TextControls obj={obj} />,
-        });
-      } else {
-        // pushes only the tag (name of the component)
-        lines.push({
-          tag,
+        data.push({
+          tag: key,
+          value,
         });
       }
     }
   }
 
-  return lines.sort((a, b) => a.tag.localeCompare(b.tag));
+  return data.sort((a, b) => a.tag.localeCompare(b.tag));
 };

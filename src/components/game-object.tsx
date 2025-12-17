@@ -13,6 +13,7 @@ export interface GameObjectProps {
   setRenderRoot: (obj: GameObj) => void;
   isExpanded?: boolean;
   isRenderRoot?: boolean;
+  shouldDrawInspect: boolean;
   k: KAPLAYCtxType;
 }
 
@@ -22,6 +23,7 @@ export const GameObject = ({
   isExpanded: isExpandedExternal = false,
   isRenderRoot,
   setRenderRoot,
+  shouldDrawInspect,
   k,
 }: GameObjectProps) => {
   const [isExpanded, setIsExpanded] = useState(isExpandedExternal);
@@ -70,7 +72,9 @@ export const GameObject = ({
 
   const handleMouseEnter = () => {
     cancelUpdateControllers();
-    drawInspect(obj);
+    if (!isRootObject && shouldDrawInspect) {
+      drawInspect(obj);
+    }
   };
 
   const handleMouseLeave = () => {
@@ -177,6 +181,7 @@ export const GameObject = ({
               obj={child}
               key={child.id}
               setRenderRoot={setRenderRoot}
+              shouldDrawInspect={shouldDrawInspect}
             />
           ))}
         </div>

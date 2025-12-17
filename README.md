@@ -15,6 +15,8 @@ A dev tool for [Kaplay](https://kaplayjs.com/) which allows you to explore and i
 - Pause an object
 - Dark theme (is this a feature?)
 
+The layout is made with desktop in mind. That said, it is somewhat usable on phones.
+
 ## Usage
 
 Install it:
@@ -64,17 +66,38 @@ available options are:
 
 ```ts
 interface InspectorOptions {
-  updateTimeout?: number; // in milliseconds, default: 100
-  isVisible?: boolean; // is inspector visible on load, default: true
-  className?: string; // optional CSS class to add to the root element
+  // CSS class to add to the root element
+  className?: string; 
+  // is inspector visible on load, default: true
+  isVisible?: boolean; 
+  // default update time in milliseconds, default: 250
+  initUpdateTimeout?: number; 
+  // should area, anchor and bounding box be drawn on object hover, default: true
+  shouldDrawInspect?: boolean: 
 }
 ```
 
-### Positioning
+## Customizing colors
+
+Kaplay Inspector defines colors in [OKLCH color space](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/color_value/oklch). This makes changing of the primary and the secondary color pretty straight forward. You only need to update two hue variables like this:
+
+```css
+.k-inspector.your-custom-class {
+  --ki-h: 300; /* Purple */
+  --ki-h-secondary: 200; /* Teal */
+}
+```
+
+Please note that if you load inspector's CSS dynamically, you'll have to add a custom class to create a higher specificity selector.
+
+If you want to change other colors as well, check the [styles.css](./src/styles/styles.css).
+
+
+## Positioning
 
 By default, the inspector has `position: fixed` and it sits at the bottom of the screen. If you want to move it around, the easiest way it to pass a custom class name through the options and position it yourself.
 
-Here is an example of what I do:
+Assuming we have only the canvas and the inspector element on the page, here is an example of what I like to do:
 
 ```css
 body:has(.k-inspector__hide) {
@@ -94,14 +117,14 @@ body:has(.k-inspector__hide) {
 }
 ```
 
-When inspector is visible (I check if the hide button is shown), show the game in the top and the inspector on the bottom (like in the screenshot above).
+This fixed the game canvas in the upper part of the viewport (60% of it) and the bottom part is taken by the inspector. It only applies this layout when inspector is visible (by checking if the hide button is shown).
 
+Same as with colors, be sure to have a higher specificity selector if inspector's CSS is loaded dynamically.
 
 ## TODO
 
-* [ ] Bounding box - handle a case when anchor is a `Vec2`
 * [ ] Controllable theme - system/light/dark. At the moment it is always matching the system.
 * [ ] Filter/search
 * [ ] Persist search in URL or local storage
 * [ ] Collapse/Expand all button
-* [ ] Note on changing color themes
+* [ ] Clean up `inspect-comps.tsx`

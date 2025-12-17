@@ -5,17 +5,18 @@ import kaplay from "kaplay";
 export type KAPLAYCtxType = ReturnType<typeof kaplay>;
 
 export interface InspectorOptions {
-  updateTimeout?: number;
+  initUpdateTimeout?: number;
+  initDrawInspectOnHover?: boolean;
   isVisibleOnLoad?: boolean;
   className?: string;
 }
 
 export default function init(k: KAPLAYCtxType, props: InspectorOptions = {}) {
   const {
-    //
     className = "",
-    updateTimeout = 100,
+    initUpdateTimeout = 250,
     isVisibleOnLoad = true,
+    initDrawInspectOnHover = true,
   } = props;
 
   const appElement = document.createElement("div");
@@ -26,8 +27,9 @@ export default function init(k: KAPLAYCtxType, props: InspectorOptions = {}) {
   render(
     <Inspector
       k={k}
-      updateTimeout={updateTimeout}
+      initUpdateTimeout={initUpdateTimeout}
       isVisibleOnLoad={isVisibleOnLoad}
+      initDrawInspectOnHover={initDrawInspectOnHover}
     />,
     appElement,
   );

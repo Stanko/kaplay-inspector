@@ -9,6 +9,11 @@ k.loadFont("nope8", "fonts/Nope8.woff", {
   filter: "nearest",
 });
 
+k.loadSprite("ship", "sprites/ship.png", {
+  sliceX: 4,
+  sliceY: 3,
+});
+
 // ----- MOON ----- //
 
 k.loadSprite("moon", "sprites/moon.png", {
@@ -24,7 +29,7 @@ k.add([
   k.sprite("moon", {
     anim: "main",
   }),
-  k.anchor("center"),
+  k.anchor(k.vec2(-0.25, 0.75)),
   k.pos(k.randi(40, k.width() - 40), k.randi(40, k.height() - 40)),
 ]);
 
@@ -101,6 +106,13 @@ const ship = k.add([
   k.anchor("center"),
   {
     speed: 200,
+    fire: () => {},
+  },
+  {
+    data: "hello world",
+    inspect() {
+      return "Example of an anonymous component: " + this.data;
+    },
   },
 ]);
 
