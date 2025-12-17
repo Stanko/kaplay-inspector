@@ -1,10 +1,9 @@
-import type { KAPLAYCtx } from "kaplay";
 import { useEffect, useState } from "preact/hooks";
-import type { InspectorOptions } from "../init";
+import type { InspectorOptions, KAPLAYCtxType } from "../init";
 import { GameObject } from "./game-object";
 
 export interface InspectorProps extends InspectorOptions {
-  k: KAPLAYCtx;
+  k: KAPLAYCtxType;
 }
 
 export const Inspector = ({

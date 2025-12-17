@@ -1,13 +1,16 @@
-import type { KAPLAYCtx } from "kaplay";
 import { render } from "preact";
 import { Inspector } from "./components/inspector";
+import kaplay from "kaplay";
+
+export type KAPLAYCtxType = ReturnType<typeof kaplay>;
 
 export interface InspectorOptions {
   updateTimeout?: number;
   isVisibleOnLoad?: boolean;
   className?: string;
 }
-export default function init(k: KAPLAYCtx, props: InspectorOptions = {}) {
+
+export default function init(k: KAPLAYCtxType, props: InspectorOptions = {}) {
   const {
     //
     className = "",

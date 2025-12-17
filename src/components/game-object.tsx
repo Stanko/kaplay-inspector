@@ -1,10 +1,11 @@
-import type { GameObj, KAPLAYCtx, KEventController } from "kaplay";
+import type { GameObj, KEventController } from "kaplay";
 import { useCallback, useEffect, useRef, useState } from "preact/hooks";
 import { MinusIcon, PlusIcon } from "../components/icons";
 import { cx } from "../lib/cx";
 import { drawBoundingBox } from "../lib/draw-bbox";
 import { getObjectInfo } from "../lib/get-object-info";
 import { Breadcrumbs } from "./breadcrumbs";
+import type { KAPLAYCtxType } from "../init";
 
 export interface GameObjectProps {
   className?: string;
@@ -12,7 +13,7 @@ export interface GameObjectProps {
   setRenderRoot: (obj: GameObj) => void;
   isExpanded?: boolean;
   isRenderRoot?: boolean;
-  k: KAPLAYCtx;
+  k: KAPLAYCtxType;
 }
 
 export const GameObject = ({

@@ -1,6 +1,7 @@
-import type { GameObj, KAPLAYCtx, Rect } from "kaplay";
+import type { GameObj, Rect } from "kaplay";
+import type { KAPLAYCtxType } from "../init";
 
-export const drawBoundingBox = (obj: GameObj, k: KAPLAYCtx) => {
+export const drawBoundingBox = (obj: GameObj, k: KAPLAYCtxType) => {
   // TODO handle a case when anchor is a vec2
   const anchor = obj.anchor || "topleft";
 

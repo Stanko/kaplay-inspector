@@ -104,3 +104,4 @@ When inspector is visible (I check if the hide button is shown), show the game i
 * [ ] Filter/search
 * [ ] Persist search in URL or local storage
 * [ ] Collapse/Expand all button
+* [ ] Note on changing color themes
