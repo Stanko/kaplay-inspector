@@ -1,7 +1,9 @@
-import { useEffect, useState } from "preact/hooks";
+import { useEffect, useRef, useState } from "preact/hooks";
 import type { InspectorOptions, KAPLAYCtxType } from "../init";
 import { GameObject } from "./game-object";
 import { useObjectBoolean } from "./boolean-comp";
+import type { GameObj } from "kaplay";
+import { SearchResults } from "./search-results";
 
 export interface InspectorProps extends InspectorOptions {
   k: KAPLAYCtxType;
@@ -13,6 +15,8 @@ const INTERVAL_OPTIONS = [
   { value: 500, label: "500ms" },
   { value: 1000, label: "1s" },
 ];
+
+const TYPING_TIMEOUT = 250;
 
 export const Inspector = ({
   initUpdateTimeout = 250,
@@ -27,6 +31,9 @@ export const Inspector = ({
   const [root, setRoot] = useState(k.getTreeRoot());
   const [renderIndex, setRenderIndex] = useState(0);
   const [isVisible, setIsVisible] = useState(isVisibleOnLoad);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchResults, setSearchResults] = useState<GameObj[]>([]);
+  const typingTimeout = useRef<ReturnType<typeof setTimeout>>();
 
   const paused = useObjectBoolean(k.getTreeRoot(), "paused");
 
@@ -39,13 +46,21 @@ export const Inspector = ({
     return () => clearInterval(interval);
   }, [renderIndex, updateTimeout]);
 
-  // const handlePauseClick = () => {
-  //   const root = k.getTreeRoot();
-  //   root.paused = !root.paused;
-  // };
-
   const toggleVisibility = () => {
     setIsVisible(!isVisible);
+  };
+
+  const search = (term: string) => {
+    setSearchResults(k.get(term, { recursive: true, liveUpdate: true }));
+  };
+
+  const handleSearchInput = (e: Event) => {
+    const term = (e.target as HTMLInputElement).value;
+    setSearchTerm(term);
+    clearTimeout(typingTimeout.current);
+    typingTimeout.current = setTimeout(() => {
+      search(term);
+    }, TYPING_TIMEOUT);
   };
 
   if (!isVisible) {
@@ -62,6 +77,13 @@ export const Inspector = ({
         <button class="ki-btn" onClick={() => paused.onChange(!paused.checked)}>
           {paused.checked ? "Resume Game" : "Pause Game"}
         </button>
+        &bull;
+        <input
+          placeholder="Search tags or comps"
+          type="text"
+          class="ki-input"
+          onInput={handleSearchInput}
+        />
         &bull;
         <div>{k.get("*", { recursive: true }).length} objects</div>
         &bull;
@@ -97,15 +119,24 @@ export const Inspector = ({
       </div>
 
       <div class="k-inspector__objects">
-        <GameObject
-          k={k}
-          className="game-object--root"
-          obj={root}
-          setRenderRoot={setRoot}
-          shouldDrawInspect={shouldDrawInspect}
-          isExpanded
-          isRenderRoot
-        />
+        {searchTerm.length > 0 ? (
+          <SearchResults
+            k={k}
+            results={searchResults}
+            setRenderRoot={setRoot}
+            shouldDrawInspect={shouldDrawInspect}
+          />
+        ) : (
+          <GameObject
+            k={k}
+            className="game-object--root"
+            obj={root}
+            setRenderRoot={setRoot}
+            shouldDrawInspect={shouldDrawInspect}
+            isExpanded
+            isRenderRoot
+          />
+        )}
       </div>
     </>
   );

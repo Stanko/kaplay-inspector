@@ -14,6 +14,7 @@ A dev tool for [Kaplay](https://kaplayjs.com/) which allows you to explore and i
 - Tweak position, text or color
 - Pause objects
 - Hide objects
+- Search for tags or comps
 - Dark theme (is this a feature?)
 
 The layout is made with desktop in mind. That said, it is somewhat usable on phones.
