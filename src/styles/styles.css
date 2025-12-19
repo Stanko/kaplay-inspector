@@ -197,6 +197,11 @@
     width: calc(100% + 0.25rem);
     border-radius: 4px;
     outline-offset: 0;
+    position: sticky;
+    /* TODO add sticky header and sticky side buttons */
+    /*z-index: 1;
+    top: 2.625rem;
+    background-color: var(--ki-bg);*/
 
     svg rect {
       fill: var(--ki-bg);

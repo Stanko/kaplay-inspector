@@ -5,6 +5,8 @@ import { PositionControls } from "../components/position-controls";
 import { TextControls } from "../components/text-controls";
 import { SpriteControls } from "../components/sprite-controls";
 import { Color } from "../components/color-controls";
+import { ChildObject } from "../components/child-object";
+import { isGameObj } from "./is-game-obj";
 
 const componentMap: Record<
   string,
@@ -63,6 +65,11 @@ export const inspectComps = (obj: GameObj) => {
         data.push({
           tag: key,
           value: "function",
+        });
+      } else if (isGameObj(value)) {
+        data.push({
+          tag: key,
+          value: <ChildObject obj={value} />,
         });
       } else if (typeof value === "object") {
         data.push({

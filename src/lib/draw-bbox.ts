@@ -1,38 +1,44 @@
-import type { AnchorComp, GameObj, Rect } from "kaplay";
+import type { Anchor, GameObj } from "kaplay";
 import type { KAPLAYCtxType } from "../init";
+
+const anchorMap: Record<Anchor, [x: number, y: number]> = {
+  topleft: [-1, -1],
+  top: [0, -1],
+  topright: [1, -1],
+  left: [-1, 0],
+  center: [0, 0],
+  right: [1, 0],
+  botleft: [-1, 1],
+  bot: [0, 1],
+  botright: [1, 1],
+};
 
 export const drawBoundingBox = (obj: GameObj, k: KAPLAYCtxType) => {
   if (obj.renderArea) {
-    const rect = obj.renderArea().bbox() as Rect;
+    const localArea = obj.renderArea();
+    const transform = obj.transform.clone();
+    let anchor = obj.anchor || "topleft";
 
-    const anchor = (obj as GameObj<AnchorComp>).anchor || "topleft";
-    const offset = k.vec2(0);
-
-    if (typeof anchor === "string") {
-      if (anchor.includes("left")) {
-        offset.x = 0;
-      } else if (anchor.includes("right")) {
-        offset.x = rect.width;
-      } else {
-        offset.x = rect.width / 2;
+    if (localArea && obj.anchor !== "topleft") {
+      if (typeof anchor === "string") {
+        const coords = anchorMap[anchor as Anchor];
+        anchor = new k.Vec2(coords[0], coords[1]);
       }
 
-      if (anchor.includes("top")) {
-        offset.y = 0;
-      } else if (anchor.includes("bot")) {
-        offset.y = rect.height;
-      } else {
-        offset.y = rect.height / 2;
-      }
-    } else {
-      offset.x = (anchor.x * rect.width + 1) / 2 + rect.width / 2;
-      offset.y = (anchor.y * rect.height + 1) / 2 + rect.height / 2;
+      const offset = anchor
+        .add(1, 1)
+        .scale(-0.5 * localArea.width, -0.5 * localArea.height);
+
+      transform.translateSelfV(offset);
     }
 
-    rect.pos = rect.pos.sub(offset);
+    const worldArea = localArea.transform(transform);
+    const worldBBox = worldArea.bbox();
 
     k.drawRect({
-      ...rect,
+      pos: worldBBox.pos,
+      width: worldBBox.width,
+      height: worldBBox.height,
       fill: false,
       outline: {
         width: 1,
@@ -41,4 +47,10 @@ export const drawBoundingBox = (obj: GameObj, k: KAPLAYCtxType) => {
       },
     });
   }
+
+  obj.children.forEach((child) => {
+    if (!child.hidden) {
+      drawBoundingBox(child, k);
+    }
+  });
 };

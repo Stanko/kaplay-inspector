@@ -11,8 +11,9 @@ A dev tool for [Kaplay](https://kaplayjs.com/) which allows you to explore and i
 - Hover an object to draw it's area, anchor and bounding box
 - Inspect object's component and custom props
 - Log an object to console
-- Tweak position and text
-- Pause an object
+- Tweak position, text or color
+- Pause objects
+- Hide objects
 - Dark theme (is this a feature?)
 
 The layout is made with desktop in mind. That said, it is somewhat usable on phones.
@@ -52,7 +53,7 @@ if (
 }
 ```
 
-If typescript is complaining about importing CSS files, you probably need to add this to one of your `.d.ts` files.
+If typescript is complaining about importing CSS files, you probably need to add this to `declaration.d.ts` file in you project's root.
 
 ```ts
 declare module '*.scss';

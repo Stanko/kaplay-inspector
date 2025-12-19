@@ -24,6 +24,17 @@ export const Breadcrumbs = ({ obj, setRenderRoot }: BreadcrumbsProps) => {
     parent = parent.parent;
   }
 
+  // TODO for destroyed objects always add root as a breadcrumb
+  // if (breadcrumbs.length === 0) {
+  //   const root = k.getTreeRoot()
+  //   breadcrumbs.push({
+  //     id: root.id,
+  //     tags: root.tags,
+  //     compsLabel: root.compsLabel,
+  //     object: root,
+  //   });
+  // }
+
   return (
     <div class="breadcrumbs">
       Back to

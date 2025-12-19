@@ -35,6 +35,11 @@ export const GameObject = ({
   const isObjectDestroyed = !obj.exists() && !isRootObject;
   const showExpandTree = obj.children.length > 0;
   const hasChildren = obj.children.length > 0;
+  const hasSize =
+    typeof obj.width === "number" && typeof obj.height === "number";
+
+  const isDrawController =
+    compsData.length === 1 && compsData[0].tag === "draw";
 
   const isInspecting = isRenderRoot && obj.id !== 0;
 
@@ -43,21 +48,13 @@ export const GameObject = ({
     updateControllers.current = [];
   }, []);
 
-  const drawInspect = useCallback((obj: GameObj, isChild: boolean = false) => {
+  const drawInspect = useCallback((obj: GameObj) => {
     if (!obj.hidden) {
-      const updateController = obj.onDraw(() => {
-        // Kaplay calls drawInspect on all of the children, no need to call it again
-        if (!isChild) {
-          obj.drawInspect();
-        }
+      const updateController = k.onDraw(() => {
         drawBoundingBox(obj, k);
+        obj.drawInspect();
       });
-
       updateControllers.current.push(updateController);
-
-      obj.children.forEach((child) => {
-        drawInspect(child, true);
-      });
     }
   }, []);
 
@@ -78,9 +75,12 @@ export const GameObject = ({
     }
   };
 
-  const handleMouseLeave = () => {
-    cancelUpdateControllers();
-  };
+  // In Kaplay, onDraw and onUpdate are also game objects
+  // For now, I disabled displaying draw objects,
+  // mostly because inspector is adding them on hover, making the list jump around
+  if (isDrawController) {
+    return null;
+  }
 
   return (
     <div
@@ -93,7 +93,7 @@ export const GameObject = ({
       <div
         class="game-object__content"
         onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
+        onMouseLeave={cancelUpdateControllers}
       >
         <button
           class={cx("game-object__header", {
@@ -136,11 +136,18 @@ export const GameObject = ({
               <BooleanComp obj={obj} propName="paused" />
               <BooleanComp obj={obj} propName="hidden" />
 
+              {hasSize && (
+                <div class="game-object__comps-row">
+                  <b>size</b>
+                  <div>
+                    {obj.width} x {obj.height}
+                  </div>
+                </div>
+              )}
+
               {compsData.map((comp) => (
                 <div key={comp.tag} class="game-object__comps-row">
-                  <div>
-                    <b>{comp.tag}</b>
-                  </div>
+                  <b>{comp.tag}</b>
                   <div>{comp.value}</div>
                 </div>
               ))}

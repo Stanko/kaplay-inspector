@@ -1,5 +1,7 @@
+import { isGameObj } from "./is-game-obj";
+
 export const stringify = (obj: any, maxDepth = 1, currentDepth = 0): string => {
-  if (typeof obj !== "object" || obj === null) {
+  if (typeof obj !== "object") {
     return JSON.stringify(obj);
   }
 
@@ -7,10 +9,14 @@ export const stringify = (obj: any, maxDepth = 1, currentDepth = 0): string => {
     if (typeof value === "function") {
       return `${key}: function`;
     } else if (typeof value === "object") {
+      if (isGameObj(value)) {
+        return `${key}: [GameObj]`;
+      }
+
       if (currentDepth < maxDepth) {
         return `${key}: ${stringify(value, maxDepth, currentDepth + 1)}`;
       } else {
-        return `${key}: [Object object]`;
+        return `${key}: [Object]`;
       }
     } else {
       return `${key}: ${value}`;

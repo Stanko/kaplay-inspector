@@ -33,6 +33,10 @@ k.add([
   k.pos(k.randi(40, k.width() - 40), k.randi(40, k.height() - 40)),
 ]);
 
+// On update and onDraw are also game objects
+k.onDraw(() => {});
+k.onUpdate(() => {});
+
 // ----- STARS ----- //
 
 k.loadSprite("stars", "sprites/stars.png", {
