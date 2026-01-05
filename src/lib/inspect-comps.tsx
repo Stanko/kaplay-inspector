@@ -74,7 +74,7 @@ export const inspectComps = (obj: GameObj) => {
       } else if (typeof value === "object") {
         data.push({
           tag: key,
-          value: stringify(value),
+          value: value === null ? "null" : stringify(value),
         });
       } else {
         data.push({

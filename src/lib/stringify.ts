@@ -6,7 +6,9 @@ export const stringify = (obj: any, maxDepth = 1, currentDepth = 0): string => {
   }
 
   const lines = Object.entries(obj).map(([key, value]) => {
-    if (typeof value === "function") {
+    if (value === null) {
+      return `${key}: null`;
+    } else if (typeof value === "function") {
       return `${key}: function`;
     } else if (typeof value === "object") {
       if (isGameObj(value)) {

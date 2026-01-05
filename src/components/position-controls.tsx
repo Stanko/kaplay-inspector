@@ -20,19 +20,31 @@ export const PositionControls = ({ obj }: PositionControlsProps) => {
 
   return (
     <div class="pos-controls">
-      <HoldButton className="ki-btn" onClickAndHold={() => (obj.pos.x -= 1)}>
+      <HoldButton
+        className="ki-btn"
+        onClickAndHold={() => obj.moveTo(obj.pos.x - 1, obj.pos.y)}
+      >
         <ArrowLeftIcon />
       </HoldButton>
-      <HoldButton className="ki-btn" onClickAndHold={() => (obj.pos.x += 1)}>
+      <HoldButton
+        className="ki-btn"
+        onClickAndHold={() => obj.moveTo(obj.pos.x + 1, obj.pos.y)}
+      >
         <ArrowRightIcon />
       </HoldButton>
       <div class="pos-controls__value">x: {roundToDecimal(obj.pos.x, 2)}</div>
       <div class="pos-controls__value">y: {roundToDecimal(obj.pos.y, 2)}</div>
 
-      <HoldButton className="ki-btn" onClickAndHold={() => (obj.pos.y -= 1)}>
+      <HoldButton
+        className="ki-btn"
+        onClickAndHold={() => obj.moveTo(obj.pos.x, obj.pos.y - 1)}
+      >
         <ArrowUpIcon />
       </HoldButton>
-      <HoldButton className="ki-btn" onClickAndHold={() => (obj.pos.y += 1)}>
+      <HoldButton
+        className="ki-btn"
+        onClickAndHold={() => obj.moveTo(obj.pos.x, obj.pos.y + 1)}
+      >
         <ArrowDownIcon />
       </HoldButton>
     </div>
