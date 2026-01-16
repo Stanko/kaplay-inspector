@@ -132,6 +132,5 @@ Same as with colors, be sure to have a higher specificity selector if inspector'
 ## TODO
 
 * [ ] Controllable theme - system/light/dark. At the moment it is always matching the system.
-* [ ] Filter/search
 * [ ] Persist search in URL or local storage
 * [ ] Collapse/Expand all button
