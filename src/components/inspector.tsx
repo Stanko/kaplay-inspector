@@ -1,13 +1,12 @@
 import { useEffect, useRef, useState } from "preact/hooks";
-import type { InspectorOptions, KAPLAYCtxType } from "../init";
+import type { InspectorOptions } from "../init";
 import { GameObject } from "./game-object";
 import { useObjectBoolean } from "./boolean-comp";
 import type { GameObj } from "kaplay";
 import { SearchResults } from "./search-results";
+import { k } from "../k";
 
-export interface InspectorProps extends InspectorOptions {
-  k: KAPLAYCtxType;
-}
+export interface InspectorProps extends InspectorOptions {}
 
 const INTERVAL_OPTIONS = [
   { value: 100, label: "100ms" },
@@ -22,7 +21,6 @@ export const Inspector = ({
   initUpdateTimeout = 250,
   isVisibleOnLoad = true,
   initDrawInspectOnHover = true,
-  k,
 }: InspectorProps) => {
   const [updateTimeout, setUpdateTimeout] = useState(initUpdateTimeout);
   const [shouldDrawInspect, setShouldDrawInspect] = useState(
@@ -121,14 +119,12 @@ export const Inspector = ({
       <div class="k-inspector__objects">
         {searchTerm.length > 0 ? (
           <SearchResults
-            k={k}
             results={searchResults}
             setRenderRoot={setRoot}
             shouldDrawInspect={shouldDrawInspect}
           />
         ) : (
           <GameObject
-            k={k}
             className="game-object--root"
             obj={root}
             setRenderRoot={setRoot}

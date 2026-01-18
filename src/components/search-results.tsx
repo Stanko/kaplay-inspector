@@ -1,9 +1,7 @@
 import type { GameObj } from "kaplay";
 import { GameObject } from "./game-object";
-import type { KAPLAYCtxType } from "../init";
 
 export interface SearchResultsProps {
-  k: KAPLAYCtxType;
   className?: string;
   results: GameObj[];
   setRenderRoot: (obj: GameObj) => void;
@@ -11,7 +9,6 @@ export interface SearchResultsProps {
 }
 
 export const SearchResults = ({
-  k,
   results,
   setRenderRoot,
   shouldDrawInspect,
@@ -25,7 +22,6 @@ export const SearchResults = ({
       {results.map((result) => {
         return (
           <GameObject
-            k={k}
             className="game-object--root"
             obj={result}
             setRenderRoot={setRenderRoot}

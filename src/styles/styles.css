@@ -309,9 +309,9 @@
     padding-bottom: 1rem;
   }
 
-  /* Position controls */
+  /* Vector controls */
 
-  .pos-controls {
+  .vector-controls {
     display: flex;
     align-items: center;
     gap: 0.25rem;
@@ -319,13 +319,13 @@
     min-width: 12rem;
   }
 
-  .pos-controls .ki-btn,
-  .pos-controls__value {
+  .vector-controls .ki-btn,
+  .vector-controls__value {
     flex-shrink: 0;
     text-align: center;
   }
 
-  .pos-controls__value {
+  .vector-controls__value {
     width: 5rem;
   }
 
@@ -333,6 +333,26 @@
 
   .text-controls__input {
     width: 100%;
+  }
+
+  /* Anchor controls */
+
+  .anchor-controls {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .anchor-radios {
+    text-align: center;
+  }
+
+  .anchor-row {
+    display: flex;
+  }
+
+  .anchor-radios label {
+    padding: 0.25rem;
   }
 
   /* Color */

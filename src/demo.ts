@@ -1,7 +1,33 @@
-import { k } from "./k";
-import "./styles/demo.css";
+import kaplay from "kaplay";
+import init from "./init";
 
-// ----- INIT ----- //
+import "./styles/demo.css";
+import "./styles/styles.css";
+
+const k = kaplay({
+  global: false,
+  width: 450,
+  height: 300,
+  pixelDensity: Math.min(window.devicePixelRatio, 2),
+  debugKey: "d",
+  scale: 1,
+  background: "black",
+  texFilter: "nearest",
+  debug: true,
+  crisp: true,
+  canvas: document.querySelector(".game") as HTMLCanvasElement,
+  buttons: {
+    fire: {
+      keyboard: ["z", "space"],
+    },
+  },
+});
+
+// ----- INIT INSPECTOR ----- //
+
+init(k);
+
+// ----- INIT GAME ----- //
 
 k.loadRoot("./");
 

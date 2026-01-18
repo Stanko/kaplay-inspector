@@ -7,6 +7,7 @@ import { SpriteControls } from "../components/sprite-controls";
 import { Color } from "../components/color-controls";
 import { ChildObject } from "../components/child-object";
 import { isGameObj } from "./is-game-obj";
+import { AnchorControls } from "../components/anchor-controls";
 
 const componentMap: Record<
   string,
@@ -16,6 +17,7 @@ const componentMap: Record<
   text: TextControls,
   sprite: SpriteControls,
   color: Color,
+  anchor: AnchorControls,
 };
 
 export const inspectComps = (obj: GameObj) => {

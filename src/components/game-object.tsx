@@ -5,8 +5,8 @@ import { cx } from "../lib/cx";
 import { drawBoundingBox } from "../lib/draw-bbox";
 import { getObjectInfo } from "../lib/get-object-info";
 import { Breadcrumbs } from "./breadcrumbs";
-import type { KAPLAYCtxType } from "../init";
 import { BooleanComp } from "./boolean-comp";
+import { k } from "../k";
 
 export interface GameObjectProps {
   className?: string;
@@ -15,7 +15,6 @@ export interface GameObjectProps {
   isExpanded?: boolean;
   isRenderRoot?: boolean;
   shouldDrawInspect: boolean;
-  k: KAPLAYCtxType;
 }
 
 export const GameObject = ({
@@ -25,7 +24,6 @@ export const GameObject = ({
   isRenderRoot,
   setRenderRoot,
   shouldDrawInspect,
-  k,
 }: GameObjectProps) => {
   const [isExpanded, setIsExpanded] = useState(isExpandedExternal);
   const updateControllers = useRef<KEventController[]>([]);
@@ -51,7 +49,7 @@ export const GameObject = ({
   const drawInspect = useCallback((obj: GameObj) => {
     if (!obj.hidden) {
       const updateController = k.onDraw(() => {
-        drawBoundingBox(obj, k);
+        drawBoundingBox(obj);
         obj.drawInspect();
       });
       updateControllers.current.push(updateController);
@@ -162,7 +160,6 @@ export const GameObject = ({
         >
           {obj.children.map((child) => (
             <GameObject
-              k={k}
               obj={child}
               key={child.id}
               setRenderRoot={setRenderRoot}
