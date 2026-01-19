@@ -1,15 +1,15 @@
 import type { GameObj, SpriteComp } from "kaplay";
 
-export interface SpriteControlsProps {
+export interface SpriteControlProps {
   className?: string;
   obj: GameObj;
 }
 
-export const SpriteControls = ({ obj }: SpriteControlsProps) => {
+export const SpriteControl = ({ obj }: SpriteControlProps) => {
   const object = obj as GameObj<SpriteComp>;
   const animation = object.getCurAnim();
   return (
-    <div class="sprite-controls">
+    <div class="sprite-control">
       <b>{object.sprite}</b>
       <div>frame: {object.frame}</div>
       {animation && (

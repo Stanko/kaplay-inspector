@@ -1,9 +1,9 @@
-import type { GameObj, AnchorComp, Vec2 } from "kaplay";
+import type { GameObj, AnchorComp } from "kaplay";
 import { cx } from "../lib/cx";
-import { VectorControls } from "./vector-controls";
 import { k } from "../k";
+import { VectorControl } from "./vector-control";
 
-export interface AnchorControlsProps {
+export interface AnchorControlProps {
   className?: string;
   obj: GameObj;
 }
@@ -14,16 +14,13 @@ const strings = [
   ["botleft", "bot", "botright"],
 ] as const;
 
-export const AnchorControls = ({
-  className = "",
-  obj,
-}: AnchorControlsProps) => {
+export const AnchorControl = ({ className = "", obj }: AnchorControlProps) => {
   const object = obj as GameObj<AnchorComp>;
 
   const isString = typeof obj.anchor === "string";
 
   return (
-    <div class={cx(className, "anchor-controls")}>
+    <div class={cx(className, "anchor-control")}>
       {isString ? (
         <>
           <div class="anchor-radios">
@@ -50,18 +47,14 @@ export const AnchorControls = ({
             <div>{isString && object.anchor}</div>
           </div>
           <button class="ki-btn" onClick={() => (object.anchor = k.vec2(0, 0))}>
-            Switch to vector
+            Use a vector
           </button>
         </>
       ) : (
         <>
-          <VectorControls
-            value={object.anchor as Vec2}
-            onChange={(anchor) => (object.anchor = anchor)}
-            step={0.05}
-          />
+          <VectorControl obj={obj} property="anchor" step={0.1} />
           <button class="ki-btn" onClick={() => (object.anchor = "center")}>
-            Switch to string
+            Use a named location
           </button>
         </>
       )}

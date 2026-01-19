@@ -119,9 +119,14 @@ export const GameObject = ({
 
         <div class="game-object__buttons">
           {!isRenderRoot && (
-            <button class="ki-btn" onClick={() => setRenderRoot(obj)}>
-              inspect
-            </button>
+            <>
+              <button class="ki-btn ki-btn--red" onClick={() => obj.destroy()}>
+                destroy
+              </button>
+              <button class="ki-btn" onClick={() => setRenderRoot(obj)}>
+                inspect
+              </button>
+            </>
           )}
           <button class="ki-btn " onClick={() => console.log(obj)}>
             log

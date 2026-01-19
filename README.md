@@ -2,7 +2,9 @@
 
 A dev tool for [Kaplay](https://kaplayjs.com/) which allows you to explore and inspect the game object tree real time.
 
-![Kaplay inspector in action](./public/screenshot.png)
+Check the demo: [muffinman.io/kaplay-inspector/](https://muffinman.io/kaplay-inspector/).
+
+[![Kaplay inspector in action](./public/screenshot.png)](https://muffinman.io/kaplay-inspector/)
 
 ## Features
 
@@ -11,7 +13,12 @@ A dev tool for [Kaplay](https://kaplayjs.com/) which allows you to explore and i
 - Hover an object to draw it's area, anchor and bounding box
 - Inspect object's component and custom props
 - Log an object to console
-- Tweak position, text or color
+- Tweak object properties live
+  - position, scale, rotate, skew, z-index
+  - opacity, color, blend mode
+  - text
+  - anchor
+  - health
 - Pause objects
 - Hide objects
 - Search for tags or comps
@@ -132,5 +139,4 @@ Same as with colors, be sure to have a higher specificity selector if inspector'
 ## TODO
 
 * [ ] Controllable theme - system/light/dark. At the moment it is always matching the system.
-* [ ] Persist search in URL or local storage
-* [ ] Collapse/Expand all button
+* [ ] Persist search/options in URL or local storage

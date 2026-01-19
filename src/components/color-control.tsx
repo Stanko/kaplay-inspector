@@ -2,7 +2,7 @@ import type { GameObj, ColorComp } from "kaplay";
 import { useEffect, useState } from "preact/hooks";
 import { cx } from "../lib/cx";
 
-export interface ColorProps {
+export interface ColorControlProps {
   className?: string;
   obj: GameObj;
 }
@@ -24,8 +24,8 @@ const ColorSlider = ({ onChange, value, channel }: ColorSliderProps) => {
   return (
     <input
       className={cx(
-        "color-controls__slider-input",
-        `color-controls__slider-input--${channel}`,
+        "color-control__slider-input",
+        `color-control__slider-input--${channel}`,
       )}
       type="range"
       min="0"
@@ -36,7 +36,7 @@ const ColorSlider = ({ onChange, value, channel }: ColorSliderProps) => {
   );
 };
 
-export const Color = ({ obj }: ColorProps) => {
+export const ColorControl = ({ obj }: ColorControlProps) => {
   const object = obj as GameObj<ColorComp>;
   const { r, g, b } = object.color;
   const [color, setColor] = useState({ r, g, b });
@@ -52,9 +52,9 @@ export const Color = ({ obj }: ColorProps) => {
   };
 
   return (
-    <div class="color-controls">
+    <div class="color-control">
       <div
-        class="color-controls__swatch"
+        class="color-control__swatch"
         style={{ background: `rgb(${color.r} ${color.g} ${color.b})` }}
       />
       <div>

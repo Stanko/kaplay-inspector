@@ -57,6 +57,8 @@ k.add([
   }),
   k.anchor(k.vec2(-0.25, 0.75)),
   k.pos(k.randi(40, k.width() - 40), k.randi(40, k.height() - 40)),
+  k.rotate(0),
+  k.opacity(),
 ]);
 
 // On update and onDraw are also game objects
@@ -127,12 +129,31 @@ k.loadSprite("ship", "sprites/ship.png", {
   sliceY: 3,
 });
 
+const hpLabel = k.add([
+  "hp-label",
+  k.pos(10, 10),
+  k.anchor("topleft"),
+  k.opacity(0.6),
+  k.text("HP: 5", {
+    font: "nope8",
+    size: 12,
+  }),
+  {
+    updateHP() {
+      hpLabel.text = `Ship HP: ${ship.hp} / ${ship.maxHP}`;
+    },
+  },
+]);
+
 const ship = k.add([
   "ship",
   k.pos(k.width() / 2, 220),
+  k.scale(),
+  k.blend(0),
   k.sprite("ship", {
     frame: 0,
   }),
+  k.health(5, 10),
   k.anchor("center"),
   {
     speed: 200,
@@ -145,6 +166,11 @@ const ship = k.add([
     },
   },
 ]);
+
+hpLabel.updateHP();
+
+ship.onHurt(hpLabel.updateHP);
+ship.onHeal(hpLabel.updateHP);
 
 ship.onUpdate(() => {
   // ----- Movement ----- //
@@ -163,7 +189,9 @@ ship.onUpdate(() => {
     vec.y += ship.speed;
   }
 
-  ship.move(vec.unit().scale(ship.speed));
+  if (vec.len() > 0) {
+    ship.move(vec.unit().scale(ship.speed));
+  }
 
   const N = 16;
   if (ship.pos.x < N) {

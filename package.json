@@ -2,7 +2,7 @@
   "name": "@stanko/kaplay-inspector",
   "description": "A dev tool for Kaplay which allows you to explore and inspect the game object tree real time.",
   "private": false,
-  "version": "0.1.7",
+  "version": "0.2.0",
   "type": "module",
   "main": "./dist/init.js",
   "types": "./dist/init.d.ts",
@@ -21,7 +21,7 @@
     "prepublish": "npm run build-lib"
   },
   "peerDependencies": {
-    "kaplay": "^4000.0.0-alpha.20"
+    "kaplay": "^4000.0.0-alpha.26"
   },
   "dependencies": {
     "preact": "^10.28.2"
@@ -30,7 +30,8 @@
     "@preact/preset-vite": "^2.10.2",
     "@types/node": "^25.0.6",
     "typescript": "~5.9.3",
-    "vite": "^7.3.1"
+    "vite": "^7.3.1",
+    "kaplay": "^4000.0.0-alpha.26"
   },
   "repository": {
     "type": "git",

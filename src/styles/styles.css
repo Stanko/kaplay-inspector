@@ -73,6 +73,22 @@
     color: inherit;
   }
 
+  textarea {
+    field-sizing: content;
+    max-height: 6rem;
+  }
+
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  input[type="number"] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+  }
+
   button {
     border: none;
     cursor: pointer;
@@ -100,6 +116,14 @@
     border: 1px solid var(--ki-primary);
   }
 
+  .ki-btn--red {
+    color: var(--ki-red);
+  }
+
+  .ki-btn--red:hover {
+    border: 1px solid var(--ki-red);
+  }
+
   .ki-input {
     background-color: var(--ki-bg);
     border: none;
@@ -112,6 +136,11 @@
   .ki-input:focus-visible {
     outline: none;
     border-color: var(--ki-primary);
+  }
+
+  .ki-input--error,
+  .ki-input--error:focus-visible {
+    border-color: var(--ki-red);
   }
 
   /* Main layout */
@@ -309,35 +338,42 @@
     padding-bottom: 1rem;
   }
 
-  /* Vector controls */
+  /* Flex layout for controls */
 
-  .vector-controls {
+  .ki-flex {
     display: flex;
-    align-items: center;
     gap: 0.25rem;
-    width: fit-content;
-    min-width: 12rem;
+    align-items: center;
   }
 
-  .vector-controls .ki-btn,
-  .vector-controls__value {
-    flex-shrink: 0;
-    text-align: center;
+  /* Number input */
+
+  .number-input input {
+    width: 4.5rem;
   }
 
-  .vector-controls__value {
-    width: 5rem;
+  /* Vector control */
+
+  .vector-control__x-input {
+    margin-right: 0.75rem; /* with gap it comes to 1rem */
   }
 
-  /* Text Controls */
+  /* Blend control */
 
-  .text-controls__input {
+  .blend-control {
+    display: grid;
+    gap: 0.25rem;
+  }
+
+  /* Text control */
+
+  .text-control__input {
     width: 100%;
   }
 
-  /* Anchor controls */
+  /* Anchor control */
 
-  .anchor-controls {
+  .anchor-control {
     display: flex;
     align-items: center;
     gap: 1rem;
@@ -357,7 +393,7 @@
 
   /* Color */
 
-  .color-controls {
+  .color-control {
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -365,28 +401,28 @@
     min-width: 12rem;
   }
 
-  .color-controls__swatch {
+  .color-control__swatch {
     width: 2rem;
     height: 2rem;
     border-radius: 8px;
     border: 1px solid var(--ki-border-light);
   }
 
-  .color-controls__slider {
+  .color-control__slider {
     display: flex;
     align-items: center;
     gap: 0.25rem;
   }
 
-  .color-controls__slider-input--r {
+  .color-control__slider-input--r {
     accent-color: red;
   }
 
-  .color-controls__slider-input--g {
+  .color-control__slider-input--g {
     accent-color: green;
   }
 
-  .color-controls__slider-input--b {
+  .color-control__slider-input--b {
     accent-color: blue;
   }
 

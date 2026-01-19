@@ -1,23 +1,37 @@
 import type { GameObj, InternalGameObjRaw } from "kaplay";
 import type { JSX } from "preact";
 import { stringify } from "./stringify";
-import { PositionControls } from "../components/position-controls";
-import { TextControls } from "../components/text-controls";
-import { SpriteControls } from "../components/sprite-controls";
-import { Color } from "../components/color-controls";
+import { TextControl } from "../components/text-control";
+import { SpriteControl } from "../components/sprite-control";
+import { ColorControl } from "../components/color-control";
 import { ChildObject } from "../components/child-object";
 import { isGameObj } from "./is-game-obj";
-import { AnchorControls } from "../components/anchor-controls";
+import { AnchorControl } from "../components/anchor-control";
+import { HpControl } from "../components/hp-control";
+import { NumberControl } from "../components/number-control";
+import { VectorControl } from "../components/vector-control";
+import { BlendControl } from "../components/blend-control";
 
 const componentMap: Record<
   string,
   (props: { obj: GameObj }) => JSX.Element | null
 > = {
-  pos: PositionControls,
-  text: TextControls,
-  sprite: SpriteControls,
-  color: Color,
-  anchor: AnchorControls,
+  text: TextControl,
+  sprite: SpriteControl,
+  color: ColorControl,
+  anchor: AnchorControl,
+  health: HpControl,
+  blend: BlendControl,
+  // Vectors
+  pos: ({ obj }) => <VectorControl obj={obj} property="pos" />,
+  scale: ({ obj }) => <VectorControl obj={obj} property="scale" step={0.1} />,
+  skew: ({ obj }) => <VectorControl obj={obj} property="skew" step={5} />,
+  // Numbers
+  opacity: ({ obj }) => (
+    <NumberControl obj={obj} property="opacity" step={0.1} />
+  ),
+  rotate: ({ obj }) => <NumberControl obj={obj} property="angle" step={5} />,
+  z: ({ obj }) => <NumberControl obj={obj} property="z" />,
 };
 
 export const inspectComps = (obj: GameObj) => {
