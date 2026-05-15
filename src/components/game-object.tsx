@@ -49,8 +49,10 @@ export const GameObject = ({
   const drawInspect = useCallback((obj: GameObj) => {
     if (!obj.hidden) {
       const updateController = k.onDraw(() => {
+        k.pushTransform();
         drawBoundingBox(obj);
         obj.drawInspect();
+        k.popTransform();
       });
       updateControllers.current.push(updateController);
     }
