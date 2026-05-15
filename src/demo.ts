@@ -155,6 +155,10 @@ const ship = k.add([
   }),
   k.health(5, 10),
   k.anchor("center"),
+  k.area({
+    isSensor: true,
+    shape: new k.Polygon([k.vec2(-8, 7), k.vec2(0, -11), k.vec2(8, 7)]),
+  }),
   {
     speed: 200,
     fire: () => {},

@@ -62,7 +62,7 @@ export const inspectComps = (obj: GameObj) => {
         // Commented out on purpose
         // For now, only the name of the component is shown,
         // until I try it out and figure if it would be useful to display the full component state
-        // value: stringify(comp),
+        // value: <pre>{stringify(comp)}</pre>,
       });
     }
   }
@@ -93,10 +93,17 @@ export const inspectComps = (obj: GameObj) => {
           value: value === null ? "null" : stringify(value),
         });
       } else {
-        data.push({
-          tag: key,
-          value,
-        });
+        if (typeof value === "number") {
+          data.push({
+            tag: key,
+            value: <NumberControl obj={obj} property={key} />,
+          });
+        } else {
+          data.push({
+            tag: key,
+            value,
+          });
+        }
       }
     }
   }

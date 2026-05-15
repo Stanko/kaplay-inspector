@@ -32,7 +32,7 @@ export const AnchorControl = ({ className = "", obj }: AnchorControlProps) => {
                       <label key={anchor}>
                         <input
                           type="radio"
-                          name="anchor"
+                          name={`anchor-${obj.id}`}
                           value={anchor}
                           checked={anchor === object.anchor}
                           onChange={() => (object.anchor = anchor)}
