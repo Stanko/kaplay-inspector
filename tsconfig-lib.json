@@ -5,16 +5,17 @@
     "declaration": true,
     "jsx": "react-jsx",
     "jsxImportSource": "preact",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "pretty": true,
     "resolveJsonModule": true,
     "strict": true,
-    "outDir": "dist",
+    "outDir": "./dist",
     "target": "ES2022",
     "useDefineForClassFields": true,
     "module": "ESNext",
-    "lib": ["ES2022", "DOM", "DOM.Iterable"]
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "rootDir": "./src",
   },
   "exclude": ["node_modules", "dist"],
-  "include": ["src/init.tsx"]
+  "include": ["src/init.tsx"],
 }
