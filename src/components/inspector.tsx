@@ -5,6 +5,7 @@ import { useObjectBoolean } from "./boolean-comp";
 import type { GameObj } from "kaplay";
 import { SearchResults } from "./search-results";
 import { k } from "../k";
+import { Recorder } from "./recorder";
 
 export interface InspectorProps extends InspectorOptions {}
 
@@ -111,6 +112,8 @@ export const Inspector = ({
           />
           Draw bbox on hover
         </label>
+        &bull;
+        <Recorder />
         <button class="ki-btn k-inspector__hide" onClick={toggleVisibility}>
           Hide
         </button>
