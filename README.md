@@ -22,6 +22,7 @@ Check the demo: [muffinman.io/kaplay-inspector/](https://muffinman.io/kaplay-ins
 - Pause objects
 - Hide objects
 - Search for tags or comps
+- Record video of the game
 - Dark theme (is this a feature?)
 
 The layout is made with desktop in mind. That said, it is somewhat usable on phones.

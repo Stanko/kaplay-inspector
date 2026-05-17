@@ -50,7 +50,7 @@ export const recorder = () => {
 
     const a = document.createElement("a");
     a.href = URL.createObjectURL(blob);
-    a.download = `${k.getSceneName()} (${new Date().toLocaleDateString("en-US")}).webm`;
+    a.download = `${k.getSceneName() || "kaplay"} (${new Date().toLocaleDateString("en-US")}).webm`;
     a.click();
 
     k._k.audio.masterNode.disconnect(audioDest);
