@@ -1,4 +1,5 @@
 import type { GameObj } from "kaplay";
+import { k } from "../k";
 import { getObjectInfo } from "../lib/get-object-info";
 
 interface BreadcrumbsProps {
@@ -25,15 +26,15 @@ export const Breadcrumbs = ({ obj, setRenderRoot }: BreadcrumbsProps) => {
   }
 
   // TODO for destroyed objects always add root as a breadcrumb
-  // if (breadcrumbs.length === 0) {
-  //   const root = k.getTreeRoot()
-  //   breadcrumbs.push({
-  //     id: root.id,
-  //     tags: root.tags,
-  //     compsLabel: root.compsLabel,
-  //     object: root,
-  //   });
-  // }
+  if (breadcrumbs.length === 0) {
+    const root = k.getTreeRoot();
+    breadcrumbs.push({
+      id: root.id,
+      tags: root.tags,
+      compsLabel: root.compsLabel,
+      object: root,
+    });
+  }
 
   return (
     <div class="breadcrumbs">
