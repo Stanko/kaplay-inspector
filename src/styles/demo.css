@@ -23,6 +23,7 @@ canvas {
   max-width: 60rem;
   height: auto !important;
   width: 100% !important;
+  image-rendering: pixelated;
 }
 
 main {
