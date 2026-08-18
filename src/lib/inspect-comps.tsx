@@ -42,14 +42,12 @@ const inferPropertyControl = (obj: GameObj, property: string, value: any) => {
     return null;
   }
 
-  if (property === null) {
-    return "null";
+  if (typeof value === "function") {
+    return null;
   }
 
-  if (typeof value === "function") {
-    // TODO try adding a button to invoke the function
-    // return "function";
-    return null;
+  if (property === null) {
+    return "null";
   }
 
   if (typeof value === "string") {

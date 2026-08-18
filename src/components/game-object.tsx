@@ -36,9 +36,6 @@ export const GameObject = ({
   const hasSize =
     typeof obj.width === "number" && typeof obj.height === "number";
 
-  const isDrawController =
-    compsData.length === 1 && compsData[0].tag === "draw";
-
   const isInspecting = isRenderRoot && obj.id !== 0;
 
   const cancelUpdateControllers = useCallback(() => {
@@ -75,10 +72,8 @@ export const GameObject = ({
     }
   };
 
-  // In Kaplay, onDraw and onUpdate are also game objects
-  // For now, I disabled displaying draw objects,
-  // mostly because inspector is adding them on hover, making the list jump around
-  if (isDrawController) {
+  // Skip drawing if there are no components to inspect
+  if (compsData.length === 0) {
     return null;
   }
 

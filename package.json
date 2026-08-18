@@ -24,13 +24,13 @@
     "kaplay": "^4000.0.0-alpha.26"
   },
   "dependencies": {
-    "preact": "^10.29.1"
+    "preact": "^10.29.8"
   },
   "devDependencies": {
-    "@preact/preset-vite": "^2.10.5",
-    "@types/node": "^25.8.0",
-    "typescript": "~6.0.3",
-    "vite": "^8.0.13",
+    "@preact/preset-vite": "^2.10.6",
+    "@types/node": "^26.2.0",
+    "typescript": "~7.0.2",
+    "vite": "^8.2.1",
     "kaplay": "^4000.0.0-alpha.26"
   },
   "repository": {
