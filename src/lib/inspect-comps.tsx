@@ -1,4 +1,4 @@
-import type { GameObj, InternalGameObjRaw } from "kaplay";
+import type { Comp, GameObj, InternalGameObjRaw } from "kaplay";
 import type { JSX } from "preact";
 import { stringify } from "./stringify";
 import { TextControl } from "../components/text-control";
@@ -11,6 +11,7 @@ import { HpControl } from "../components/hp-control";
 import { NumberControl } from "../components/number-control";
 import { VectorControl } from "../components/vector-control";
 import { BlendControl } from "../components/blend-control";
+import { BooleanControl } from "../components/boolean-comp";
 
 const componentMap: Record<
   string,
@@ -34,12 +35,77 @@ const componentMap: Record<
   z: ({ obj }) => <NumberControl obj={obj} property="z" />,
 };
 
+const PROPS_TO_SKIP = ["id", "require"];
+
+const inferPropertyControl = (obj: GameObj, property: string, value: any) => {
+  if (PROPS_TO_SKIP.includes(property)) {
+    return null;
+  }
+
+  if (property === null) {
+    return "null";
+  }
+
+  if (typeof value === "function") {
+    // TODO try adding a button to invoke the function
+    // return "function";
+    return null;
+  }
+
+  if (typeof value === "string") {
+    return <TextControl obj={obj} property={property} />;
+  }
+
+  if (typeof value === "boolean") {
+    return <BooleanControl obj={obj} property={property} />;
+  }
+
+  if (typeof value === "number") {
+    return <NumberControl obj={obj} property={property} />;
+  }
+
+  if (isGameObj(value)) {
+    return <ChildObject obj={value} />;
+  }
+
+  if (
+    // TODO write better check for vectors
+    typeof value === "object" &&
+    typeof value.x === "number" &&
+    typeof value.y === "number"
+  ) {
+    return <VectorControl obj={obj} property={property} inPlace />;
+  }
+
+  if (typeof value === "object") {
+    return stringify(value);
+  }
+
+  return value;
+};
+
+const getControls = (comp: Comp, obj: GameObj) => {
+  return Object.entries(comp)
+    .map(([key, value]) => {
+      const control = inferPropertyControl(obj, key, value);
+      if (control) {
+        return {
+          tag: key,
+          value: control,
+        };
+      }
+      return null;
+    })
+    .filter((item) => item !== null);
+};
+
 export const inspectComps = (obj: GameObj) => {
   const object = obj as InternalGameObjRaw;
 
   const data: { tag: string; value?: string | JSX.Element | null }[] = [];
 
   for (const [tag, comp] of object._compStates) {
+    // Explicitely defined components for kaplay native components
     if (componentMap[tag]) {
       const CompComponent = componentMap[tag];
       data.push({
@@ -57,13 +123,26 @@ export const inspectComps = (obj: GameObj) => {
         value: value ? value.replace(`${tag}: `, "") : "",
       });
     } else {
-      data.push({
-        tag,
-        // Commented out on purpose
-        // For now, only the name of the component is shown,
-        // until I try it out and figure if it would be useful to display the full component state
-        // value: <pre>{stringify(comp)}</pre>,
-      });
+      const controls = getControls(comp, obj);
+
+      if (controls.length === 0) {
+        continue;
+      }
+
+      if (controls.length === 1) {
+        // When there is only one property, display it using the component name as the label
+        data.push(controls[0]);
+      } else {
+        // If there are more, display the component name as a title and list each property
+        data.push({ tag });
+
+        for (const control of controls) {
+          data.push({
+            tag: `- ${control.tag}`,
+            value: control.value,
+          });
+        }
+      }
     }
   }
 
@@ -76,37 +155,8 @@ export const inspectComps = (obj: GameObj) => {
       continue;
     }
 
-    for (const [key, value] of Object.entries(comp)) {
-      if (typeof value === "function") {
-        data.push({
-          tag: key,
-          value: "function",
-        });
-      } else if (isGameObj(value)) {
-        data.push({
-          tag: key,
-          value: <ChildObject obj={value} />,
-        });
-      } else if (typeof value === "object") {
-        data.push({
-          tag: key,
-          value: value === null ? "null" : stringify(value),
-        });
-      } else {
-        if (typeof value === "number") {
-          data.push({
-            tag: key,
-            value: <NumberControl obj={obj} property={key} />,
-          });
-        } else {
-          data.push({
-            tag: key,
-            value,
-          });
-        }
-      }
-    }
+    data.push(...getControls(comp, obj));
   }
 
-  return data.sort((a, b) => a.tag.localeCompare(b.tag));
+  return data;
 };

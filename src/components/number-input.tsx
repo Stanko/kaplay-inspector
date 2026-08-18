@@ -78,6 +78,7 @@ export const NumberInput = ({
         class={cx("ki-input", {
           "ki-input--error": error,
         })}
+        type="number"
         value={localValue}
         onInput={handleInput}
         onFocus={() => setIsFocused(true)}

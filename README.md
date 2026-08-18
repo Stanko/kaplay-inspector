@@ -9,7 +9,7 @@ Check the demo: [muffinman.io/kaplay-inspector/](https://muffinman.io/kaplay-ins
 ## Features
 
 - Navigate the game object tree
-- Updates every 100ms (configurable) 
+- Updates every 100ms (configurable)
 - Hover an object to draw it's area, anchor and bounding box
 - Inspect object's component and custom props
 - Log an object to console
@@ -45,7 +45,7 @@ You'll need to import the CSS and `init` method, here is an example using vite:
 import kaplay from "kaplay";
 
 // Init you kaplay game
-const k = kaplay({})
+const k = kaplay({});
 
 if (
   // Make sure to load it only in development mode
@@ -65,7 +65,7 @@ if (
 If typescript is complaining about importing CSS files, you probably need to add this to `declaration.d.ts` file in you project's root.
 
 ```ts
-declare module '*.scss';
+declare module "*.scss";
 ```
 
 ### Options
@@ -74,8 +74,8 @@ You can pass options object to the init method as a second parameter:
 
 ```ts
 init(k, {
-  updateTimeout: 100,
-})
+  initUpdateTimeout: 100,
+});
 ```
 
 available options are:
@@ -83,13 +83,13 @@ available options are:
 ```ts
 interface InspectorOptions {
   // CSS class to add to the root element
-  className?: string; 
+  className?: string;
   // is inspector visible on load, default: true
-  isVisible?: boolean; 
+  isVisibleOnLoad?: boolean;
   // default update time in milliseconds, default: 250
-  initUpdateTimeout?: number; 
+  initUpdateTimeout?: number;
   // should area, anchor and bounding box be drawn on object hover, default: true
-  shouldDrawInspect?: boolean: 
+  initDrawInspectOnHover?: boolean;
 }
 ```
 
@@ -107,7 +107,6 @@ Kaplay Inspector defines colors in [OKLCH color space](https://developer.mozilla
 Please note that if you load inspector's CSS dynamically, you'll have to add a custom class to create a higher specificity selector.
 
 If you want to change other colors as well, check the [styles.css](./src/styles/styles.css).
-
 
 ## Positioning
 
@@ -139,5 +138,9 @@ Same as with colors, be sure to have a higher specificity selector if inspector'
 
 ## TODO
 
-* [ ] Controllable theme - system/light/dark. At the moment it is always matching the system.
-* [ ] Persist search/options in URL or local storage
+- [ ] Controllable theme - system/light/dark. At the moment it is always matching the system.
+- [ ] Persist search/options in URL or local storage
+- [ ] Mouse inspect
+- [ ] Draw bounding box on top of everything
+- [ ] Persist is visible in local storage
+- [ ] Try infering function control

@@ -1,5 +1,6 @@
 import type { GameObj } from "kaplay";
 import { useEffect, useState } from "preact/hooks";
+import { cx } from "../lib/cx";
 
 type CheckboxCompProps = {
   obj: GameObj;
@@ -24,9 +25,35 @@ export const useObjectBoolean = (obj: GameObj, propName: string) => {
   };
 };
 
+export interface BooleanControlProps {
+  className?: string;
+  id?: string;
+  obj: GameObj;
+  property: string;
+}
+
+export const BooleanControl = ({
+  className = "",
+  id,
+  obj,
+  property,
+}: BooleanControlProps) => {
+  const { checked, onChange } = useObjectBoolean(obj, property);
+
+  return (
+    <input
+      class={cx(className, "boolean-control")}
+      id={id}
+      type="checkbox"
+      aria-label={property}
+      checked={checked}
+      onChange={(e) => onChange((e.target as HTMLInputElement).checked)}
+    />
+  );
+};
+
 export const BooleanComp = ({ obj, propName }: CheckboxCompProps) => {
   const id = `${propName}-${obj.id}`;
-  const { checked, onChange } = useObjectBoolean(obj, propName);
 
   return (
     <div class="game-object__comps-row">
@@ -34,12 +61,7 @@ export const BooleanComp = ({ obj, propName }: CheckboxCompProps) => {
         <b>{propName}</b>
       </label>
       <div>
-        <input
-          id={id}
-          type="checkbox"
-          checked={checked}
-          onChange={(e) => onChange((e.target as HTMLInputElement).checked)}
-        />
+        <BooleanControl id={id} obj={obj} property={propName} />
       </div>
     </div>
   );

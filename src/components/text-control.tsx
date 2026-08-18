@@ -2,22 +2,22 @@ import type { GameObj } from "kaplay";
 import { TextInput } from "./text-input";
 
 export interface TextControlProps {
-  className?: string;
   obj: GameObj;
+  property?: string;
 }
 
-export const TextControl = ({ obj }: TextControlProps) => {
-  if (typeof obj.text !== "string") {
+export const TextControl = ({ obj, property = "text" }: TextControlProps) => {
+  if (typeof obj[property] !== "string") {
     return null;
   }
 
   return (
-    <div class="text-control">
+    <div class={"text-control"}>
       <TextInput
         className="text-control__input ki-input"
         placeholder="Enter text"
-        value={obj.text}
-        onChange={(text) => (obj.text = text)}
+        value={obj[property]}
+        onChange={(text) => (obj[property] = text)}
       />
     </div>
   );

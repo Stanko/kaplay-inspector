@@ -7,6 +7,11 @@ export interface VectorControlProps {
   obj: Record<string, any>;
   property: string;
   step?: number;
+  // This is primarily for pos/scale/skew,
+  // because kaplay doesn't needs a whole new object to update these properties
+  // It is already fixed in Kaplay, but it is not yet released
+  // TODO: remove inPlace prop when it is fixed in Kaplay
+  inPlace?: boolean;
 }
 
 export const VectorControl = ({
@@ -14,6 +19,7 @@ export const VectorControl = ({
   obj,
   property,
   step,
+  inPlace = false,
 }: VectorControlProps) => {
   if (obj[property] === undefined) {
     return null;
@@ -26,14 +32,26 @@ export const VectorControl = ({
         className="vector-control__x-input"
         obj={obj[property]}
         property="x"
-        onChange={(x) => (obj[property] = k.vec2(x, obj[property].y))}
+        onChange={(x) => {
+          if (inPlace) {
+            obj[property].x = x;
+          } else {
+            obj[property] = k.vec2(x, obj[property].y);
+          }
+        }}
         step={step}
       />
       y:{" "}
       <NumberInput
         obj={obj[property]}
         property="y"
-        onChange={(y) => (obj[property] = k.vec2(obj[property].x, y))}
+        onChange={(y) => {
+          if (inPlace) {
+            obj[property].y = y;
+          } else {
+            obj[property] = k.vec2(obj[property].x, y);
+          }
+        }}
         step={step}
       />
     </div>
