@@ -51,6 +51,13 @@ export const recorder = () => {
     }
   };
 
+  const cleanup = () => {
+    k._k.audio.masterNode.disconnect(audioDest);
+    stream.getTracks().forEach((track) => track.stop());
+  };
+
+  recorder.onerror = cleanup;
+
   recorder.onstop = () => {
     const blob = new Blob(chunks, { type: recorder.mimeType });
 
@@ -59,9 +66,7 @@ export const recorder = () => {
     a.download = `${k.getSceneName() || "kaplay"} (${new Date().toLocaleDateString("en-US")}).webm`;
     a.click();
     setTimeout(() => URL.revokeObjectURL(a.href), 0);
-
-    k._k.audio.masterNode.disconnect(audioDest);
-    canvasStream.getTracks().forEach((t) => t.stop());
+    cleanup();
   };
 
   return recorder;

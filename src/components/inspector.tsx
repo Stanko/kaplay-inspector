@@ -54,8 +54,14 @@ export const Inspector = ({
   };
 
   const handleSearchInput = (e: Event) => {
-    const term = (e.target as HTMLInputElement).value;
+    const term = (e.target as HTMLInputElement).value.trim();
     setSearchTerm(term);
+
+    if (term === "") {
+      setSearchResults([]);
+      return;
+    }
+
     clearTimeout(typingTimeout.current);
     typingTimeout.current = setTimeout(() => {
       search(term);

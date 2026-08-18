@@ -18,7 +18,8 @@
     "build": "tsc -b && rm -rf ./docs && vite build && touch ./docs/.nojekyll",
     "build-lib": "rm -rf ./dist && tsc -p ./tsconfig-lib.json && npm run copy-css",
     "prepare": "cp ./pre-commit ./.git/hooks/pre-commit && chmod +x ./.git/hooks/pre-commit",
-    "prepublish": "npm run build-lib"
+    "prepublish": "npm run build-lib",
+    "check": "tsc --noEmit"
   },
   "peerDependencies": {
     "kaplay": "^4000.0.0-alpha.26"
@@ -29,9 +30,9 @@
   "devDependencies": {
     "@preact/preset-vite": "^2.10.6",
     "@types/node": "^26.2.0",
-    "typescript": "~7.0.2",
-    "vite": "^8.2.1",
-    "kaplay": "^4000.0.0-alpha.26"
+    "kaplay": "^4000.0.0-alpha.26",
+    "typescript": "^6.0.3",
+    "vite": "^8.2.1"
   },
   "repository": {
     "type": "git",
