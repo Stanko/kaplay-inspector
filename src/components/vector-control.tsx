@@ -10,7 +10,7 @@ export interface VectorControlProps {
   // This is primarily for pos/scale/skew,
   // because kaplay doesn't needs a whole new object to update these properties
   // It is already fixed in Kaplay, but it is not yet released
-  // TODO: remove inPlace prop when it is fixed in Kaplay
+  // TODO: remove inPlace prop when it is changed in Kaplay
   inPlace?: boolean;
 }
 

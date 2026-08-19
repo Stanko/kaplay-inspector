@@ -7,7 +7,7 @@ export interface SearchResultsProps {
 
 export const SearchResults = ({ results }: SearchResultsProps) => {
   if (results.length === 0) {
-    return <div>No results found.</div>;
+    return <div class="search__no-results">No results found.</div>;
   }
 
   return (

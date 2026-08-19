@@ -145,8 +145,8 @@ Same as with colors, be sure to have a higher specificity selector if inspector'
 
 ## TODO
 
-- [ ] Add clear button on search
 - [ ] Nested game objects
+- [x] Add clear button on search
 - [x] Controllable theme - system/light/dark. At the moment it is always matching the system.
 - [x] On scene change live search doesn't work
 - [x] Mouse inspect

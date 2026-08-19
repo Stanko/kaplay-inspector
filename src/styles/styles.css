@@ -22,9 +22,17 @@
     oklch(0.62 0.2 var(--ki-h) / 0.1),
     oklch(0.7 0.15 var(--ki-h) / 0.1)
   );
+  --ki-primary-extra-light: light-dark(
+    oklch(0.62 0.2 var(--ki-h) / 0.05),
+    oklch(0.7 0.15 var(--ki-h) / 0.05)
+  );
   --ki-secondary: light-dark(
     oklch(0.62 0.2 var(--ki-h-secondary)),
     oklch(0.7 0.15 var(--ki-h-secondary))
+  );
+  --ki-secondary-extra-light: light-dark(
+    oklch(0.62 0.2 var(--ki-h-secondary) / 0.05),
+    oklch(0.7 0.15 var(--ki-h-secondary) / 0.05)
   );
 
   &.k-inspector--light {
@@ -46,17 +54,17 @@
   background-color: var(--ki-bg);
   color: var(--ki-fg);
   max-height: 45vh;
-  overflow: auto;
+  overflow: hidden;
   font-family:
     ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, Consolas,
     "DejaVu Sans Mono", monospace;
   font-size: 0.875rem;
-  scrollbar-width: thin;
-  scrollbar-color: var(--ki-border) transparent;
   box-sizing: border-box;
   padding: 0;
   margin: 0;
   line-height: 1.2;
+  display: grid;
+  align-content: flex-start;
 
   * {
     box-sizing: border-box;
@@ -176,7 +184,10 @@
   }
 
   .k-inspector__objects {
-    padding: 0.5rem;
+    padding: 0 0.5rem;
+    overflow: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--ki-border) transparent;
   }
 
   .k-inspector__hide {
@@ -253,11 +264,23 @@
     border-radius: 50%;
   }
 
+  /* Search  results*/
+
+  .search__no-results {
+    padding: 1rem 0.5rem;
+    line-height: 1;
+    font-weight: 500;
+  }
+
   /* Game object */
 
   .game-object {
     transition: background 500ms;
     position: relative;
+  }
+
+  .game-object--root {
+    margin: 0.5rem 0;
   }
 
   .game-object .game-object {
@@ -296,6 +319,13 @@
 
   /* Header */
 
+  .game-object__sticky-header {
+    position: sticky;
+    z-index: 1;
+    top: 0;
+    background-color: var(--ki-bg);
+  }
+
   .game-object__header {
     position: relative;
     display: flex;
@@ -307,11 +337,6 @@
     width: calc(100% + 0.25rem);
     border-radius: 4px;
     outline-offset: 0;
-    position: sticky;
-    /* TODO add sticky header and sticky side buttons */
-    /*z-index: 1;
-    top: 2.625rem;
-    background-color: var(--ki-bg);*/
 
     svg rect {
       fill: var(--ki-bg);
@@ -320,6 +345,13 @@
 
   .game-object__header:hover {
     background-color: var(--ki-primary-light);
+  }
+
+  .game-object__header--expanded {
+    background-color: var(--ki-primary-extra-light);
+  }
+  .game-object__header--expanded:has(.game-object__comp-names) {
+    background-color: var(--ki-secondary-extra-light);
   }
 
   .game-object__header::before {

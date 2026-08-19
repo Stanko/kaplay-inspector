@@ -68,44 +68,52 @@ export const GameObject = ({
         onMouseEnter={handleMouseEnter}
         onMouseLeave={cleanup}
       >
-        <button
-          class={cx("game-object__header", {
-            "game-object__header--expandable": showExpandTree,
-          })}
-          onClick={handleToggleClick}
-        >
-          {isExpanded ? (
-            <MinusIcon className="game-object__expand-icon" />
-          ) : (
-            <PlusIcon className="game-object__expand-icon" />
-          )}
-          <div class="game-object__id">ID {obj.id}:</div>
-          {tags ? (
-            <div class="game-object__tags">{isRootObject ? "Root" : tags}</div>
-          ) : (
-            <div class="game-object__comp-names">{compsLabel}</div>
-          )}
-          {obj.children.length > 0 && <div>({obj.children.length})</div>}
+        <div class="game-object__sticky-header">
+          <button
+            class={cx("game-object__header", {
+              "game-object__header--expandable": showExpandTree,
+              "game-object__header--expanded": isExpanded,
+            })}
+            onClick={handleToggleClick}
+          >
+            {isExpanded ? (
+              <MinusIcon className="game-object__expand-icon" />
+            ) : (
+              <PlusIcon className="game-object__expand-icon" />
+            )}
+            <div class="game-object__id">ID {obj.id}:</div>
+            {tags ? (
+              <div class="game-object__tags">
+                {isRootObject ? "Root" : tags}
+              </div>
+            ) : (
+              <div class="game-object__comp-names">{compsLabel}</div>
+            )}
+            {obj.children.length > 0 && <div>({obj.children.length})</div>}
 
-          {isObjectDestroyed && (
-            <div class="game-object__destroyed">DESTROYED</div>
-          )}
-        </button>
-
-        <div class="game-object__buttons">
-          {!isRenderRoot && (
-            <>
-              <button class="ki-btn ki-btn--red" onClick={() => obj.destroy()}>
-                destroy
-              </button>
-              <button class="ki-btn" onClick={() => setRoot(obj)}>
-                inspect
-              </button>
-            </>
-          )}
-          <button class="ki-btn " onClick={() => console.log(obj)}>
-            log
+            {isObjectDestroyed && (
+              <div class="game-object__destroyed">DESTROYED</div>
+            )}
           </button>
+
+          <div class="game-object__buttons">
+            {!isRenderRoot && (
+              <>
+                <button
+                  class="ki-btn ki-btn--red"
+                  onClick={() => obj.destroy()}
+                >
+                  destroy
+                </button>
+                <button class="ki-btn" onClick={() => setRoot(obj)}>
+                  inspect
+                </button>
+              </>
+            )}
+            <button class="ki-btn " onClick={() => console.log(obj)}>
+              log
+            </button>
+          </div>
         </div>
 
         {isExpanded && (

@@ -178,6 +178,7 @@ export const Inspector = ({
         <div class="ki-separator" />
         <label>
           <input
+            disabled={shouldMouseInspect}
             type="checkbox"
             checked={shouldDrawInspect}
             onChange={() => setShouldDrawInspect(!shouldDrawInspect)}
