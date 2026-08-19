@@ -1,0 +1,64 @@
+import { useEffect } from "preact/hooks";
+import { useApp } from "../lib/app-context";
+import { useInspector } from "./inspector-context";
+import { SquareMousePointer } from "lucide-preact";
+
+export const MouseInspect = () => {
+  const { k, setRoot, isMouseInspectActive, setMouseInspectActive } = useApp();
+  const { setInspectObject } = useInspector();
+
+  useEffect(() => {
+    if (!isMouseInspectActive) {
+      return;
+    }
+
+    const getHoveredObject = () =>
+      k
+        .get("*", { recursive: true })
+        .find((obj) => obj.has("area") && obj.isHovering());
+
+    const drawController = k.onDraw(() => {
+      setInspectObject(getHoveredObject() ?? null);
+    });
+
+    const clickController = k.onMousePress("left", () => {
+      const obj = getHoveredObject();
+
+      if (obj) {
+        setRoot(obj);
+        setMouseInspectActive(false);
+      }
+    });
+
+    const sceneChangeController = k.onSceneLeave(() => {
+      setMouseInspectActive(false);
+      cleanup();
+    });
+
+    const cleanup = () => {
+      sceneChangeController.cancel();
+      drawController.cancel();
+      clickController.cancel();
+      setInspectObject(null);
+    };
+
+    return cleanup;
+  }, [
+    isMouseInspectActive,
+    k,
+    setInspectObject,
+    setMouseInspectActive,
+    setRoot,
+  ]);
+
+  return (
+    <label>
+      <input
+        type="checkbox"
+        checked={isMouseInspectActive}
+        onChange={() => setMouseInspectActive(!isMouseInspectActive)}
+      />
+      <SquareMousePointer />
+    </label>
+  );
+};

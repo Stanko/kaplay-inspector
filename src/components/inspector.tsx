@@ -6,12 +6,12 @@ import { Recorder } from "./recorder";
 import { getFpsColor } from "../lib/get-fps-color";
 import { InspectorContext } from "./inspector-context";
 import { useInspectOverlay } from "../hooks/use-inspect-overlay";
-import { useMouseInspect } from "../hooks/use-mouse-inspect";
 import { Textures } from "./textures";
 import { useApp } from "../lib/app-context";
 import { DrawBBox } from "./draw-bb-box";
 import { Search } from "./search";
 import { UpdateInterval } from "./update-interval";
+import { MouseInspect } from "./mouse-inspect";
 
 export const Inspector = () => {
   const {
@@ -31,13 +31,6 @@ export const Inspector = () => {
   const { setInspectObject, clearInspectObject } = useInspectOverlay(
     k,
     isDrawBBoxActive,
-  );
-
-  // Mouse click inspecting
-  const { shouldMouseInspect, setShouldMouseInspect } = useMouseInspect(
-    k,
-    setInspectObject,
-    setRoot,
   );
 
   // Game root paused state
@@ -88,16 +81,9 @@ export const Inspector = () => {
         <div class="ki-separator" />
         <UpdateInterval />
         <div class="ki-separator" />
-        <DrawBBox disabled={shouldMouseInspect} />
+        <DrawBBox />
         <div class="ki-separator" />
-        <label>
-          <input
-            type="checkbox"
-            checked={shouldMouseInspect}
-            onChange={() => setShouldMouseInspect(!shouldMouseInspect)}
-          />
-          Mouse inspect
-        </label>
+        <MouseInspect />
         <div class="ki-separator" />
         <Recorder />
         <Textures />

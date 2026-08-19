@@ -26,7 +26,7 @@ export const App = ({ k }: AppProps) => {
     hoveredObject: null,
     // Inspector state
     updateInterval: 250,
-    isVisible: false,
+    isVisible: true,
     isDrawBBoxActive: true,
     isMouseInspectActive: false,
     // Search
@@ -85,6 +85,13 @@ export const App = ({ k }: AppProps) => {
     [setAppState],
   );
 
+  const setMouseInspectActive = useCallback(
+    (value: boolean) => {
+      setAppState({ isMouseInspectActive: value });
+    },
+    [setAppState],
+  );
+
   const contextValue = useMemo(
     () => ({
       k,
@@ -95,6 +102,7 @@ export const App = ({ k }: AppProps) => {
       setSearchInputValue,
       setUpdateInterval,
       setDrawBBoxActive,
+      setMouseInspectActive,
       // State
       searchQuery,
       ...appState,
@@ -107,6 +115,7 @@ export const App = ({ k }: AppProps) => {
       setSearchInputValue,
       setUpdateInterval,
       setDrawBBoxActive,
+      setMouseInspectActive,
       appState,
     ],
   );

@@ -1,16 +1,16 @@
 import { useApp } from "../lib/app-context";
 
-interface DrawBBoxProps {
-  disabled?: boolean;
-}
-
-export const DrawBBox = ({ disabled = false }: DrawBBoxProps) => {
-  const { isDrawBBoxActive, setDrawBBoxActive } = useApp();
+export const DrawBBox = () => {
+  const {
+    isDrawBBoxActive,
+    isMouseInspectActive,
+    setDrawBBoxActive,
+  } = useApp();
 
   return (
     <label>
       <input
-        disabled={disabled}
+        disabled={isMouseInspectActive}
         type="checkbox"
         checked={isDrawBBoxActive}
         onChange={() => setDrawBBoxActive(!isDrawBBoxActive)}

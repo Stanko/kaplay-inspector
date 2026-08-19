@@ -25,6 +25,7 @@
     "kaplay": "^4000.0.0-alpha.27.1"
   },
   "dependencies": {
+    "lucide-preact": "^1.33.0",
     "preact": "^10.29.8"
   },
   "devDependencies": {

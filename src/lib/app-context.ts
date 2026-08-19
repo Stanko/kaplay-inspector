@@ -23,6 +23,7 @@ interface AppContextValue extends AppState {
   setSearchInputValue: (value: string) => void;
   setUpdateInterval: (value: number) => void;
   setDrawBBoxActive: (value: boolean) => void;
+  setMouseInspectActive: (value: boolean) => void;
 }
 
 export const AppContext = createContext<AppContextValue | null>(null);
