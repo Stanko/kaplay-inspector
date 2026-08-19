@@ -9,6 +9,10 @@ const isFixed = (obj: GameObj): boolean => {
   return Boolean(obj.fixed) || Boolean(obj.parent && isFixed(obj.parent));
 };
 
+const isHidden = (obj: GameObj): boolean => {
+  return Boolean(obj.hidden) || Boolean(obj.parent && isHidden(obj.parent));
+};
+
 const isDrawnAtOrAbove = (obj: GameObj, other: GameObj): boolean => {
   const layerDifference =
     (obj._drawLayerIndex ?? 0) - (other._drawLayerIndex ?? 0);
@@ -73,6 +77,10 @@ export const MouseInspect = () => {
       let hoveredObjectPriority = -1;
 
       for (const obj of k.get("*", { recursive: true })) {
+        if (isHidden(obj)) {
+          continue;
+        }
+
         const hasArea = obj.has("area");
         const isHovering = hasArea
           ? obj.isHovering()
