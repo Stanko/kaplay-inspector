@@ -7,6 +7,8 @@ export interface InspectorOptions {
   initDrawInspectOnHover?: boolean;
   isVisibleOnLoad?: boolean;
   className?: string;
+  saveVisibleState?: boolean;
+  saveSearch?: boolean;
 }
 
 export default function init(k: KAPLAYCtxType, props: InspectorOptions = {}) {
@@ -15,6 +17,8 @@ export default function init(k: KAPLAYCtxType, props: InspectorOptions = {}) {
     initUpdateTimeout = 250,
     isVisibleOnLoad = true,
     initDrawInspectOnHover = true,
+    saveVisibleState = false,
+    saveSearch = true,
   } = props;
 
   // Set kaplay context to be imported directly from components to reduce prop drilling
@@ -30,6 +34,8 @@ export default function init(k: KAPLAYCtxType, props: InspectorOptions = {}) {
       initUpdateTimeout={initUpdateTimeout}
       isVisibleOnLoad={isVisibleOnLoad}
       initDrawInspectOnHover={initDrawInspectOnHover}
+      saveVisibleState={saveVisibleState}
+      saveSearch={saveSearch}
     />,
     appElement,
   );

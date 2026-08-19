@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "preact/hooks";
+import { useCallback, useEffect, useRef, useState } from "preact/hooks";
 import type { InspectorOptions } from "../init";
 import { GameObject } from "./game-object";
 import { useObjectBoolean } from "./boolean-comp";
@@ -6,6 +6,7 @@ import type { GameObj } from "kaplay";
 import { SearchResults } from "./search-results";
 import { k } from "../k";
 import { Recorder } from "./recorder";
+import { getFpsColor } from "../lib/get-fps-color";
 
 export interface InspectorProps extends InspectorOptions {}
 
@@ -18,21 +19,62 @@ const INTERVAL_OPTIONS = [
 
 const TYPING_TIMEOUT = 250;
 
+const LS_VISIBLE_STATE = "ki__is-visible";
+const LS_SEARCH_TERM = "ki__search-term";
+
 export const Inspector = ({
   initUpdateTimeout = 250,
   isVisibleOnLoad = true,
   initDrawInspectOnHover = true,
+  saveVisibleState = false,
+  saveSearch = true,
 }: InspectorProps) => {
+  const savedVisibleState = saveVisibleState
+    ? localStorage.getItem(LS_VISIBLE_STATE)
+    : null;
+  const isVisibleInit =
+    savedVisibleState === null ? isVisibleOnLoad : savedVisibleState === "true";
+
+  const savedSearchTerm = saveSearch
+    ? localStorage.getItem(LS_SEARCH_TERM)
+    : null;
+  const searchTermInit = savedSearchTerm || "";
   const [updateTimeout, setUpdateTimeout] = useState(initUpdateTimeout);
   const [shouldDrawInspect, setShouldDrawInspect] = useState(
     initDrawInspectOnHover,
   );
-  const [root, setRoot] = useState(k.getTreeRoot());
+  const [root, setRootHook] = useState(k.getTreeRoot());
   const [renderIndex, setRenderIndex] = useState(0);
-  const [isVisible, setIsVisible] = useState(isVisibleOnLoad);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [isVisible, setIsVisibleHook] = useState(isVisibleInit);
+  const [searchTerm, setSearchTermHook] = useState(searchTermInit);
   const [searchResults, setSearchResults] = useState<GameObj[]>([]);
   const typingTimeout = useRef<ReturnType<typeof setTimeout>>();
+  const searchQuery = searchTerm.trim();
+
+  const setRoot = useCallback((value: GameObj) => {
+    setSearchTerm("");
+    setRootHook(value);
+  }, []);
+
+  const setIsVisible = useCallback(
+    (value: boolean) => {
+      setIsVisibleHook(value);
+      if (saveVisibleState) {
+        localStorage.setItem(LS_VISIBLE_STATE, value.toString());
+      }
+    },
+    [saveVisibleState],
+  );
+
+  const setSearchTerm = useCallback(
+    (value: string) => {
+      setSearchTermHook(value);
+      if (saveSearch) {
+        localStorage.setItem(LS_SEARCH_TERM, value);
+      }
+    },
+    [saveSearch],
+  );
 
   const paused = useObjectBoolean(k.getTreeRoot(), "paused");
 
@@ -49,23 +91,23 @@ export const Inspector = ({
     setIsVisible(!isVisible);
   };
 
-  const search = (term: string) => {
-    setSearchResults(k.get(term, { recursive: true, liveUpdate: true }));
-  };
+  useEffect(() => {
+    clearTimeout(typingTimeout.current);
 
-  const handleSearchInput = (e: Event) => {
-    const term = (e.target as HTMLInputElement).value.trim();
-    setSearchTerm(term);
-
-    if (term === "") {
+    if (searchQuery === "") {
       setSearchResults([]);
       return;
     }
 
-    clearTimeout(typingTimeout.current);
     typingTimeout.current = setTimeout(() => {
-      search(term);
+      setSearchResults(
+        k.get(searchQuery, { recursive: true, liveUpdate: true }),
+      );
     }, TYPING_TIMEOUT);
+  }, [searchQuery]);
+
+  const handleSearchInput = (e: Event) => {
+    setSearchTerm((e.target as HTMLInputElement).value);
   };
 
   if (!isVisible) {
@@ -76,24 +118,28 @@ export const Inspector = ({
     );
   }
 
+  const fps = Math.round(k.debug.fps());
+  const fpsColor = getFpsColor(fps);
+
   return (
     <>
       <div class="k-inspector__header">
         <button class="ki-btn" onClick={() => paused.onChange(!paused.checked)}>
           {paused.checked ? "Resume Game" : "Pause Game"}
         </button>
-        &bull;
+        <div class="ki-separator" />
         <input
           placeholder="Search tags or comps"
           type="text"
           class="ki-input"
           onInput={handleSearchInput}
+          value={searchTerm}
         />
-        &bull;
+        <div class="ki-separator" />
         <div>{k.get("*", { recursive: true }).length} objects</div>
-        &bull;
-        <div>{Math.round(k.debug.fps())} fps</div>
-        &bull;
+        <div class="ki-separator" />
+        <div class={fpsColor}>{fps} fps</div>
+        <div class="ki-separator" />
         <div class="k-inspector__interval">
           Update:
           {INTERVAL_OPTIONS.map((option) => (
@@ -109,7 +155,7 @@ export const Inspector = ({
             </label>
           ))}
         </div>
-        &bull;
+        <div class="ki-separator" />
         <label>
           <input
             type="checkbox"
@@ -118,7 +164,7 @@ export const Inspector = ({
           />
           Draw bbox on hover
         </label>
-        &bull;
+        <div class="ki-separator" />
         <Recorder />
         <button class="ki-btn k-inspector__hide" onClick={toggleVisibility}>
           Hide
@@ -126,7 +172,7 @@ export const Inspector = ({
       </div>
 
       <div class="k-inspector__objects">
-        {searchTerm.length > 0 ? (
+        {searchQuery.length > 0 ? (
           <SearchResults
             results={searchResults}
             setRenderRoot={setRoot}

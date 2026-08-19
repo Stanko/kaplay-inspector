@@ -122,6 +122,26 @@ k.add([
   ),
 ]);
 
+// ----- SHIP TRAIL ----- //
+
+k.loadSprite("ship-trail", "sprites/ship-trail.png", {
+  sliceX: 5,
+  sliceY: 3,
+  anims: {
+    short: { from: 0, to: 2, loop: true },
+    long: { from: 5, to: 9, loop: true },
+  },
+});
+
+const trail = k.add([
+  "ship__trail",
+  k.sprite("ship-trail", {
+    anim: "short",
+  }),
+  k.anchor("center"),
+  k.pos(0, 12),
+]);
+
 // ----- SHIP ----- //
 
 k.loadSprite("ship", "sprites/ship.png", {
@@ -162,14 +182,19 @@ const ship = k.add([
   {
     speed: 200,
     fire: () => {},
+    trail,
   },
   {
     data: "hello world",
     inspect() {
-      return "Example of an anonymous component: " + this.data;
+      return (
+        "Example of an anonymous component, with inspect() method: " + this.data
+      );
     },
   },
 ]);
+
+trail.parent = ship;
 
 hpLabel.updateHP();
 
@@ -238,22 +263,6 @@ ship.onUpdate(() => {
   }
 });
 
-// ----- SHIP TRAIL ----- //
-
-k.loadSprite("ship-trail", "sprites/ship-trail.png", {
-  sliceX: 5,
-  sliceY: 3,
-  anims: {
-    short: { from: 0, to: 2, loop: true },
-    long: { from: 5, to: 9, loop: true },
-  },
+k.onKeyPress("space", () => {
+  k.add(["ship", k.pos(0, 0)]);
 });
-
-const trail = ship.add([
-  "ship__trail",
-  k.sprite("ship-trail", {
-    anim: "short",
-  }),
-  k.anchor("center"),
-  k.pos(0, 12),
-]);

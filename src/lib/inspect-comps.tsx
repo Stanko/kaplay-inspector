@@ -12,6 +12,7 @@ import { NumberControl } from "../components/number-control";
 import { VectorControl } from "../components/vector-control";
 import { BlendControl } from "../components/blend-control";
 import { BooleanControl } from "../components/boolean-comp";
+import { isPropertyReadOnly } from "./is-property-read-only";
 
 const componentMap: Record<
   string,
@@ -37,7 +38,13 @@ const componentMap: Record<
 
 const PROPS_TO_SKIP = ["id", "require"];
 
-const inferPropertyControl = (obj: GameObj, property: string, value: any) => {
+const inferPropertyControl = (
+  obj: GameObj,
+  comp: Comp,
+  property: string,
+  value: any,
+  recursive: boolean,
+): JSX.Element | JSX.Element[] | string | string[] | null => {
   if (PROPS_TO_SKIP.includes(property)) {
     return null;
   }
@@ -46,8 +53,15 @@ const inferPropertyControl = (obj: GameObj, property: string, value: any) => {
     return null;
   }
 
-  if (property === null) {
+  if (value === null) {
+    // TODO maybe just skip it and return null
     return "null";
+  }
+
+  // KAPLAY proxies component properties through the game object.
+  // Its proxy setter can be present even when the original component property is getter-only.
+  if (isPropertyReadOnly(obj, property) || isPropertyReadOnly(comp, property)) {
+    return typeof value === "object" ? stringify(value) : String(value);
   }
 
   if (typeof value === "string") {
@@ -76,20 +90,36 @@ const inferPropertyControl = (obj: GameObj, property: string, value: any) => {
   }
 
   if (typeof value === "object") {
-    return stringify(value);
+    if (!recursive) {
+      return stringify(value);
+    }
+
+    const rows = getControls(value, value, false);
+    return (
+      <div>
+        {rows.map((row) => {
+          return (
+            <div key={`${property}-${row.label}`} class="game-object__comp-row">
+              <b>{row.label}</b>
+              <div>{row.control}</div>
+            </div>
+          );
+        })}
+      </div>
+    );
   }
 
   return value;
 };
 
-const getControls = (comp: Comp, obj: GameObj) => {
+const getControls = (comp: Comp, obj: GameObj, recursive: boolean = true) => {
   return Object.entries(comp)
     .map(([key, value]) => {
-      const control = inferPropertyControl(obj, key, value);
+      const control = inferPropertyControl(obj, comp, key, value, recursive);
       if (control) {
         return {
-          tag: key,
-          value: control,
+          label: key,
+          control,
         };
       }
       return null;
@@ -100,55 +130,49 @@ const getControls = (comp: Comp, obj: GameObj) => {
 export const inspectComps = (obj: GameObj) => {
   const object = obj as InternalGameObjRaw;
 
-  const data: { tag: string; value?: string | JSX.Element | null }[] = [];
+  const data: {
+    label: string;
+    control?: string | string[] | JSX.Element | JSX.Element[] | null;
+  }[] = [];
 
-  for (const [tag, comp] of object._compStates) {
+  for (const [id, comp] of object._compStates) {
     // Explicitely defined components for kaplay native components
-    if (componentMap[tag]) {
-      const CompComponent = componentMap[tag];
+    if (componentMap[id]) {
+      const CompComponent = componentMap[id];
       data.push({
-        tag,
-        value: <CompComponent obj={obj} />,
+        label: id,
+        control: <CompComponent obj={obj} />,
       });
     } else if (comp.inspect) {
       const value = comp.inspect();
       data.push({
-        tag,
+        label: id,
         // Remove component name if it is present in the inspect result.
         // Native Kaplay components are doing this,
         // and because we are displaying the name in the left column already,
         // we don't need to display it again.
-        value: value ? value.replace(`${tag}: `, "") : "",
+        control: value ? value.replace(`${id}: `, "") : "",
       });
     } else {
-      const controls = getControls(comp, obj);
+      const rows = getControls(comp, obj);
 
-      if (controls.length === 0) {
-        continue;
-      }
-
-      if (controls.length === 1) {
-        // When there is only one property, display it using the component name as the label
-        data.push(controls[0]);
-      } else {
-        // If there are more, display the component name as a title and list each property
-        data.push({ tag });
-
-        for (const control of controls) {
-          data.push({
-            tag: `- ${control.tag}`,
-            value: control.value,
-          });
-        }
-      }
+      data.push({
+        label: id,
+        control: rows.map((row) => (
+          <div key={row.label} class="game-object__comp-row">
+            <b>{row.label}</b>
+            <div>{row.control}</div>
+          </div>
+        )),
+      });
     }
   }
 
   for (const [i, comp] of object._anonymousCompStates.entries()) {
     if (comp.inspect) {
       data.push({
-        tag: `anonymous ${i}`,
-        value: comp.inspect(),
+        label: `anonymous ${i}`,
+        control: comp.inspect(),
       });
       continue;
     }

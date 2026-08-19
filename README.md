@@ -90,6 +90,10 @@ interface InspectorOptions {
   initUpdateTimeout?: number;
   // should area, anchor and bounding box be drawn on object hover, default: true
   initDrawInspectOnHover?: boolean;
+  // persist inspector visibility between page loads, default: false
+  saveVisibleState?: boolean;
+  // persist the search input between page loads, default: true
+  saveSearch?: boolean;
 }
 ```
 
@@ -139,8 +143,10 @@ Same as with colors, be sure to have a higher specificity selector if inspector'
 ## TODO
 
 - [ ] Controllable theme - system/light/dark. At the moment it is always matching the system.
-- [ ] Persist search/options in URL or local storage
 - [ ] Mouse inspect
 - [ ] Draw bounding box on top of everything
-- [ ] Persist is visible in local storage
-- [ ] Try infering function control
+- [ ] Add clear button on search
+- [ ] Nested game objects
+- [ ] Fix Inspect not working on search
+- [x] Persist search/options in URL or local storage
+- [x] Persist is visible in local storage

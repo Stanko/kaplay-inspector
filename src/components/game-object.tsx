@@ -146,9 +146,9 @@ export const GameObject = ({
               )}
 
               {compsData.map((comp) => (
-                <div key={comp.tag} class="game-object__comps-row">
-                  <b>{comp.tag}</b>
-                  <div>{comp.value}</div>
+                <div key={comp.label} class="game-object__comps-row">
+                  <b>{comp.label}</b>
+                  <div>{comp.control}</div>
                 </div>
               ))}
             </div>
