@@ -127,11 +127,8 @@ Same as with colors, be sure to have a higher specificity selector if inspector'
 
 ## TODO
 
-- [ ] Nested game objects
-- [x] Add clear button on search
-- [x] Controllable theme - system/light/dark
-- [x] On scene change live search doesn't work
-- [x] Mouse inspect
-- [x] Draw bounding box on top of everything
-- [x] Fix Inspect not working on search
+- [ ] Fix tooltip positions
 - [ ] Persist settings in local storage
+- [ ] Textures
+- [ ] Text input CSS polish
+- [ ] Pixel text bounding box

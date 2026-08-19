@@ -11,6 +11,8 @@ import { UpdateInterval } from "./toolbar/update-interval";
 import { MouseInspect } from "./toolbar/mouse-inspect";
 import { useInspectOverlay } from "../hooks/use-inspect-overlay";
 import { PauseGame } from "./toolbar/pause-game";
+import { Gamepad2, Minimize2 } from "lucide-preact";
+import { ToolbarButton } from "./inputs/toolbar-button";
 
 export const Inspector = () => {
   const {
@@ -38,9 +40,13 @@ export const Inspector = () => {
 
   if (!isVisible) {
     return (
-      <button class="ki-btn k-inspector__show" onClick={toggleVisibility}>
-        Show Inspector
-      </button>
+      <ToolbarButton
+        className="k-inspector__show"
+        onClick={toggleVisibility}
+        tooltip="Show Kaplay Inspector"
+      >
+        <Gamepad2 />
+      </ToolbarButton>
     );
   }
 
@@ -60,9 +66,13 @@ export const Inspector = () => {
         <div>{k.get("*", { recursive: true }).length} objects</div>
         <div class={fpsColor}>{fps} fps</div>
 
-        <button class="ki-btn k-inspector__hide" onClick={toggleVisibility}>
-          Hide
-        </button>
+        <ToolbarButton
+          className="k-inspector__hide"
+          onClick={toggleVisibility}
+          tooltip="Hide Inspector"
+        >
+          <Minimize2 />
+        </ToolbarButton>
       </div>
 
       <div class="k-inspector__objects">
