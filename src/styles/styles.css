@@ -64,6 +64,7 @@
   margin: 0;
   line-height: 1.2;
   display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
   align-content: flex-start;
 
   * {
@@ -184,6 +185,7 @@
   }
 
   .k-inspector__objects {
+    min-height: 0;
     padding: 0 0.5rem;
     overflow: auto;
     scrollbar-width: thin;
@@ -433,7 +435,7 @@
 
   .game-object__comps-row:hover,
   .game-object__comps-row:nth-child(even):hover {
-    background-color: var(--ki-primary-light);
+    background-color: var(--ki-primary-extra-light);
   }
 
   .game-object__comps-row:nth-child(even) {
@@ -455,6 +457,19 @@
 
   .game-object__children {
     padding-bottom: 1rem;
+  }
+
+  /* Child object */
+
+  .child-object {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+
+  .child-object .game-object__buttons {
+    position: relative;
   }
 
   /* Flex layout for controls */

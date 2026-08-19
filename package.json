@@ -22,7 +22,7 @@
     "check": "tsc --noEmit"
   },
   "peerDependencies": {
-    "kaplay": "^4000.0.0-alpha.26"
+    "kaplay": "^4000.0.0-alpha.27.1"
   },
   "dependencies": {
     "preact": "^10.29.8"

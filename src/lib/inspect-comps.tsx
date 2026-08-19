@@ -180,5 +180,5 @@ export const inspectComps = (obj: GameObj) => {
     data.push(...getControls(comp, obj));
   }
 
-  return data;
+  return data.sort((a, b) => a.label.localeCompare(b.label));
 };
