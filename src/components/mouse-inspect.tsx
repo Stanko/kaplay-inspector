@@ -1,11 +1,15 @@
 import { useEffect } from "preact/hooks";
 import { useApp } from "../lib/app-context";
-import { useInspector } from "./inspector-context";
 import { SquareMousePointer } from "lucide-preact";
 
 export const MouseInspect = () => {
-  const { k, setRoot, isMouseInspectActive, setMouseInspectActive } = useApp();
-  const { setInspectObject } = useInspector();
+  const {
+    k,
+    setRoot,
+    isMouseInspectActive,
+    setMouseInspectActive,
+    setInspectObject,
+  } = useApp();
 
   useEffect(() => {
     if (!isMouseInspectActive) {

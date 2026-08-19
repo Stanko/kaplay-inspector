@@ -1,29 +1,17 @@
 import { useCallback, useMemo, useState } from "preact/hooks";
 import type { KAPLAYCtxType } from "./kaplay";
 import type { GameObj } from "kaplay";
-import { AppContext } from "./lib/app-context";
+import { AppContext, type AppState } from "./lib/app-context";
 import { Inspector } from "./components/inspector";
 
 export interface AppProps {
   k: KAPLAYCtxType;
 }
-
-interface AppState {
-  root: GameObj;
-  hoveredObject: GameObj | null;
-  updateInterval: number;
-  isVisible: boolean;
-  isDrawBBoxActive: boolean;
-  isMouseInspectActive: boolean;
-  searchResults: GameObj[];
-  searchInputValue: string;
-}
-
 export const App = ({ k }: AppProps) => {
   const [appState, setAppStateRaw] = useState<AppState>({
     // Inspector objects
     root: k.getTreeRoot(),
-    hoveredObject: null,
+    inspectObject: null,
     // Inspector state
     updateInterval: 250,
     isVisible: true,
@@ -51,7 +39,7 @@ export const App = ({ k }: AppProps) => {
   const setRoot = useCallback((object: GameObj) => {
     setAppState({
       root: object,
-      hoveredObject: null,
+      inspectObject: null,
       searchResults: [],
       searchInputValue: "",
     });
@@ -92,6 +80,25 @@ export const App = ({ k }: AppProps) => {
     [setAppState],
   );
 
+  const setInspectObject = useCallback((object: GameObj | null) => {
+    setAppStateRaw((prevState) => {
+      // Don't update state for the same object
+      if (prevState.inspectObject === object) {
+        return prevState;
+      }
+
+      return { ...prevState, inspectObject: object };
+    });
+  }, []);
+
+  const clearInspectObject = useCallback((object: GameObj) => {
+    setAppStateRaw((prevState) =>
+      prevState.inspectObject === object
+        ? { ...prevState, inspectObject: null }
+        : prevState,
+    );
+  }, []);
+
   const contextValue = useMemo(
     () => ({
       k,
@@ -103,6 +110,8 @@ export const App = ({ k }: AppProps) => {
       setUpdateInterval,
       setDrawBBoxActive,
       setMouseInspectActive,
+      setInspectObject,
+      clearInspectObject,
       // State
       searchQuery,
       ...appState,
@@ -116,6 +125,8 @@ export const App = ({ k }: AppProps) => {
       setUpdateInterval,
       setDrawBBoxActive,
       setMouseInspectActive,
+      setInspectObject,
+      clearInspectObject,
       appState,
     ],
   );

@@ -1,3 +1,4 @@
+import { RefreshCcw } from "lucide-preact";
 import { useApp } from "../lib/app-context";
 
 const INTERVAL_OPTIONS = [
@@ -12,7 +13,7 @@ export const UpdateInterval = () => {
 
   return (
     <div class="k-inspector__interval">
-      Update:
+      <RefreshCcw />
       {INTERVAL_OPTIONS.map((option) => (
         <label key={option.value}>
           <input

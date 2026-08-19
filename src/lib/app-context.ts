@@ -3,9 +3,9 @@ import { createContext } from "preact";
 import { useContext } from "preact/hooks";
 import type { KAPLAYCtxType } from "../kaplay";
 
-interface AppState {
+export interface AppState {
   root: GameObj;
-  hoveredObject: GameObj | null;
+  inspectObject: GameObj | null;
   updateInterval: number;
   isVisible: boolean;
   isDrawBBoxActive: boolean;
@@ -24,6 +24,8 @@ interface AppContextValue extends AppState {
   setUpdateInterval: (value: number) => void;
   setDrawBBoxActive: (value: boolean) => void;
   setMouseInspectActive: (value: boolean) => void;
+  setInspectObject: (obj: GameObj | null) => void;
+  clearInspectObject: (obj: GameObj) => void;
 }
 
 export const AppContext = createContext<AppContextValue | null>(null);

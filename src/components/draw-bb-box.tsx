@@ -1,11 +1,9 @@
+import { SquareDashed } from "lucide-preact";
 import { useApp } from "../lib/app-context";
 
 export const DrawBBox = () => {
-  const {
-    isDrawBBoxActive,
-    isMouseInspectActive,
-    setDrawBBoxActive,
-  } = useApp();
+  const { isDrawBBoxActive, isMouseInspectActive, setDrawBBoxActive } =
+    useApp();
 
   return (
     <label>
@@ -15,7 +13,7 @@ export const DrawBBox = () => {
         checked={isDrawBBoxActive}
         onChange={() => setDrawBBoxActive(!isDrawBBoxActive)}
       />
-      Draw bbox on hover
+      <SquareDashed />
     </label>
   );
 };

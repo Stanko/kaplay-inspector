@@ -1,3 +1,4 @@
+import { Image } from "lucide-preact";
 import { useGpuTextures } from "../hooks/use-gpu-textures";
 import { ToolbarButton } from "./toolbar-button";
 
@@ -6,7 +7,7 @@ export const Textures = () => {
 
   return (
     <ToolbarButton onClick={() => getTextures()} tooltip="Display GPU textures">
-      T
+      <Image />
     </ToolbarButton>
   );
 };

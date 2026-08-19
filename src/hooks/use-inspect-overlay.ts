@@ -1,29 +1,21 @@
-import type { GameObj } from "kaplay";
-import { useCallback, useEffect, useRef } from "preact/hooks";
+import { useEffect, useRef } from "preact/hooks";
+import { useApp } from "../lib/app-context";
 import { drawBoundingBox } from "../lib/draw-bbox";
-import type { KAPLAYCtxType } from "../kaplay";
+import type { GameObj } from "kaplay";
 
-export const useInspectOverlay = (
-  k: KAPLAYCtxType,
-  shouldDrawInspect: boolean,
-) => {
-  const inspectObject = useRef<GameObj | null>(null);
+export const useInspectOverlay = () => {
+  const { k, inspectObject, setInspectObject, isDrawBBoxActive } = useApp();
+  const inspectObjectRef = useRef<GameObj | null>(null);
 
-  const setInspectObject = useCallback((obj: GameObj | null) => {
-    inspectObject.current = obj;
-  }, []);
-
-  const clearInspectObject = useCallback((obj: GameObj) => {
-    if (inspectObject.current === obj) {
-      inspectObject.current = null;
-    }
-  }, []);
+  useEffect(() => {
+    inspectObjectRef.current = inspectObject;
+  }, [inspectObject]);
 
   useEffect(() => {
     k.system(
       "kaplay-inspector-overlay",
       () => {
-        const obj = inspectObject.current;
+        const obj = inspectObjectRef.current;
 
         if (!obj || !obj.exists() || obj.hidden) {
           return;
@@ -38,15 +30,14 @@ export const useInspectOverlay = (
     );
 
     return () => {
-      inspectObject.current = null;
+      inspectObjectRef.current = null;
+      setInspectObject(null);
     };
   }, [k]);
 
   useEffect(() => {
-    if (!shouldDrawInspect) {
-      inspectObject.current = null;
+    if (!isDrawBBoxActive) {
+      setInspectObject(null);
     }
-  }, [shouldDrawInspect]);
-
-  return { setInspectObject, clearInspectObject };
+  }, [isDrawBBoxActive]);
 };

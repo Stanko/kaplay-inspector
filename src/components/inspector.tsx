@@ -1,24 +1,21 @@
-import { useEffect, useMemo, useState } from "preact/hooks";
+import { useEffect, useState } from "preact/hooks";
 import { GameObject } from "./game-object";
-import { useObjectBoolean } from "./boolean-comp";
 import { SearchResults } from "./search-results";
 import { Recorder } from "./recorder";
 import { getFpsColor } from "../lib/get-fps-color";
-import { InspectorContext } from "./inspector-context";
-import { useInspectOverlay } from "../hooks/use-inspect-overlay";
 import { Textures } from "./textures";
 import { useApp } from "../lib/app-context";
 import { DrawBBox } from "./draw-bb-box";
 import { Search } from "./search";
 import { UpdateInterval } from "./update-interval";
 import { MouseInspect } from "./mouse-inspect";
+import { useInspectOverlay } from "../hooks/use-inspect-overlay";
+import { PauseGame } from "./pause-game";
 
 export const Inspector = () => {
   const {
     k,
     root,
-    setRoot,
-    isDrawBBoxActive,
     isVisible,
     toggleVisibility,
     searchResults,
@@ -28,13 +25,7 @@ export const Inspector = () => {
 
   const [, setRenderIndex] = useState(0);
 
-  const { setInspectObject, clearInspectObject } = useInspectOverlay(
-    k,
-    isDrawBBoxActive,
-  );
-
-  // Game root paused state
-  const paused = useObjectBoolean(k.getTreeRoot(), "paused");
+  useInspectOverlay();
 
   // Force re-render every updateInterval milliseconds
   useEffect(() => {
@@ -44,16 +35,6 @@ export const Inspector = () => {
 
     return () => clearInterval(interval);
   }, [updateInterval]);
-
-  const contextValue = useMemo(
-    () => ({
-      k,
-      setRoot,
-      setInspectObject,
-      clearInspectObject,
-    }),
-    [k, setRoot, setInspectObject, clearInspectObject],
-  );
 
   if (!isVisible) {
     return (
@@ -67,11 +48,9 @@ export const Inspector = () => {
   const fpsColor = getFpsColor(fps);
 
   return (
-    <InspectorContext.Provider value={contextValue}>
+    <>
       <div class="k-inspector__header">
-        <button class="ki-btn" onClick={() => paused.onChange(!paused.checked)}>
-          {paused.checked ? "Resume Game" : "Pause Game"}
-        </button>
+        <PauseGame />
         <div class="ki-separator" />
         <Search />
         <div class="ki-separator" />
@@ -104,6 +83,6 @@ export const Inspector = () => {
           />
         )}
       </div>
-    </InspectorContext.Provider>
+    </>
   );
 };

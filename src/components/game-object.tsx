@@ -5,7 +5,6 @@ import { cx } from "../lib/cx";
 import { getObjectInfo } from "../lib/get-object-info";
 import { Breadcrumbs } from "./breadcrumbs";
 import { BooleanComp } from "./boolean-comp";
-import { useInspector } from "./inspector-context";
 import { useApp } from "../lib/app-context";
 
 export interface GameObjectProps {
@@ -21,8 +20,8 @@ export const GameObject = ({
   isExpanded: isExpandedExternal = false,
   isRenderRoot,
 }: GameObjectProps) => {
-  const { setInspectObject, clearInspectObject } = useInspector();
-  const { setRoot, isDrawBBoxActive } = useApp();
+  const { setRoot, isDrawBBoxActive, setInspectObject, clearInspectObject } =
+    useApp();
   const [isExpanded, setIsExpanded] = useState(isExpandedExternal);
 
   const { compsData, tags, compsLabel } = getObjectInfo(obj);
