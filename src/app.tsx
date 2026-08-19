@@ -7,6 +7,39 @@ import { Inspector } from "./components/inspector";
 export interface AppProps {
   k: KAPLAYCtxType;
 }
+
+const KEYS_TO_SAVE: (keyof AppState)[] = [
+  "updateInterval",
+  "isVisible",
+  "isDrawBBoxActive",
+  "searchInputValue",
+];
+
+const LS_APP_STATE = "ki__app-state";
+
+const save = (appState: AppState) => {
+  const data: Record<string, any> = {};
+
+  KEYS_TO_SAVE.forEach((key) => {
+    data[key] = appState[key];
+  });
+
+  localStorage.setItem(LS_APP_STATE, JSON.stringify(data));
+};
+
+const load = () => {
+  try {
+    const savedState = localStorage.getItem(LS_APP_STATE);
+    if (savedState) {
+      return JSON.parse(savedState);
+    }
+    return {};
+  } catch {
+    localStorage.removeItem(LS_APP_STATE);
+    return {};
+  }
+};
+
 export const App = ({ k }: AppProps) => {
   const [appState, setAppStateRaw] = useState<AppState>({
     // Inspector objects
@@ -20,6 +53,7 @@ export const App = ({ k }: AppProps) => {
     // Search
     searchResults: [],
     searchInputValue: "",
+    ...load(),
   });
 
   const searchQuery = useMemo(
@@ -28,7 +62,19 @@ export const App = ({ k }: AppProps) => {
   );
 
   const setAppState = useCallback((value: Partial<AppState>) => {
-    setAppStateRaw((prevState) => ({ ...prevState, ...value }));
+    setAppStateRaw((prevState) => {
+      const newState = { ...prevState, ...value };
+
+      if (
+        Object.keys(value).some((key) =>
+          KEYS_TO_SAVE.includes(key as keyof AppState),
+        )
+      ) {
+        save(newState);
+      }
+
+      return newState;
+    });
   }, []);
 
   // Actions

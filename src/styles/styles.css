@@ -192,7 +192,7 @@
     background-color: var(--ki-bg);
   }
 
-  .ki-toolbar-btn:hover {
+  .ki-toolbar-btn:not(:disabled):hover {
     background-color: var(--ki-gray-light);
   }
 
@@ -227,7 +227,7 @@
     height: 0.25rem;
   }
 
-  .ki-toolbar-btn:hover .ki-toolbar-btn__tooltip,
+  .ki-toolbar-btn:not(:disabled):hover .ki-toolbar-btn__tooltip,
   .ki-toolbar-btn:focus-visible .ki-toolbar-btn__tooltip {
     opacity: 1;
     pointer-events: all;
@@ -324,14 +324,6 @@
 
   .k-inspector__header label:hover {
     color: var(--ki-primary);
-  }
-
-  .ki-separator {
-    color: var(--ki-border);
-    background: var(--ki-border);
-    height: 0.25rem;
-    width: 0.25rem;
-    border-radius: 50%;
   }
 
   .recording,
@@ -465,7 +457,7 @@
     display: flex;
     gap: 0.25rem;
     align-items: center;
-    height: 2rem;
+    height: 100%;
   }
 
   .game-object__destroyed {
@@ -657,6 +649,49 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+
+  /* Dropdown */
+  .ki-dropdown {
+    /* Reset browser popover positioning */
+    inset: auto;
+    margin: 0;
+
+    /* The popover target is automatically its anchor */
+    position-area: block-end span-inline-end;
+    position-try: flip-block;
+    margin-block-start: 0.25rem;
+
+    min-width: 6rem;
+    max-width: calc(100vw - 1rem);
+    padding: 0.25rem;
+    border: 1px solid var(--ki-border-light);
+    border-radius: 6px;
+    background: var(--ki-bg);
+    color: var(--ki-fg);
+    box-shadow: 0 4px 16px rgb(0 0 0 / 0.1);
+  }
+
+  .ki-dropdown-item {
+    display: block;
+    width: 100%;
+    padding: 0.375rem 0.5rem;
+    text-align: left;
+    border-radius: 4px;
+  }
+
+  .ki-dropdown-item:hover,
+  .ki-dropdown-item:focus-visible {
+    background: var(--ki-gray-light);
+  }
+
+  .ki-dropdown-item--selected {
+    color: var(--ki-primary);
+    font-weight: bold;
+  }
+
+  .ki-toolbar-btn:has(+ .ki-dropdown:popover-open) .ki-toolbar-btn__tooltip {
+    opacity: 0;
   }
 }
 

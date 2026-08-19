@@ -10,7 +10,12 @@ const isFixed = (obj: GameObj): boolean => {
 };
 
 const isHidden = (obj: GameObj): boolean => {
-  return Boolean(obj.hidden) || Boolean(obj.parent && isHidden(obj.parent));
+  return (
+    Boolean(obj.hidden) ||
+    Boolean(obj.parent && isHidden(obj.parent)) ||
+    // TODO not sure if this should be ignored
+    obj.opacity === 0
+  );
 };
 
 const isDrawnAtOrAbove = (obj: GameObj, other: GameObj): boolean => {

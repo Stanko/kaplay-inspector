@@ -5,7 +5,7 @@ import { ToolbarButton } from "./toolbar-button";
 interface ToolbarButtonToggleProps {
   className?: string;
   tooltip?: string;
-  children: JSX.Element | string;
+  children: JSX.Element | string | number | (JSX.Element | string | number)[];
   onChange?: (checked: boolean) => void;
   checked?: boolean;
   disabled?: boolean;

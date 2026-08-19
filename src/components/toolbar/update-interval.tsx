@@ -1,7 +1,6 @@
 import { RefreshCcw } from "lucide-preact";
 import { useApp } from "../../lib/app-context";
-import { ToolbarButtonToggle } from "../inputs/toolbar-toggle-button";
-import { useState } from "preact/hooks";
+import { Dropdown } from "../inputs/dropdown";
 
 const INTERVAL_OPTIONS = [
   { value: 100, label: "100ms" },
@@ -11,35 +10,16 @@ const INTERVAL_OPTIONS = [
 ];
 
 export const UpdateInterval = () => {
-  const [isOpen, setIsOpen] = useState(false);
   const { updateInterval, setUpdateInterval } = useApp();
 
   return (
-    <div class="k-inspector__interval">
-      <ToolbarButtonToggle
-        onChange={() => setIsOpen(!isOpen)}
-        checked={isOpen}
-        tooltip="Change Update Interval"
-      >
-        <RefreshCcw />
-      </ToolbarButtonToggle>
-
-      {isOpen && (
-        <>
-          {INTERVAL_OPTIONS.map((option) => (
-            <label key={option.value}>
-              <input
-                type="radio"
-                name="interval"
-                value={option.value}
-                checked={updateInterval === option.value}
-                onChange={() => setUpdateInterval(option.value)}
-              />
-              {option.label}
-            </label>
-          ))}
-        </>
-      )}
-    </div>
+    <Dropdown
+      tooltip="Change Update Interval"
+      items={INTERVAL_OPTIONS}
+      selectedValue={updateInterval}
+      onChange={setUpdateInterval}
+    >
+      <RefreshCcw />
+    </Dropdown>
   );
 };

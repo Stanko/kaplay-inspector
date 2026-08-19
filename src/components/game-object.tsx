@@ -50,8 +50,8 @@ export const GameObject = ({
     }
   };
 
-  // Skip drawing if there are no components to inspect
-  if (compsData.length === 0) {
+  // Skip drawing if there are no components or children to inspect
+  if (compsData.length === 0 && obj.children.length === 0) {
     return null;
   }
 
