@@ -136,13 +136,25 @@ export const Inspector = ({
           {paused.checked ? "Resume Game" : "Pause Game"}
         </button>
         <div class="ki-separator" />
-        <input
-          placeholder="Search tags or comps"
-          type="text"
-          class="ki-input"
-          onInput={handleSearchInput}
-          value={searchTerm}
-        />
+        <div class="k-inspector__search">
+          <input
+            placeholder="Search tags or comps"
+            type="text"
+            class="ki-input k-inspector__search-input"
+            onInput={handleSearchInput}
+            value={searchTerm}
+          />
+
+          <button
+            class="k-inspector__search-clear"
+            onClick={() => setSearchTerm("")}
+            aria-label="Clear search"
+          >
+            <svg viewBox="0 0 16 16" aria-hidden="true">
+              <path d="M 1 1 L 15 15 M 1 15 L 15 1" />
+            </svg>
+          </button>
+        </div>
         <div class="ki-separator" />
         <div>{k.get("*", { recursive: true }).length} objects</div>
         <div class="ki-separator" />
