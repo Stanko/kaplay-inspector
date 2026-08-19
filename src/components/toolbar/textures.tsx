@@ -1,5 +1,5 @@
 import { Image } from "lucide-preact";
-import { useGpuTextures } from "../hooks/use-gpu-textures";
+import { useGpuTextures } from "../../hooks/use-gpu-textures";
 import { ToolbarButton } from "./toolbar-button";
 
 export const Textures = () => {

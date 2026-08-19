@@ -1,6 +1,6 @@
 import type { TargetedInputEvent } from "preact";
 import { useEffect, useState } from "preact/hooks";
-import { cx } from "../lib/cx";
+import { cx } from "../../lib/cx";
 
 export interface TextInputProps {
   className?: string;

@@ -1,6 +1,6 @@
 import { Pause, Play } from "lucide-preact";
-import { useApp } from "../lib/app-context";
-import { useObjectBoolean } from "./boolean-comp";
+import { useApp } from "../../lib/app-context";
+import { useObjectBoolean } from "../controls/boolean-control";
 
 export const PauseGame = () => {
   const { k } = useApp();

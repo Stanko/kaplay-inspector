@@ -1,6 +1,6 @@
 import type { GameObj } from "kaplay";
 import { useEffect, useState } from "preact/hooks";
-import { cx } from "../lib/cx";
+import { cx } from "../../lib/cx";
 
 type CheckboxCompProps = {
   obj: GameObj;

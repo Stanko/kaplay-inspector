@@ -1,5 +1,5 @@
 import type { JSX } from "preact/jsx-runtime";
-import { cx } from "../lib/cx";
+import { cx } from "../../lib/cx";
 
 interface ToolbarButtonProps {
   className?: string;

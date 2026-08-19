@@ -1,7 +1,7 @@
 import type { TargetedInputEvent } from "preact";
 import { useEffect, useState } from "preact/hooks";
-import { cx } from "../lib/cx";
-import { toFixed } from "../lib/to-fixed";
+import { cx } from "../../lib/cx";
+import { toFixed } from "../../lib/to-fixed";
 import { HoldButton } from "./hold-button";
 
 export interface NumberInputProps {

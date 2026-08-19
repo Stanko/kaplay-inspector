@@ -1,18 +1,18 @@
 import type { Comp, GameObj, InternalGameObjRaw } from "kaplay";
 import type { JSX } from "preact";
-import { stringify } from "./stringify";
-import { TextControl } from "../components/text-control";
-import { SpriteControl } from "../components/sprite-control";
-import { ColorControl } from "../components/color-control";
-import { ChildObject } from "../components/child-object";
+import { ChildObjectControl } from "../components/controls/child-object-control";
+import { AnchorControl } from "../components/controls/anchor-control";
+import { BlendControl } from "../components/controls/blend-control";
+import { BooleanControl } from "../components/controls/boolean-control";
+import { ColorControl } from "../components/controls/color-control";
+import { HpControl } from "../components/controls/hp-control";
+import { NumberControl } from "../components/controls/number-control";
+import { SpriteControl } from "../components/controls/sprite-control";
+import { TextControl } from "../components/controls/text-control";
+import { VectorControl } from "../components/controls/vector-control";
 import { isGameObj } from "./is-game-obj";
-import { AnchorControl } from "../components/anchor-control";
-import { HpControl } from "../components/hp-control";
-import { NumberControl } from "../components/number-control";
-import { VectorControl } from "../components/vector-control";
-import { BlendControl } from "../components/blend-control";
-import { BooleanControl } from "../components/boolean-comp";
 import { isPropertyReadOnly } from "./is-property-read-only";
+import { stringify } from "./stringify";
 
 const componentMap: Record<
   string,
@@ -73,11 +73,19 @@ const inferPropertyControl = (
   }
 
   if (typeof value === "number") {
-    return <NumberControl obj={obj} property={property} />;
+    return (
+      <NumberControl
+        obj={obj}
+        property={property}
+        onChange={(n) => {
+          obj[property] = n;
+        }}
+      />
+    );
   }
 
   if (isGameObj(value)) {
-    return <ChildObject obj={value} />;
+    return <ChildObjectControl obj={value} />;
   }
 
   if (

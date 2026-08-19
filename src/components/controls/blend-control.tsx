@@ -1,4 +1,4 @@
-import { cx } from "../lib/cx";
+import { cx } from "../../lib/cx";
 
 export interface BlendControlProps {
   obj: Record<string, any>;

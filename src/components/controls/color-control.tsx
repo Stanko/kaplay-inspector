@@ -1,6 +1,6 @@
 import type { GameObj, ColorComp } from "kaplay";
 import { useEffect, useState } from "preact/hooks";
-import { cx } from "../lib/cx";
+import { cx } from "../../lib/cx";
 
 export interface ColorControlProps {
   obj: GameObj;

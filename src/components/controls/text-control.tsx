@@ -1,5 +1,5 @@
 import type { GameObj } from "kaplay";
-import { TextInput } from "./text-input";
+import { TextInput } from "../inputs/text-input";
 
 export interface TextControlProps {
   obj: GameObj;

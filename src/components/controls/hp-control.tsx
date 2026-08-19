@@ -19,6 +19,9 @@ export const HpControl = ({ className = "", obj, step }: HpControlProps) => {
         obj={obj}
         property="hp"
         step={step}
+        onChange={(n) => {
+          obj.hp = n;
+        }}
       />{" "}
       (Max: {obj.maxHP})
     </div>

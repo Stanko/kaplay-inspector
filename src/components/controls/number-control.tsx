@@ -1,4 +1,4 @@
-import { NumberInput } from "./number-input";
+import { NumberInput } from "../inputs/number-input";
 
 export interface NumberControlProps {
   obj: Record<string, any>;

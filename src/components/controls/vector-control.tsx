@@ -1,6 +1,6 @@
-import { cx } from "../lib/cx";
-import { NumberInput } from "./number-input";
-import { useApp } from "../lib/app-context";
+import { cx } from "../../lib/cx";
+import { NumberInput } from "../inputs/number-input";
+import { useApp } from "../../lib/app-context";
 
 export interface VectorControlProps {
   className?: string;

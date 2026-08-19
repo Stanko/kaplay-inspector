@@ -1,16 +1,16 @@
 import { useEffect, useState } from "preact/hooks";
 import { GameObject } from "./game-object";
 import { SearchResults } from "./search-results";
-import { Recorder } from "./recorder";
+import { Recorder } from "./toolbar/recorder";
 import { getFpsColor } from "../lib/get-fps-color";
-import { Textures } from "./textures";
+import { Textures } from "./toolbar/textures";
 import { useApp } from "../lib/app-context";
-import { DrawBBox } from "./draw-bb-box";
-import { Search } from "./search";
-import { UpdateInterval } from "./update-interval";
-import { MouseInspect } from "./mouse-inspect";
+import { DrawBBox } from "./toolbar/draw-bb-box";
+import { Search } from "./toolbar/search";
+import { UpdateInterval } from "./toolbar/update-interval";
+import { MouseInspect } from "./toolbar/mouse-inspect";
 import { useInspectOverlay } from "../hooks/use-inspect-overlay";
-import { PauseGame } from "./pause-game";
+import { PauseGame } from "./toolbar/pause-game";
 
 export const Inspector = () => {
   const {

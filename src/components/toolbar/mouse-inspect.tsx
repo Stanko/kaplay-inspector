@@ -1,5 +1,5 @@
 import { useEffect } from "preact/hooks";
-import { useApp } from "../lib/app-context";
+import { useApp } from "../../lib/app-context";
 import { SquareMousePointer } from "lucide-preact";
 
 export const MouseInspect = () => {

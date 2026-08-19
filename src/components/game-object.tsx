@@ -4,7 +4,7 @@ import { MinusIcon, PlusIcon } from "../components/icons";
 import { cx } from "../lib/cx";
 import { getObjectInfo } from "../lib/get-object-info";
 import { Breadcrumbs } from "./breadcrumbs";
-import { BooleanComp } from "./boolean-comp";
+import { BooleanComp } from "./controls/boolean-control";
 import { useApp } from "../lib/app-context";
 
 export interface GameObjectProps {

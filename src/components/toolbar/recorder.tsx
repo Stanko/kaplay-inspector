@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "preact/hooks";
-import { recorder } from "../lib/video-recorder";
+import { recorder } from "../../lib/video-recorder";
 import { ToolbarButton } from "./toolbar-button";
-import { useApp } from "../lib/app-context";
+import { useApp } from "../../lib/app-context";
 import { Video } from "lucide-preact";
 
 export const Recorder = () => {

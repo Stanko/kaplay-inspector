@@ -1,5 +1,5 @@
 import { RefreshCcw } from "lucide-preact";
-import { useApp } from "../lib/app-context";
+import { useApp } from "../../lib/app-context";
 
 const INTERVAL_OPTIONS = [
   { value: 100, label: "100ms" },

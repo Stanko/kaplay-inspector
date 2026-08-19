@@ -1,12 +1,12 @@
 import type { GameObj } from "kaplay";
-import { getObjectInfo } from "../lib/get-object-info";
-import { useApp } from "../lib/app-context";
+import { getObjectInfo } from "../../lib/get-object-info";
+import { useApp } from "../../lib/app-context";
 
 export interface ChildObjectProps {
   obj: GameObj;
 }
 
-export const ChildObject = ({ obj }: ChildObjectProps) => {
+export const ChildObjectControl = ({ obj }: ChildObjectProps) => {
   const { setRoot } = useApp();
   const { tags, compsLabel } = getObjectInfo(obj);
   const isRootObject = obj.id === 0;

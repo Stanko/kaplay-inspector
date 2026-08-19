@@ -1,5 +1,5 @@
 import { useEffect, useState } from "preact/hooks";
-import { useApp } from "../lib/app-context";
+import { useApp } from "../../lib/app-context";
 
 export const Search = () => {
   const {

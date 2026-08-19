@@ -1,7 +1,7 @@
 import type { GameObj, AnchorComp } from "kaplay";
-import { cx } from "../lib/cx";
+import { cx } from "../../lib/cx";
 import { VectorControl } from "./vector-control";
-import { useApp } from "../lib/app-context";
+import { useApp } from "../../lib/app-context";
 
 export interface AnchorControlProps {
   className?: string;
