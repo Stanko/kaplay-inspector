@@ -1,21 +1,16 @@
-import { useCallback, useEffect, useMemo, useState } from "preact/hooks";
-import type { InspectorOptions } from "../init";
+import { useEffect, useMemo, useState } from "preact/hooks";
 import { GameObject } from "./game-object";
 import { useObjectBoolean } from "./boolean-comp";
-import type { GameObj } from "kaplay";
 import { SearchResults } from "./search-results";
 import { Recorder } from "./recorder";
 import { getFpsColor } from "../lib/get-fps-color";
 import { InspectorContext } from "./inspector-context";
-import type { KAPLAYCtxType } from "../kaplay";
 import { useInspectOverlay } from "../hooks/use-inspect-overlay";
-import { LS_SEARCH_QUERY, useObjectSearch } from "../hooks/use-object-search";
+import { useObjectSearch } from "../hooks/use-object-search";
 import { useMouseInspect } from "../hooks/use-mouse-inspect";
 import { Textures } from "./textures";
-
-export interface InspectorProps extends InspectorOptions {
-  k: KAPLAYCtxType;
-}
+import { useApp } from "../lib/app-context";
+import { DrawBBox } from "./draw-bb-box";
 
 const INTERVAL_OPTIONS = [
   { value: 100, label: "100ms" },
@@ -24,66 +19,28 @@ const INTERVAL_OPTIONS = [
   { value: 1000, label: "1s" },
 ];
 
-const LS_VISIBLE_STATE = "ki__is-visible";
+export const Inspector = () => {
+  const { k, root, setRoot, isDrawBBoxActive } = useApp();
 
-export const Inspector = ({
-  k,
-  initUpdateTimeout = 250,
-  isVisibleOnLoad = true,
-  initDrawInspectOnHover = true,
-  saveVisibleState = false,
-  saveSearch = true,
-}: InspectorProps) => {
   // Visible State
-  const savedVisibleState = saveVisibleState
-    ? localStorage.getItem(LS_VISIBLE_STATE)
-    : null;
-  const isVisibleInit =
-    savedVisibleState === null ? isVisibleOnLoad : savedVisibleState === "true";
-  const [isVisible, setIsVisibleHook] = useState(isVisibleInit);
-
-  const setIsVisible = useCallback(
-    (value: boolean) => {
-      setIsVisibleHook(value);
-      if (saveVisibleState) {
-        localStorage.setItem(LS_VISIBLE_STATE, value.toString());
-      }
-    },
-    [saveVisibleState],
-  );
+  const [isVisible, setIsVisible] = useState(true);
 
   const toggleVisibility = () => {
     setIsVisible(!isVisible);
   };
 
   // Search
-  const savedSearchTerm = saveSearch
-    ? localStorage.getItem(LS_SEARCH_QUERY)
-    : null;
-  const searchTermInit = savedSearchTerm || "";
   const { searchResults, searchQuery, searchTerm, setSearchTerm } =
-    useObjectSearch(k, searchTermInit, saveSearch);
+    useObjectSearch(k);
 
   // Update timeout and force re-render
-  const [updateTimeout, setUpdateTimeout] = useState(initUpdateTimeout);
+  const [updateTimeout, setUpdateTimeout] = useState(250);
   const [renderIndex, setRenderIndex] = useState(0);
 
-  // Draw bounding box on item hover
-  const [shouldDrawInspect, setShouldDrawInspect] = useState(
-    initDrawInspectOnHover,
-  );
   const { setInspectObject, clearInspectObject } = useInspectOverlay(
     k,
-    shouldDrawInspect,
+    isDrawBBoxActive,
   );
-
-  // Set root object
-  const [root, setRootHook] = useState(k.getTreeRoot());
-
-  const setRoot = useCallback((value: GameObj) => {
-    setSearchTerm("");
-    setRootHook(value);
-  }, []);
 
   // Mouse click inspecting
   const { shouldMouseInspect, setShouldMouseInspect } = useMouseInspect(
@@ -114,9 +71,8 @@ export const Inspector = ({
       setRoot,
       setInspectObject,
       clearInspectObject,
-      shouldDrawInspect,
     }),
-    [k, setRoot, setInspectObject, clearInspectObject, shouldDrawInspect],
+    [k, setRoot, setInspectObject, clearInspectObject],
   );
 
   if (!isVisible) {
@@ -177,15 +133,7 @@ export const Inspector = ({
           ))}
         </div>
         <div class="ki-separator" />
-        <label>
-          <input
-            disabled={shouldMouseInspect}
-            type="checkbox"
-            checked={shouldDrawInspect}
-            onChange={() => setShouldDrawInspect(!shouldDrawInspect)}
-          />
-          Draw bbox on hover
-        </label>
+        <DrawBBox disabled={shouldMouseInspect} />
         <div class="ki-separator" />
         <label>
           <input

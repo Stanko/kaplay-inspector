@@ -2,15 +2,8 @@ import type { GameObj } from "kaplay";
 import { useEffect, useState } from "preact/hooks";
 import type { KAPLAYCtxType } from "../kaplay";
 
-export const LS_SEARCH_QUERY = "ki__search-query";
-
-export const useObjectSearch = (
-  k: KAPLAYCtxType,
-  searchTermInit: string = "",
-  saveSearchQuery: boolean = false,
-  delay = 250,
-) => {
-  const [searchTerm, setSearchTerm] = useState(searchTermInit);
+export const useObjectSearch = (k: KAPLAYCtxType) => {
+  const [searchTerm, setSearchTerm] = useState("");
   const searchQuery = searchTerm.trim();
 
   const [searchResults, setSearchResults] = useState<GameObj[]>([]);
@@ -36,10 +29,6 @@ export const useObjectSearch = (
   }, [k, renderIndex]);
 
   useEffect(() => {
-    if (saveSearchQuery) {
-      localStorage.setItem(LS_SEARCH_QUERY, searchQuery);
-    }
-
     if (searchQuery === "") {
       setSearchResults([]);
       return;
@@ -49,10 +38,10 @@ export const useObjectSearch = (
       setSearchResults(
         k.get(searchQuery, { recursive: true, liveUpdate: true }),
       );
-    }, delay);
+    }, 250);
 
     return () => clearTimeout(searchTimeout);
-  }, [delay, k, renderIndex, searchQuery]);
+  }, [k, renderIndex, searchQuery]);
 
   return {
     searchResults,

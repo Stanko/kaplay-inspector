@@ -1,13 +1,13 @@
 import type { GameObj } from "kaplay";
 import { getObjectInfo } from "../lib/get-object-info";
-import { useInspector } from "./inspector-context";
+import { useApp } from "../lib/app-context";
 
 interface BreadcrumbsProps {
   obj: GameObj;
 }
 
 export const Breadcrumbs = ({ obj }: BreadcrumbsProps) => {
-  const { k, setRoot } = useInspector();
+  const { k, setRoot } = useApp();
   const breadcrumbs = [];
 
   if (obj.exists()) {

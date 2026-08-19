@@ -6,6 +6,7 @@ import { getObjectInfo } from "../lib/get-object-info";
 import { Breadcrumbs } from "./breadcrumbs";
 import { BooleanComp } from "./boolean-comp";
 import { useInspector } from "./inspector-context";
+import { useApp } from "../lib/app-context";
 
 export interface GameObjectProps {
   className?: string;
@@ -20,8 +21,8 @@ export const GameObject = ({
   isExpanded: isExpandedExternal = false,
   isRenderRoot,
 }: GameObjectProps) => {
-  const { setRoot, setInspectObject, clearInspectObject, shouldDrawInspect } =
-    useInspector();
+  const { setInspectObject, clearInspectObject } = useInspector();
+  const { setRoot, isDrawBBoxActive } = useApp();
   const [isExpanded, setIsExpanded] = useState(isExpandedExternal);
 
   const { compsData, tags, compsLabel } = getObjectInfo(obj);
@@ -45,7 +46,7 @@ export const GameObject = ({
   };
 
   const handleMouseEnter = () => {
-    if (!isRootObject && shouldDrawInspect && !obj.hidden) {
+    if (!isRootObject && isDrawBBoxActive && !obj.hidden) {
       setInspectObject(obj);
     }
   };

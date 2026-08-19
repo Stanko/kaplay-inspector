@@ -8,7 +8,6 @@ interface InspectorContextValue {
   setRoot: (obj: GameObj) => void;
   setInspectObject: (obj: GameObj | null) => void;
   clearInspectObject: (obj: GameObj) => void;
-  shouldDrawInspect: boolean;
 }
 
 export const InspectorContext = createContext<InspectorContextValue | null>(

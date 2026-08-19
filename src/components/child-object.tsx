@@ -1,13 +1,13 @@
 import type { GameObj } from "kaplay";
-import { useInspector } from "./inspector-context";
 import { getObjectInfo } from "../lib/get-object-info";
+import { useApp } from "../lib/app-context";
 
 export interface ChildObjectProps {
   obj: GameObj;
 }
 
 export const ChildObject = ({ obj }: ChildObjectProps) => {
-  const { setRoot } = useInspector();
+  const { setRoot } = useApp();
   const { tags, compsLabel } = getObjectInfo(obj);
   const isRootObject = obj.id === 0;
   const isObjectDestroyed = !obj.exists() && !isRootObject;

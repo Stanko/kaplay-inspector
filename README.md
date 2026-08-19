@@ -9,7 +9,7 @@ Check the demo: [muffinman.io/kaplay-inspector/](https://muffinman.io/kaplay-ins
 ## Features
 
 - Navigate the game object tree
-- Updates every 100ms (configurable)
+- Updates every 100ms (configurable in the toolbar)
 - Hover an object to draw it's area, anchor and bounding box
 - Click objects with an area to inspect them
 - Inspect object's component and custom props
@@ -71,30 +71,12 @@ declare module "*.scss";
 
 ### Options
 
-You can pass options object to the init method as a second parameter:
-
-```ts
-init(k, {
-  initUpdateTimeout: 100,
-});
-```
-
-available options are:
+`init` accepts an optional second argument for styling the inspector:
 
 ```ts
 export interface InspectorOptions {
   /** CSS class to add to the root element */
   className?: string;
-  /** is inspector visible on load, default: true */
-  isVisibleOnLoad?: boolean;
-  /** default update time in milliseconds, default: 250 */
-  initUpdateTimeout?: number;
-  /** should bounding box, area and anchor be drawn on object hover, default: true */
-  initDrawInspectOnHover?: boolean;
-  /** persist inspector visibility between page loads, default: false */
-  saveVisibleState?: boolean;
-  /** persist the search input between page loads, default: true */
-  saveSearch?: boolean;
   /** interface theme, default: "system" */
   theme?: "light" | "dark" | "system";
 }
@@ -111,13 +93,13 @@ Kaplay Inspector defines colors in [OKLCH color space](https://developer.mozilla
 }
 ```
 
-Please note that if you load inspector's CSS dynamically, you'll have to add a custom class to create a higher specificity selector.
+If you load the inspector's CSS dynamically, use `className` to add a class with enough specificity.
 
 If you want to change other colors as well, check the [styles.css](./src/styles/styles.css).
 
 ## Positioning
 
-By default, the inspector has `position: fixed` and it sits at the bottom of the screen. If you want to move it around, the easiest way it to pass a custom class name through the options and position it yourself.
+By default, the inspector has `position: fixed` and sits at the bottom of the screen. Use `className` to add a class and position it differently.
 
 Assuming we have only the canvas and the inspector element on the page, here is an example of what I like to do:
 
@@ -147,10 +129,9 @@ Same as with colors, be sure to have a higher specificity selector if inspector'
 
 - [ ] Nested game objects
 - [x] Add clear button on search
-- [x] Controllable theme - system/light/dark. At the moment it is always matching the system.
+- [x] Controllable theme - system/light/dark
 - [x] On scene change live search doesn't work
 - [x] Mouse inspect
 - [x] Draw bounding box on top of everything
 - [x] Fix Inspect not working on search
-- [x] Persist search/options in URL or local storage
-- [x] Persist is visible in local storage
+- [ ] Persist settings in local storage
