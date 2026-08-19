@@ -20,14 +20,8 @@ const INTERVAL_OPTIONS = [
 ];
 
 export const Inspector = () => {
-  const { k, root, setRoot, isDrawBBoxActive } = useApp();
-
-  // Visible State
-  const [isVisible, setIsVisible] = useState(true);
-
-  const toggleVisibility = () => {
-    setIsVisible(!isVisible);
-  };
+  const { k, root, setRoot, isDrawBBoxActive, isVisible, toggleVisibility } =
+    useApp();
 
   // Search
   const { searchResults, searchQuery, searchTerm, setSearchTerm } =

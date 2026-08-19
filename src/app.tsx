@@ -43,6 +43,10 @@ export const App = ({ k }: AppProps) => {
     setAppStateRaw((prevState) => ({ ...prevState, ...value }));
   }, []);
 
+  const toggleVisibility = useCallback(() => {
+    setAppState({ isVisible: !appState.isVisible });
+  }, [appState.isVisible, setAppState]);
+
   // Actions
   const setRoot = useCallback((object: GameObj) => {
     setAppState({
@@ -58,6 +62,7 @@ export const App = ({ k }: AppProps) => {
       setAppState,
       // Actions
       setRoot,
+      toggleVisibility,
       // State
       searchQuery,
       ...appState,
