@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "preact/hooks";
 import { recorder } from "../../lib/video-recorder";
-import { ToolbarButton } from "./toolbar-button";
+import { ToolbarButton } from "../inputs/toolbar-button";
 import { useApp } from "../../lib/app-context";
 import { Video } from "lucide-preact";
 
@@ -36,6 +36,7 @@ export const Recorder = () => {
   return (
     <ToolbarButton
       tooltip={isRecording ? "Stop Recording" : "Record Video"}
+      className={isRecording ? "recording" : ""}
       onClick={() => {
         if (isRecording) {
           stop();
@@ -44,7 +45,7 @@ export const Recorder = () => {
         }
       }}
     >
-      <Video />
+      {isRecording ? <div class="recording__icon" /> : <Video />}
     </ToolbarButton>
   );
 };

@@ -1,5 +1,5 @@
 import type { GameObj } from "kaplay";
-import { NumberControl } from "./number-control";
+import { NumberInput } from "../inputs/number-input";
 
 export interface HpControlProps {
   className?: string;
@@ -14,7 +14,7 @@ export const HpControl = ({ className = "", obj, step }: HpControlProps) => {
 
   return (
     <div class="hp-control ki-flex">
-      <NumberControl
+      <NumberInput
         className={className}
         obj={obj}
         property="hp"

@@ -73,15 +73,7 @@ const inferPropertyControl = (
   }
 
   if (typeof value === "number") {
-    return (
-      <NumberControl
-        obj={obj}
-        property={property}
-        onChange={(n) => {
-          obj[property] = n;
-        }}
-      />
-    );
+    return <NumberControl obj={obj} property={property} />;
   }
 
   if (isGameObj(value)) {

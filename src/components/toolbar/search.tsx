@@ -1,5 +1,6 @@
 import { useEffect, useState } from "preact/hooks";
 import { useApp } from "../../lib/app-context";
+import { X } from "lucide-preact";
 
 export const Search = () => {
   const {
@@ -67,9 +68,7 @@ export const Search = () => {
         onClick={() => setSearchInputValue("")}
         aria-label="Clear search"
       >
-        <svg viewBox="0 0 16 16" aria-hidden="true">
-          <path d="M 1 1 L 15 15 M 1 15 L 15 1" />
-        </svg>
+        <X />
       </button>
     </div>
   );

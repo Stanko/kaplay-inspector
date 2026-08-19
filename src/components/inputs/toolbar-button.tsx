@@ -6,6 +6,7 @@ interface ToolbarButtonProps {
   tooltip?: string;
   children: JSX.Element | string;
   onClick?: () => void;
+  disabled?: boolean;
 }
 
 export const ToolbarButton = ({
@@ -13,9 +14,14 @@ export const ToolbarButton = ({
   children,
   onClick,
   className = "",
+  disabled = false,
 }: ToolbarButtonProps) => {
   return (
-    <button class={cx("ki-btn", "ki-toolbar-btn", className)} onClick={onClick}>
+    <button
+      class={cx("ki-toolbar-btn", className)}
+      onClick={onClick}
+      disabled={disabled}
+    >
       {children}
       {tooltip && <span class="ki-toolbar-btn__tooltip">{tooltip}</span>}
     </button>

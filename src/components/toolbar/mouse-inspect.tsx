@@ -1,6 +1,7 @@
 import { useEffect } from "preact/hooks";
 import { useApp } from "../../lib/app-context";
 import { SquareMousePointer } from "lucide-preact";
+import { ToolbarButtonToggle } from "../inputs/toolbar-toggle-button";
 
 export const MouseInspect = () => {
   const {
@@ -56,13 +57,12 @@ export const MouseInspect = () => {
   ]);
 
   return (
-    <label>
-      <input
-        type="checkbox"
-        checked={isMouseInspectActive}
-        onChange={() => setMouseInspectActive(!isMouseInspectActive)}
-      />
+    <ToolbarButtonToggle
+      checked={isMouseInspectActive}
+      onChange={() => setMouseInspectActive(!isMouseInspectActive)}
+      tooltip="Inspect an Object"
+    >
       <SquareMousePointer />
-    </label>
+    </ToolbarButtonToggle>
   );
 };

@@ -51,21 +51,15 @@ export const Inspector = () => {
     <>
       <div class="k-inspector__header">
         <PauseGame />
-        <div class="ki-separator" />
-        <Search />
-        <div class="ki-separator" />
-        <div>{k.get("*", { recursive: true }).length} objects</div>
-        <div class="ki-separator" />
-        <div class={fpsColor}>{fps} fps</div>
-        <div class="ki-separator" />
-        <UpdateInterval />
-        <div class="ki-separator" />
         <DrawBBox />
-        <div class="ki-separator" />
         <MouseInspect />
-        <div class="ki-separator" />
         <Recorder />
         <Textures />
+        <UpdateInterval />
+        <Search />
+        <div>{k.get("*", { recursive: true }).length} objects</div>
+        <div class={fpsColor}>{fps} fps</div>
+
         <button class="ki-btn k-inspector__hide" onClick={toggleVisibility}>
           Hide
         </button>

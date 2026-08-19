@@ -1,11 +1,11 @@
 import type { GameObj } from "kaplay";
 import { useCallback, useEffect, useState } from "preact/hooks";
-import { MinusIcon, PlusIcon } from "../components/icons";
 import { cx } from "../lib/cx";
 import { getObjectInfo } from "../lib/get-object-info";
 import { Breadcrumbs } from "./breadcrumbs";
 import { BooleanComp } from "./controls/boolean-control";
 import { useApp } from "../lib/app-context";
+import { MinusSquare, PlusSquare } from "lucide-preact";
 
 export interface GameObjectProps {
   className?: string;
@@ -77,9 +77,9 @@ export const GameObject = ({
             onClick={handleToggleClick}
           >
             {isExpanded ? (
-              <MinusIcon className="game-object__expand-icon" />
+              <MinusSquare className="game-object__expand-icon" />
             ) : (
-              <PlusIcon className="game-object__expand-icon" />
+              <PlusSquare className="game-object__expand-icon" />
             )}
             <div class="game-object__id">ID {obj.id}:</div>
             {tags ? (
