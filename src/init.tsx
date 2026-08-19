@@ -1,6 +1,6 @@
 import { render } from "preact";
 import { Inspector } from "./components/inspector";
-import { setK, type KAPLAYCtxType } from "./k";
+import type { KAPLAYCtxType } from "./kaplay";
 
 export interface InspectorOptions {
   initUpdateTimeout?: number;
@@ -21,9 +21,6 @@ export default function init(k: KAPLAYCtxType, props: InspectorOptions = {}) {
     saveSearch = true,
   } = props;
 
-  // Set kaplay context to be imported directly from components to reduce prop drilling
-  setK(k);
-
   const appElement = document.createElement("div");
   appElement.className = `k-inspector ${className}`;
 
@@ -31,6 +28,7 @@ export default function init(k: KAPLAYCtxType, props: InspectorOptions = {}) {
 
   render(
     <Inspector
+      k={k}
       initUpdateTimeout={initUpdateTimeout}
       isVisibleOnLoad={isVisibleOnLoad}
       initDrawInspectOnHover={initDrawInspectOnHover}

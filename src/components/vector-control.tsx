@@ -1,6 +1,6 @@
 import { cx } from "../lib/cx";
 import { NumberInput } from "./number-input";
-import { k } from "../k";
+import { useInspector } from "./inspector-context";
 
 export interface VectorControlProps {
   className?: string;
@@ -21,6 +21,8 @@ export const VectorControl = ({
   step,
   inPlace = false,
 }: VectorControlProps) => {
+  const { k } = useInspector();
+
   if (obj[property] === undefined) {
     return null;
   }

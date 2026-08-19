@@ -6,15 +6,13 @@ import { drawBoundingBox } from "../lib/draw-bbox";
 import { getObjectInfo } from "../lib/get-object-info";
 import { Breadcrumbs } from "./breadcrumbs";
 import { BooleanComp } from "./boolean-comp";
-import { k } from "../k";
+import { useInspector } from "./inspector-context";
 
 export interface GameObjectProps {
   className?: string;
   obj: GameObj;
-  setRenderRoot: (obj: GameObj) => void;
   isExpanded?: boolean;
   isRenderRoot?: boolean;
-  shouldDrawInspect: boolean;
 }
 
 export const GameObject = ({
@@ -22,9 +20,8 @@ export const GameObject = ({
   className = "",
   isExpanded: isExpandedExternal = false,
   isRenderRoot,
-  setRenderRoot,
-  shouldDrawInspect,
 }: GameObjectProps) => {
+  const { k, setRoot, shouldDrawInspect } = useInspector();
   const [isExpanded, setIsExpanded] = useState(isExpandedExternal);
   const updateControllers = useRef<KEventController[]>([]);
 
@@ -47,13 +44,13 @@ export const GameObject = ({
     if (!obj.hidden) {
       const updateController = k.onDraw(() => {
         k.pushTransform();
-        drawBoundingBox(obj);
+        drawBoundingBox(obj, k);
         obj.drawInspect();
         k.popTransform();
       });
       updateControllers.current.push(updateController);
     }
-  }, []);
+  }, [k]);
 
   useEffect(() => {
     return () => {
@@ -84,7 +81,7 @@ export const GameObject = ({
       })}
       key={obj.id}
     >
-      {isInspecting && <Breadcrumbs setRenderRoot={setRenderRoot} obj={obj} />}
+      {isInspecting && <Breadcrumbs obj={obj} />}
       <div
         class="game-object__content"
         onMouseEnter={handleMouseEnter}
@@ -120,7 +117,7 @@ export const GameObject = ({
               <button class="ki-btn ki-btn--red" onClick={() => obj.destroy()}>
                 destroy
               </button>
-              <button class="ki-btn" onClick={() => setRenderRoot(obj)}>
+              <button class="ki-btn" onClick={() => setRoot(obj)}>
                 inspect
               </button>
             </>
@@ -164,8 +161,6 @@ export const GameObject = ({
             <GameObject
               obj={child}
               key={child.id}
-              setRenderRoot={setRenderRoot}
-              shouldDrawInspect={shouldDrawInspect}
             />
           ))}
         </div>

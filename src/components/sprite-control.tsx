@@ -1,7 +1,6 @@
 import type { GameObj, SpriteComp } from "kaplay";
 
 export interface SpriteControlProps {
-  className?: string;
   obj: GameObj;
 }
 

@@ -1,13 +1,13 @@
 import type { GameObj } from "kaplay";
-import { k } from "../k";
 import { getObjectInfo } from "../lib/get-object-info";
+import { useInspector } from "./inspector-context";
 
 interface BreadcrumbsProps {
   obj: GameObj;
-  setRenderRoot: (obj: GameObj) => void;
 }
 
-export const Breadcrumbs = ({ obj, setRenderRoot }: BreadcrumbsProps) => {
+export const Breadcrumbs = ({ obj }: BreadcrumbsProps) => {
+  const { k, setRoot } = useInspector();
   const breadcrumbs = [];
 
   let parent = obj.parent;
@@ -40,7 +40,7 @@ export const Breadcrumbs = ({ obj, setRenderRoot }: BreadcrumbsProps) => {
     <div class="breadcrumbs">
       Back to
       {breadcrumbs.map((breadcrumb) => (
-        <button class="ki-btn" onClick={() => setRenderRoot(breadcrumb.object)}>
+        <button class="ki-btn" onClick={() => setRoot(breadcrumb.object)}>
           ID {breadcrumb.id}: {breadcrumb.tags || breadcrumb.compsLabel}
         </button>
       ))}

@@ -1,14 +1,23 @@
-import { useCallback, useEffect, useRef, useState } from "preact/hooks";
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "preact/hooks";
 import type { InspectorOptions } from "../init";
 import { GameObject } from "./game-object";
 import { useObjectBoolean } from "./boolean-comp";
 import type { GameObj } from "kaplay";
 import { SearchResults } from "./search-results";
-import { k } from "../k";
 import { Recorder } from "./recorder";
 import { getFpsColor } from "../lib/get-fps-color";
+import { InspectorContext } from "./inspector-context";
+import type { KAPLAYCtxType } from "../kaplay";
 
-export interface InspectorProps extends InspectorOptions {}
+export interface InspectorProps extends InspectorOptions {
+  k: KAPLAYCtxType;
+}
 
 const INTERVAL_OPTIONS = [
   { value: 100, label: "100ms" },
@@ -23,6 +32,7 @@ const LS_VISIBLE_STATE = "ki__is-visible";
 const LS_SEARCH_TERM = "ki__search-term";
 
 export const Inspector = ({
+  k,
   initUpdateTimeout = 250,
   isVisibleOnLoad = true,
   initDrawInspectOnHover = true,
@@ -104,11 +114,16 @@ export const Inspector = ({
         k.get(searchQuery, { recursive: true, liveUpdate: true }),
       );
     }, TYPING_TIMEOUT);
-  }, [searchQuery]);
+  }, [k, searchQuery]);
 
   const handleSearchInput = (e: Event) => {
     setSearchTerm((e.target as HTMLInputElement).value);
   };
+
+  const contextValue = useMemo(
+    () => ({ k, setRoot, shouldDrawInspect }),
+    [k, setRoot, shouldDrawInspect],
+  );
 
   if (!isVisible) {
     return (
@@ -122,7 +137,7 @@ export const Inspector = ({
   const fpsColor = getFpsColor(fps);
 
   return (
-    <>
+    <InspectorContext.Provider value={contextValue}>
       <div class="k-inspector__header">
         <button class="ki-btn" onClick={() => paused.onChange(!paused.checked)}>
           {paused.checked ? "Resume Game" : "Pause Game"}
@@ -175,20 +190,16 @@ export const Inspector = ({
         {searchQuery.length > 0 ? (
           <SearchResults
             results={searchResults}
-            setRenderRoot={setRoot}
-            shouldDrawInspect={shouldDrawInspect}
           />
         ) : (
           <GameObject
             className="game-object--root"
             obj={root}
-            setRenderRoot={setRoot}
-            shouldDrawInspect={shouldDrawInspect}
             isExpanded
             isRenderRoot
           />
         )}
       </div>
-    </>
+    </InspectorContext.Provider>
   );
 };

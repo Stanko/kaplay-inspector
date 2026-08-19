@@ -1,5 +1,5 @@
 import type { Anchor, GameObj } from "kaplay";
-import { k } from "../k";
+import type { KAPLAYCtxType } from "../kaplay";
 
 const anchorMap: Record<Anchor, [x: number, y: number]> = {
   topleft: [-1, -1],
@@ -13,7 +13,7 @@ const anchorMap: Record<Anchor, [x: number, y: number]> = {
   botright: [1, 1],
 };
 
-export const drawBoundingBox = (obj: GameObj) => {
+export const drawBoundingBox = (obj: GameObj, k: KAPLAYCtxType) => {
   if (obj.renderArea) {
     const localArea = obj.renderArea();
     const transform = obj.transform.clone();
@@ -50,7 +50,7 @@ export const drawBoundingBox = (obj: GameObj) => {
 
   obj.children.forEach((child) => {
     if (!child.hidden) {
-      drawBoundingBox(child);
+      drawBoundingBox(child, k);
     }
   });
 };

@@ -1,4 +1,4 @@
-import { k } from "../k";
+import type { KAPLAYCtxType } from "../kaplay";
 
 const mimeTypes = [
   "video/webm;codecs=vp9,opus",
@@ -15,7 +15,7 @@ const BITS_PER_PIXEL_PER_FRAME = 0.32;
 const FPS = 60;
 const MAX_VIDEO_BITS_PER_SECOND = 40_000_000; // ~40 mbps
 
-export const recorder = () => {
+export const recorder = (k: KAPLAYCtxType) => {
   const mimeType = mimeTypes.find((type) =>
     MediaRecorder.isTypeSupported(type),
   );

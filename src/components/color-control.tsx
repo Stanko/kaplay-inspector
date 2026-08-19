@@ -3,7 +3,6 @@ import { useEffect, useState } from "preact/hooks";
 import { cx } from "../lib/cx";
 
 export interface ColorControlProps {
-  className?: string;
   obj: GameObj;
 }
 
