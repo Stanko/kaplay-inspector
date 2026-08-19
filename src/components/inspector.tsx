@@ -11,6 +11,7 @@ import type { KAPLAYCtxType } from "../kaplay";
 import { useInspectOverlay } from "../hooks/use-inspect-overlay";
 import { LS_SEARCH_QUERY, useObjectSearch } from "../hooks/use-object-search";
 import { useMouseInspect } from "../hooks/use-mouse-inspect";
+import { Textures } from "./textures";
 
 export interface InspectorProps extends InspectorOptions {
   k: KAPLAYCtxType;
@@ -50,6 +51,10 @@ export const Inspector = ({
     },
     [saveVisibleState],
   );
+
+  const toggleVisibility = () => {
+    setIsVisible(!isVisible);
+  };
 
   // Search
   const savedSearchTerm = saveSearch
@@ -98,10 +103,6 @@ export const Inspector = ({
 
     return () => clearInterval(interval);
   }, [renderIndex, updateTimeout]);
-
-  const toggleVisibility = () => {
-    setIsVisible(!isVisible);
-  };
 
   const handleSearchInput = (e: Event) => {
     setSearchTerm((e.target as HTMLInputElement).value);
@@ -196,6 +197,7 @@ export const Inspector = ({
         </label>
         <div class="ki-separator" />
         <Recorder />
+        <Textures />
         <button class="ki-btn k-inspector__hide" onClick={toggleVisibility}>
           Hide
         </button>

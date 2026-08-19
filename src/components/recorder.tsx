@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "preact/hooks";
 import { recorder } from "../lib/video-recorder";
 import { useInspector } from "./inspector-context";
+import { ToolbarButton } from "./toolbar-button";
 
 export const Recorder = () => {
   const { k } = useInspector();
@@ -32,8 +33,8 @@ export const Recorder = () => {
   }, []);
 
   return (
-    <button
-      class="ki-btn"
+    <ToolbarButton
+      tooltip={isRecording ? "Stop Recording" : "Record Video"}
       onClick={() => {
         if (isRecording) {
           stop();
@@ -42,7 +43,7 @@ export const Recorder = () => {
         }
       }}
     >
-      {isRecording ? "Stop" : "Record"}
-    </button>
+      R
+    </ToolbarButton>
   );
 };

@@ -167,6 +167,30 @@
     border-color: var(--ki-red);
   }
 
+  /* Toolbar buttons */
+
+  .ki-toolbar-btn {
+    position: relative;
+  }
+
+  .ki-toolbar-btn__tooltip {
+    position: absolute;
+    width: max-content;
+    left: 50%;
+    transform: translateX(-50%);
+    top: calc(100% + 0.5rem);
+    background: black;
+    color: white;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    display: none;
+  }
+
+  .ki-toolbar-btn:hover .ki-toolbar-btn__tooltip,
+  .ki-toolbar-btn:focus-visible .ki-toolbar-btn__tooltip {
+    display: block;
+  }
+
   /* Main layout */
 
   .k-inspector__header {

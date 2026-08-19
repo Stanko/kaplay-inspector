@@ -30,7 +30,7 @@
   "devDependencies": {
     "@preact/preset-vite": "^2.10.6",
     "@types/node": "^26.2.0",
-    "kaplay": "^4000.0.0-alpha.26",
+    "kaplay": "^4000.0.0-alpha.27.1",
     "typescript": "^6.0.3",
     "vite": "^8.2.1"
   },
