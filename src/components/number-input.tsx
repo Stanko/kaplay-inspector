@@ -33,7 +33,7 @@ export const NumberInput = ({
   }, [obj[property], isFocused]);
 
   // Has to be after hooks
-  if (obj[property] === undefined) {
+  if (typeof obj[property] !== "number") {
     return null;
   }
 

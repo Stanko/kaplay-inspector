@@ -18,14 +18,13 @@ export const HoldButton = ({
   startRepeatingDelay = 200,
   onHoldEnd,
 }: HoldButtonProps) => {
-  // const [isActive, setIsActive] = useState(false);
+  const buttonRef = useRef<HTMLButtonElement>(null);
   const timerRef = useRef<ReturnType<typeof setTimeout>>();
+  const pointerIdRef = useRef<number>(0);
   const onClickAndHoldRef = useRef(onClickAndHold);
   const onHoldEndRef = useRef(onHoldEnd);
 
   const startTimer = useCallback(() => {
-    stopTimer();
-    // setIsActive(true);
     // Trigger once immediately
     onClickAndHoldRef.current();
 
@@ -41,21 +40,16 @@ export const HoldButton = ({
   }, [interval, startRepeatingDelay]);
 
   const stopTimer = useCallback(() => {
-    // setIsActive(false);
     clearTimeout(timerRef.current);
     clearInterval(timerRef.current);
+
+    if (buttonRef.current?.hasPointerCapture(pointerIdRef.current)) {
+      buttonRef.current.releasePointerCapture(pointerIdRef.current);
+    }
   }, []);
 
-  const handleHoldEnd = useCallback(() => {
-    // console.log("---------end", isActive);
-    // if (isActive) {
-    stopTimer();
-    onHoldEndRef.current?.();
-    // }
-  }, [
-    stopTimer,
-    // , isActive
-  ]);
+  // Clear timer on unmount
+  useEffect(() => stopTimer, [stopTimer]);
 
   // Keep references updated to the latest callbacks
   // This ensures the interval always calls the latest version
@@ -63,26 +57,51 @@ export const HoldButton = ({
     onClickAndHoldRef.current = onClickAndHold;
   }, [onClickAndHold]);
   useEffect(() => {
-    onClickAndHoldRef.current = onClickAndHold;
-  }, [onClickAndHold]);
+    onHoldEndRef.current = onHoldEnd;
+  }, [onHoldEnd]);
 
-  // Use document on mouseup and touchend for nicer UX
-  useEffect(() => {
-    document.addEventListener("mouseup", handleHoldEnd);
-    document.addEventListener("touchend", handleHoldEnd);
-
-    return () => {
+  const handlePointerDown = useCallback(
+    (e: PointerEvent) => {
+      if (e.button !== 0) {
+        return;
+      }
       stopTimer();
-      document.removeEventListener("mouseup", handleHoldEnd);
-      document.removeEventListener("touchend", handleHoldEnd);
-    };
-  }, [handleHoldEnd]);
+      e.preventDefault();
+      pointerIdRef.current = e.pointerId;
+      buttonRef.current?.setPointerCapture(e.pointerId);
+      startTimer();
+    },
+    [startTimer, stopTimer],
+  );
+
+  const handlePointerEnd = useCallback(() => {
+    stopTimer();
+    onHoldEndRef.current?.();
+  }, [stopTimer]);
+
+  const handleKeyDown = useCallback((e: KeyboardEvent) => {
+    if (e.key === "Enter") {
+      onClickAndHoldRef.current();
+      e.preventDefault();
+    }
+  }, []);
+
+  const handleKeyboardEnd = useCallback((e: KeyboardEvent) => {
+    if (e.key === "Enter") {
+      onHoldEndRef.current?.();
+    }
+  }, []);
 
   return (
     <button
+      ref={buttonRef}
       className={className}
-      onMouseDown={startTimer}
-      onTouchStart={startTimer}
+      onPointerDown={handlePointerDown}
+      onPointerUp={handlePointerEnd}
+      onPointerCancel={handlePointerEnd}
+      onLostPointerCapture={handlePointerEnd}
+      onKeyDown={handleKeyDown}
+      onKeyUp={handleKeyboardEnd}
     >
       {children}
     </button>
