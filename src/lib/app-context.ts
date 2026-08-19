@@ -16,12 +16,13 @@ interface AppState {
 
 interface AppContextValue extends AppState {
   k: KAPLAYCtxType;
-  setAppState: (state: Partial<AppState>) => void;
   setRoot: (obj: GameObj) => void;
   searchQuery: string;
   toggleVisibility: () => void;
   setSearchResults: (results: GameObj[]) => void;
   setSearchInputValue: (value: string) => void;
+  setUpdateInterval: (value: number) => void;
+  setDrawBBoxActive: (value: boolean) => void;
 }
 
 export const AppContext = createContext<AppContextValue | null>(null);

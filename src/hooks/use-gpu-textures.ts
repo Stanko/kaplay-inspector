@@ -1,5 +1,5 @@
 import type { Texture } from "kaplay";
-import { useInspector } from "../components/inspector-context";
+import { useApp } from "../lib/app-context";
 
 const gpuTextureToDataURL = (texture: Texture) => {
   const { gl } = texture.ctx;
@@ -54,7 +54,7 @@ const gpuTextureToDataURL = (texture: Texture) => {
 };
 
 export const useGpuTextures = () => {
-  const { k } = useInspector();
+  const { k } = useApp();
 
   const getTextures = () => {
     const { packer } = k._k.assets;

@@ -1,7 +1,7 @@
 import type { GameObj, AnchorComp } from "kaplay";
 import { cx } from "../lib/cx";
 import { VectorControl } from "./vector-control";
-import { useInspector } from "./inspector-context";
+import { useApp } from "../lib/app-context";
 
 export interface AnchorControlProps {
   className?: string;
@@ -15,7 +15,7 @@ const strings = [
 ] as const;
 
 export const AnchorControl = ({ className = "", obj }: AnchorControlProps) => {
-  const { k } = useInspector();
+  const { k } = useApp();
   const object = obj as GameObj<AnchorComp>;
 
   const isString = typeof obj.anchor === "string";

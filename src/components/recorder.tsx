@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from "preact/hooks";
 import { recorder } from "../lib/video-recorder";
-import { useInspector } from "./inspector-context";
 import { ToolbarButton } from "./toolbar-button";
+import { useApp } from "../lib/app-context";
 
 export const Recorder = () => {
-  const { k } = useInspector();
+  const { k } = useApp();
   const rec = useRef<MediaRecorder | null>(null);
   const [isRecording, setIsRecording] = useState(false);
 

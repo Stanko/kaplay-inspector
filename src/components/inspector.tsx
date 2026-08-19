@@ -11,13 +11,7 @@ import { Textures } from "./textures";
 import { useApp } from "../lib/app-context";
 import { DrawBBox } from "./draw-bb-box";
 import { Search } from "./search";
-
-const INTERVAL_OPTIONS = [
-  { value: 100, label: "100ms" },
-  { value: 250, label: "250ms" },
-  { value: 500, label: "500ms" },
-  { value: 1000, label: "1s" },
-];
+import { UpdateInterval } from "./update-interval";
 
 export const Inspector = () => {
   const {
@@ -29,11 +23,10 @@ export const Inspector = () => {
     toggleVisibility,
     searchResults,
     searchQuery,
+    updateInterval,
   } = useApp();
 
-  // Update timeout and force re-render
-  const [updateTimeout, setUpdateTimeout] = useState(250);
-  const [renderIndex, setRenderIndex] = useState(0);
+  const [, setRenderIndex] = useState(0);
 
   const { setInspectObject, clearInspectObject } = useInspectOverlay(
     k,
@@ -50,14 +43,14 @@ export const Inspector = () => {
   // Game root paused state
   const paused = useObjectBoolean(k.getTreeRoot(), "paused");
 
-  // Force re-render every updateTimeout milliseconds
+  // Force re-render every updateInterval milliseconds
   useEffect(() => {
     const interval = setInterval(() => {
-      setRenderIndex(renderIndex + 1);
-    }, updateTimeout);
+      setRenderIndex((index) => index + 1);
+    }, updateInterval);
 
     return () => clearInterval(interval);
-  }, [renderIndex, updateTimeout]);
+  }, [updateInterval]);
 
   const contextValue = useMemo(
     () => ({
@@ -93,21 +86,7 @@ export const Inspector = () => {
         <div class="ki-separator" />
         <div class={fpsColor}>{fps} fps</div>
         <div class="ki-separator" />
-        <div class="k-inspector__interval">
-          Update:
-          {INTERVAL_OPTIONS.map((option) => (
-            <label key={option.value}>
-              <input
-                type="radio"
-                name="interval"
-                value={option.value}
-                checked={updateTimeout === option.value}
-                onChange={() => setUpdateTimeout(option.value)}
-              />
-              {option.label}
-            </label>
-          ))}
-        </div>
+        <UpdateInterval />
         <div class="ki-separator" />
         <DrawBBox disabled={shouldMouseInspect} />
         <div class="ki-separator" />

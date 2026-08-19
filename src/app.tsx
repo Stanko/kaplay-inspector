@@ -71,20 +71,44 @@ export const App = ({ k }: AppProps) => {
     [setAppState],
   );
 
+  const setUpdateInterval = useCallback(
+    (value: number) => {
+      setAppState({ updateInterval: value });
+    },
+    [setAppState],
+  );
+
+  const setDrawBBoxActive = useCallback(
+    (value: boolean) => {
+      setAppState({ isDrawBBoxActive: value });
+    },
+    [setAppState],
+  );
+
   const contextValue = useMemo(
     () => ({
       k,
-      setAppState,
       // Actions
       setRoot,
       toggleVisibility,
       setSearchResults,
       setSearchInputValue,
+      setUpdateInterval,
+      setDrawBBoxActive,
       // State
       searchQuery,
       ...appState,
     }),
-    [k, setAppState, setRoot, appState],
+    [
+      k,
+      setRoot,
+      toggleVisibility,
+      setSearchResults,
+      setSearchInputValue,
+      setUpdateInterval,
+      setDrawBBoxActive,
+      appState,
+    ],
   );
 
   return (

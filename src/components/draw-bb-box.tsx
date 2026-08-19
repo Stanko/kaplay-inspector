@@ -5,7 +5,7 @@ interface DrawBBoxProps {
 }
 
 export const DrawBBox = ({ disabled = false }: DrawBBoxProps) => {
-  const { isDrawBBoxActive, setAppState } = useApp();
+  const { isDrawBBoxActive, setDrawBBoxActive } = useApp();
 
   return (
     <label>
@@ -13,11 +13,7 @@ export const DrawBBox = ({ disabled = false }: DrawBBoxProps) => {
         disabled={disabled}
         type="checkbox"
         checked={isDrawBBoxActive}
-        onChange={() =>
-          setAppState({
-            isDrawBBoxActive: !isDrawBBoxActive,
-          })
-        }
+        onChange={() => setDrawBBoxActive(!isDrawBBoxActive)}
       />
       Draw bbox on hover
     </label>
