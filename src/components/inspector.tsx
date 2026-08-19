@@ -6,11 +6,11 @@ import { Recorder } from "./recorder";
 import { getFpsColor } from "../lib/get-fps-color";
 import { InspectorContext } from "./inspector-context";
 import { useInspectOverlay } from "../hooks/use-inspect-overlay";
-import { useObjectSearch } from "../hooks/use-object-search";
 import { useMouseInspect } from "../hooks/use-mouse-inspect";
 import { Textures } from "./textures";
 import { useApp } from "../lib/app-context";
 import { DrawBBox } from "./draw-bb-box";
+import { Search } from "./search";
 
 const INTERVAL_OPTIONS = [
   { value: 100, label: "100ms" },
@@ -20,12 +20,16 @@ const INTERVAL_OPTIONS = [
 ];
 
 export const Inspector = () => {
-  const { k, root, setRoot, isDrawBBoxActive, isVisible, toggleVisibility } =
-    useApp();
-
-  // Search
-  const { searchResults, searchQuery, searchTerm, setSearchTerm } =
-    useObjectSearch(k);
+  const {
+    k,
+    root,
+    setRoot,
+    isDrawBBoxActive,
+    isVisible,
+    toggleVisibility,
+    searchResults,
+    searchQuery,
+  } = useApp();
 
   // Update timeout and force re-render
   const [updateTimeout, setUpdateTimeout] = useState(250);
@@ -55,10 +59,6 @@ export const Inspector = () => {
     return () => clearInterval(interval);
   }, [renderIndex, updateTimeout]);
 
-  const handleSearchInput = (e: Event) => {
-    setSearchTerm((e.target as HTMLInputElement).value);
-  };
-
   const contextValue = useMemo(
     () => ({
       k,
@@ -87,25 +87,7 @@ export const Inspector = () => {
           {paused.checked ? "Resume Game" : "Pause Game"}
         </button>
         <div class="ki-separator" />
-        <div class="k-inspector__search">
-          <input
-            placeholder="Search tags or comps"
-            type="text"
-            class="ki-input k-inspector__search-input"
-            onInput={handleSearchInput}
-            value={searchTerm}
-          />
-
-          <button
-            class="k-inspector__search-clear"
-            onClick={() => setSearchTerm("")}
-            aria-label="Clear search"
-          >
-            <svg viewBox="0 0 16 16" aria-hidden="true">
-              <path d="M 1 1 L 15 15 M 1 15 L 15 1" />
-            </svg>
-          </button>
-        </div>
+        <Search />
         <div class="ki-separator" />
         <div>{k.get("*", { recursive: true }).length} objects</div>
         <div class="ki-separator" />

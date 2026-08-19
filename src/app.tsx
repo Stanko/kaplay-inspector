@@ -43,11 +43,11 @@ export const App = ({ k }: AppProps) => {
     setAppStateRaw((prevState) => ({ ...prevState, ...value }));
   }, []);
 
+  // Actions
   const toggleVisibility = useCallback(() => {
     setAppState({ isVisible: !appState.isVisible });
   }, [appState.isVisible, setAppState]);
 
-  // Actions
   const setRoot = useCallback((object: GameObj) => {
     setAppState({
       root: object,
@@ -56,6 +56,21 @@ export const App = ({ k }: AppProps) => {
       searchInputValue: "",
     });
   }, []);
+
+  const setSearchResults = useCallback(
+    (results: GameObj[]) => {
+      setAppState({ searchResults: results });
+    },
+    [setAppState],
+  );
+
+  const setSearchInputValue = useCallback(
+    (value: string) => {
+      setAppState({ searchInputValue: value });
+    },
+    [setAppState],
+  );
+
   const contextValue = useMemo(
     () => ({
       k,
@@ -63,6 +78,8 @@ export const App = ({ k }: AppProps) => {
       // Actions
       setRoot,
       toggleVisibility,
+      setSearchResults,
+      setSearchInputValue,
       // State
       searchQuery,
       ...appState,

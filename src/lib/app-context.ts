@@ -20,6 +20,8 @@ interface AppContextValue extends AppState {
   setRoot: (obj: GameObj) => void;
   searchQuery: string;
   toggleVisibility: () => void;
+  setSearchResults: (results: GameObj[]) => void;
+  setSearchInputValue: (value: string) => void;
 }
 
 export const AppContext = createContext<AppContextValue | null>(null);
