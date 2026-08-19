@@ -144,9 +144,10 @@ Same as with colors, be sure to have a higher specificity selector if inspector'
 
 - [ ] Controllable theme - system/light/dark. At the moment it is always matching the system.
 - [ ] Mouse inspect
-- [ ] Draw bounding box on top of everything
 - [ ] Add clear button on search
 - [ ] Nested game objects
-- [ ] Fix Inspect not working on search
+- [ ] On scene change live search doesn't work
+- [x] Draw bounding box on top of everything
+- [x] Fix Inspect not working on search
 - [x] Persist search/options in URL or local storage
 - [x] Persist is visible in local storage

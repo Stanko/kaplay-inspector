@@ -1,8 +1,7 @@
-import type { GameObj, KEventController } from "kaplay";
-import { useCallback, useEffect, useRef, useState } from "preact/hooks";
+import type { GameObj } from "kaplay";
+import { useCallback, useEffect, useState } from "preact/hooks";
 import { MinusIcon, PlusIcon } from "../components/icons";
 import { cx } from "../lib/cx";
-import { drawBoundingBox } from "../lib/draw-bbox";
 import { getObjectInfo } from "../lib/get-object-info";
 import { Breadcrumbs } from "./breadcrumbs";
 import { BooleanComp } from "./boolean-comp";
@@ -21,9 +20,9 @@ export const GameObject = ({
   isExpanded: isExpandedExternal = false,
   isRenderRoot,
 }: GameObjectProps) => {
-  const { k, setRoot, shouldDrawInspect } = useInspector();
+  const { setRoot, setInspectObject, clearInspectObject, shouldDrawInspect } =
+    useInspector();
   const [isExpanded, setIsExpanded] = useState(isExpandedExternal);
-  const updateControllers = useRef<KEventController[]>([]);
 
   const { compsData, tags, compsLabel } = getObjectInfo(obj);
   const isRootObject = obj.id === 0;
@@ -35,37 +34,19 @@ export const GameObject = ({
 
   const isInspecting = isRenderRoot && obj.id !== 0;
 
-  const cancelUpdateControllers = useCallback(() => {
-    updateControllers.current.forEach((controller) => controller.cancel());
-    updateControllers.current = [];
-  }, []);
+  const cleanup = useCallback(() => {
+    clearInspectObject(obj);
+  }, [clearInspectObject, obj]);
 
-  const drawInspect = useCallback((obj: GameObj) => {
-    if (!obj.hidden) {
-      const updateController = k.onDraw(() => {
-        k.pushTransform();
-        drawBoundingBox(obj, k);
-        obj.drawInspect();
-        k.popTransform();
-      });
-      updateControllers.current.push(updateController);
-    }
-  }, [k]);
-
-  useEffect(() => {
-    return () => {
-      cancelUpdateControllers();
-    };
-  }, []);
+  useEffect(() => cleanup, [cleanup]);
 
   const handleToggleClick = () => {
     setIsExpanded(!isExpanded);
   };
 
   const handleMouseEnter = () => {
-    cancelUpdateControllers();
-    if (!isRootObject && shouldDrawInspect) {
-      drawInspect(obj);
+    if (!isRootObject && shouldDrawInspect && !obj.hidden) {
+      setInspectObject(obj);
     }
   };
 
@@ -85,7 +66,7 @@ export const GameObject = ({
       <div
         class="game-object__content"
         onMouseEnter={handleMouseEnter}
-        onMouseLeave={cancelUpdateControllers}
+        onMouseLeave={cleanup}
       >
         <button
           class={cx("game-object__header", {
@@ -158,10 +139,7 @@ export const GameObject = ({
           style={{ display: isExpanded ? "block" : "none" }}
         >
           {obj.children.map((child) => (
-            <GameObject
-              obj={child}
-              key={child.id}
-            />
+            <GameObject obj={child} key={child.id} />
           ))}
         </div>
       )}

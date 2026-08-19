@@ -6,6 +6,8 @@ import type { KAPLAYCtxType } from "../kaplay";
 interface InspectorContextValue {
   k: KAPLAYCtxType;
   setRoot: (obj: GameObj) => void;
+  setInspectObject: (obj: GameObj | null) => void;
+  clearInspectObject: (obj: GameObj) => void;
   shouldDrawInspect: boolean;
 }
 

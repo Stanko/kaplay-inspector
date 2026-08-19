@@ -14,6 +14,7 @@ import { Recorder } from "./recorder";
 import { getFpsColor } from "../lib/get-fps-color";
 import { InspectorContext } from "./inspector-context";
 import type { KAPLAYCtxType } from "../kaplay";
+import { useInspectOverlay } from "../hooks/use-inspect-overlay";
 
 export interface InspectorProps extends InspectorOptions {
   k: KAPLAYCtxType;
@@ -60,6 +61,10 @@ export const Inspector = ({
   const [searchResults, setSearchResults] = useState<GameObj[]>([]);
   const typingTimeout = useRef<ReturnType<typeof setTimeout>>();
   const searchQuery = searchTerm.trim();
+  const { setInspectObject, clearInspectObject } = useInspectOverlay(
+    k,
+    shouldDrawInspect,
+  );
 
   const setRoot = useCallback((value: GameObj) => {
     setSearchTerm("");
@@ -121,8 +126,20 @@ export const Inspector = ({
   };
 
   const contextValue = useMemo(
-    () => ({ k, setRoot, shouldDrawInspect }),
-    [k, setRoot, shouldDrawInspect],
+    () => ({
+      k,
+      setRoot,
+      setInspectObject,
+      clearInspectObject,
+      shouldDrawInspect,
+    }),
+    [
+      k,
+      setRoot,
+      setInspectObject,
+      clearInspectObject,
+      shouldDrawInspect,
+    ],
   );
 
   if (!isVisible) {
