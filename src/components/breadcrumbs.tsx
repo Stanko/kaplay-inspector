@@ -10,28 +10,28 @@ export const Breadcrumbs = ({ obj }: BreadcrumbsProps) => {
   const { k, setRoot } = useInspector();
   const breadcrumbs = [];
 
-  let parent = obj.parent;
+  if (obj.exists()) {
+    let parent = obj.parent;
 
-  while (parent) {
-    const { tags, compsLabel } = getObjectInfo(parent);
+    while (parent) {
+      const { tags, compsLabel } = getObjectInfo(parent);
 
-    breadcrumbs.unshift({
-      id: parent.id,
-      tags,
-      compsLabel,
-      object: parent,
-    });
+      breadcrumbs.unshift({
+        id: parent.id,
+        tags,
+        compsLabel,
+        object: parent,
+      });
 
-    parent = parent.parent;
-  }
-
-  // TODO for destroyed objects always add root as a breadcrumb
-  if (breadcrumbs.length === 0) {
+      parent = parent.parent;
+    }
+  } else {
     const root = k.getTreeRoot();
+
     breadcrumbs.push({
       id: root.id,
-      tags: root.tags,
-      compsLabel: root.compsLabel,
+      tags: "Root",
+      compsLabel: "Root",
       object: root,
     });
   }
@@ -40,7 +40,10 @@ export const Breadcrumbs = ({ obj }: BreadcrumbsProps) => {
     <div class="breadcrumbs">
       Back to
       {breadcrumbs.map((breadcrumb) => (
-        <button class="ki-btn" onClick={() => setRoot(breadcrumb.object)}>
+        <button
+          class="ki-btn breadcrumbs__item"
+          onClick={() => setRoot(breadcrumb.object)}
+        >
           ID {breadcrumb.id}: {breadcrumb.tags || breadcrumb.compsLabel}
         </button>
       ))}

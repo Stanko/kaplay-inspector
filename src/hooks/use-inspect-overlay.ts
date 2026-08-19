@@ -1,9 +1,12 @@
 import type { GameObj } from "kaplay";
 import { useCallback, useEffect, useRef } from "preact/hooks";
-import type { KAPLAYCtxType } from "../kaplay";
 import { drawBoundingBox } from "../lib/draw-bbox";
+import type { KAPLAYCtxType } from "../kaplay";
 
-export const useInspectOverlay = (k: KAPLAYCtxType, isEnabled: boolean) => {
+export const useInspectOverlay = (
+  k: KAPLAYCtxType,
+  shouldDrawInspect: boolean,
+) => {
   const inspectObject = useRef<GameObj | null>(null);
 
   const setInspectObject = useCallback((obj: GameObj | null) => {
@@ -40,10 +43,10 @@ export const useInspectOverlay = (k: KAPLAYCtxType, isEnabled: boolean) => {
   }, [k]);
 
   useEffect(() => {
-    if (!isEnabled) {
+    if (!shouldDrawInspect) {
       inspectObject.current = null;
     }
-  }, [isEnabled]);
+  }, [shouldDrawInspect]);
 
   return { setInspectObject, clearInspectObject };
 };

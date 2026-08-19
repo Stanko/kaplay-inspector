@@ -11,6 +11,7 @@ Check the demo: [muffinman.io/kaplay-inspector/](https://muffinman.io/kaplay-ins
 - Navigate the game object tree
 - Updates every 100ms (configurable)
 - Hover an object to draw it's area, anchor and bounding box
+- Click objects with an area to inspect them
 - Inspect object's component and custom props
 - Log an object to console
 - Tweak object properties live
@@ -23,7 +24,7 @@ Check the demo: [muffinman.io/kaplay-inspector/](https://muffinman.io/kaplay-ins
 - Hide objects
 - Search for tags or comps
 - Record video of the game
-- Dark theme (is this a feature?)
+- Configurable light/dark/system theme (is this a feature?)
 
 The layout is made with desktop in mind. That said, it is somewhat usable on phones.
 
@@ -81,19 +82,21 @@ init(k, {
 available options are:
 
 ```ts
-interface InspectorOptions {
-  // CSS class to add to the root element
+export interface InspectorOptions {
+  /** CSS class to add to the root element */
   className?: string;
-  // is inspector visible on load, default: true
+  /** is inspector visible on load, default: true */
   isVisibleOnLoad?: boolean;
-  // default update time in milliseconds, default: 250
+  /** default update time in milliseconds, default: 250 */
   initUpdateTimeout?: number;
-  // should area, anchor and bounding box be drawn on object hover, default: true
+  /** should bounding box, area and anchor be drawn on object hover, default: true */
   initDrawInspectOnHover?: boolean;
-  // persist inspector visibility between page loads, default: false
+  /** persist inspector visibility between page loads, default: false */
   saveVisibleState?: boolean;
-  // persist the search input between page loads, default: true
+  /** persist the search input between page loads, default: true */
   saveSearch?: boolean;
+  /** interface theme, default: "system" */
+  theme?: "light" | "dark" | "system";
 }
 ```
 
@@ -142,11 +145,11 @@ Same as with colors, be sure to have a higher specificity selector if inspector'
 
 ## TODO
 
-- [ ] Controllable theme - system/light/dark. At the moment it is always matching the system.
-- [ ] Mouse inspect
 - [ ] Add clear button on search
 - [ ] Nested game objects
-- [ ] On scene change live search doesn't work
+- [x] Controllable theme - system/light/dark. At the moment it is always matching the system.
+- [x] On scene change live search doesn't work
+- [x] Mouse inspect
 - [x] Draw bounding box on top of everything
 - [x] Fix Inspect not working on search
 - [x] Persist search/options in URL or local storage

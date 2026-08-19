@@ -1,10 +1,4 @@
-import {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "preact/hooks";
+import { useCallback, useEffect, useMemo, useState } from "preact/hooks";
 import type { InspectorOptions } from "../init";
 import { GameObject } from "./game-object";
 import { useObjectBoolean } from "./boolean-comp";
@@ -15,6 +9,8 @@ import { getFpsColor } from "../lib/get-fps-color";
 import { InspectorContext } from "./inspector-context";
 import type { KAPLAYCtxType } from "../kaplay";
 import { useInspectOverlay } from "../hooks/use-inspect-overlay";
+import { LS_SEARCH_QUERY, useObjectSearch } from "../hooks/use-object-search";
+import { useMouseInspect } from "../hooks/use-mouse-inspect";
 
 export interface InspectorProps extends InspectorOptions {
   k: KAPLAYCtxType;
@@ -27,10 +23,7 @@ const INTERVAL_OPTIONS = [
   { value: 1000, label: "1s" },
 ];
 
-const TYPING_TIMEOUT = 250;
-
 const LS_VISIBLE_STATE = "ki__is-visible";
-const LS_SEARCH_TERM = "ki__search-term";
 
 export const Inspector = ({
   k,
@@ -40,36 +33,13 @@ export const Inspector = ({
   saveVisibleState = false,
   saveSearch = true,
 }: InspectorProps) => {
+  // Visible State
   const savedVisibleState = saveVisibleState
     ? localStorage.getItem(LS_VISIBLE_STATE)
     : null;
   const isVisibleInit =
     savedVisibleState === null ? isVisibleOnLoad : savedVisibleState === "true";
-
-  const savedSearchTerm = saveSearch
-    ? localStorage.getItem(LS_SEARCH_TERM)
-    : null;
-  const searchTermInit = savedSearchTerm || "";
-  const [updateTimeout, setUpdateTimeout] = useState(initUpdateTimeout);
-  const [shouldDrawInspect, setShouldDrawInspect] = useState(
-    initDrawInspectOnHover,
-  );
-  const [root, setRootHook] = useState(k.getTreeRoot());
-  const [renderIndex, setRenderIndex] = useState(0);
   const [isVisible, setIsVisibleHook] = useState(isVisibleInit);
-  const [searchTerm, setSearchTermHook] = useState(searchTermInit);
-  const [searchResults, setSearchResults] = useState<GameObj[]>([]);
-  const typingTimeout = useRef<ReturnType<typeof setTimeout>>();
-  const searchQuery = searchTerm.trim();
-  const { setInspectObject, clearInspectObject } = useInspectOverlay(
-    k,
-    shouldDrawInspect,
-  );
-
-  const setRoot = useCallback((value: GameObj) => {
-    setSearchTerm("");
-    setRootHook(value);
-  }, []);
 
   const setIsVisible = useCallback(
     (value: boolean) => {
@@ -81,16 +51,43 @@ export const Inspector = ({
     [saveVisibleState],
   );
 
-  const setSearchTerm = useCallback(
-    (value: string) => {
-      setSearchTermHook(value);
-      if (saveSearch) {
-        localStorage.setItem(LS_SEARCH_TERM, value);
-      }
-    },
-    [saveSearch],
+  // Search
+  const savedSearchTerm = saveSearch
+    ? localStorage.getItem(LS_SEARCH_QUERY)
+    : null;
+  const searchTermInit = savedSearchTerm || "";
+  const { searchResults, searchQuery, searchTerm, setSearchTerm } =
+    useObjectSearch(k, searchTermInit, saveSearch);
+
+  // Update timeout and force re-render
+  const [updateTimeout, setUpdateTimeout] = useState(initUpdateTimeout);
+  const [renderIndex, setRenderIndex] = useState(0);
+
+  // Draw bounding box on item hover
+  const [shouldDrawInspect, setShouldDrawInspect] = useState(
+    initDrawInspectOnHover,
+  );
+  const { setInspectObject, clearInspectObject } = useInspectOverlay(
+    k,
+    shouldDrawInspect,
   );
 
+  // Set root object
+  const [root, setRootHook] = useState(k.getTreeRoot());
+
+  const setRoot = useCallback((value: GameObj) => {
+    setSearchTerm("");
+    setRootHook(value);
+  }, []);
+
+  // Mouse click inspecting
+  const { shouldMouseInspect, setShouldMouseInspect } = useMouseInspect(
+    k,
+    setInspectObject,
+    setRoot,
+  );
+
+  // Game root paused state
   const paused = useObjectBoolean(k.getTreeRoot(), "paused");
 
   // Force re-render every updateTimeout milliseconds
@@ -106,21 +103,6 @@ export const Inspector = ({
     setIsVisible(!isVisible);
   };
 
-  useEffect(() => {
-    clearTimeout(typingTimeout.current);
-
-    if (searchQuery === "") {
-      setSearchResults([]);
-      return;
-    }
-
-    typingTimeout.current = setTimeout(() => {
-      setSearchResults(
-        k.get(searchQuery, { recursive: true, liveUpdate: true }),
-      );
-    }, TYPING_TIMEOUT);
-  }, [k, searchQuery]);
-
   const handleSearchInput = (e: Event) => {
     setSearchTerm((e.target as HTMLInputElement).value);
   };
@@ -133,13 +115,7 @@ export const Inspector = ({
       clearInspectObject,
       shouldDrawInspect,
     }),
-    [
-      k,
-      setRoot,
-      setInspectObject,
-      clearInspectObject,
-      shouldDrawInspect,
-    ],
+    [k, setRoot, setInspectObject, clearInspectObject, shouldDrawInspect],
   );
 
   if (!isVisible) {
@@ -197,6 +173,15 @@ export const Inspector = ({
           Draw bbox on hover
         </label>
         <div class="ki-separator" />
+        <label>
+          <input
+            type="checkbox"
+            checked={shouldMouseInspect}
+            onChange={() => setShouldMouseInspect(!shouldMouseInspect)}
+          />
+          Mouse inspect
+        </label>
+        <div class="ki-separator" />
         <Recorder />
         <button class="ki-btn k-inspector__hide" onClick={toggleVisibility}>
           Hide
@@ -205,9 +190,7 @@ export const Inspector = ({
 
       <div class="k-inspector__objects">
         {searchQuery.length > 0 ? (
-          <SearchResults
-            results={searchResults}
-          />
+          <SearchResults results={searchResults} />
         ) : (
           <GameObject
             className="game-object--root"

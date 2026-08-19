@@ -1,38 +1,38 @@
 .k-inspector {
-  --ki-bg: rgb(250 250 250);
-  --ki-fg: rgb(25 25 25);
-  --ki-red: #d9174b;
-  --ki-orange: #e67e22;
-  --ki-green: #27ae60;
-  --ki-gray-light: rgb(238 238 238);
-  --ki-gray-bg: rgb(244 244 244);
-  --ki-border: rgb(170 170 170);
-  --ki-border-light: rgb(210 210 210);
+  color-scheme: light dark;
 
-  --ki-l: 0.62;
-  --ki-c: 0.2;
+  --ki-bg: light-dark(rgb(250 250 250), rgb(30 30 30));
+  --ki-fg: light-dark(rgb(25 25 25), rgb(230 230 230));
+  --ki-red: light-dark(#d9174b, #ff4073);
+  --ki-orange: light-dark(#e67e22, #f39c12);
+  --ki-green: light-dark(#179e50, #2ecc71);
+  --ki-gray-light: light-dark(rgb(238 238 238), rgb(50 50 50));
+  --ki-gray-bg: light-dark(rgb(244 244 244), rgb(40 40 40));
+  --ki-border: light-dark(rgb(170 170 170), rgb(80 80 80));
+  --ki-border-light: light-dark(rgb(210 210 210), rgb(60 60 60));
+
   --ki-h: 250;
-  --ki-lch: var(--ki-l) var(--ki-c) var(--ki-h);
   --ki-h-secondary: 150;
-  --ki-secondary-lch: var(--ki-l) var(--ki-c) var(--ki-h-secondary);
 
-  --ki-primary: oklch(var(--ki-lch));
-  --ki-primary-light: oklch(var(--ki-lch) / 0.1);
-  --ki-secondary: oklch(var(--ki-secondary-lch));
+  --ki-primary: light-dark(
+    oklch(0.62 0.2 var(--ki-h)),
+    oklch(0.7 0.15 var(--ki-h))
+  );
+  --ki-primary-light: light-dark(
+    oklch(0.62 0.2 var(--ki-h) / 0.1),
+    oklch(0.7 0.15 var(--ki-h) / 0.1)
+  );
+  --ki-secondary: light-dark(
+    oklch(0.62 0.2 var(--ki-h-secondary)),
+    oklch(0.7 0.15 var(--ki-h-secondary))
+  );
 
-  @media (prefers-color-scheme: dark) {
-    --ki-bg: rgb(30 30 30);
-    --ki-fg: rgb(230 230 230);
-    --ki-red: #ff4073;
-    --ki-orange: #e67e22;
-    --ki-green: #2ecc71;
-    --ki-gray-light: rgb(50 50 50);
-    --ki-gray-bg: rgb(40 40 40);
-    --ki-border: rgb(80 80 80);
-    --ki-border-light: rgb(60 60 60);
+  &.k-inspector--light {
+    color-scheme: only light;
+  }
 
-    --ki-l: 0.7;
-    --ki-c: 0.15;
+  &.k-inspector--dark {
+    color-scheme: only dark;
   }
 
   font-synthesis: none;
@@ -477,5 +477,12 @@
     margin-bottom: 0.5rem;
     gap: 0.5rem;
     align-items: center;
+  }
+
+  .breadcrumbs__item {
+    max-width: 10rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
