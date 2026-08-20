@@ -69,7 +69,7 @@ export const MouseInspect = () => {
     setRoot,
     isMouseInspectActive,
     setMouseInspectActive,
-    setInspectObject,
+    inspectObject,
   } = useApp();
 
   useEffect(() => {
@@ -112,7 +112,7 @@ export const MouseInspect = () => {
     };
 
     const drawController = k.onDraw(() => {
-      setInspectObject(getHoveredObject() ?? null);
+      inspectObject.set(getHoveredObject() ?? null);
     });
 
     const clickController = k.onMousePress("left", () => {
@@ -133,17 +133,11 @@ export const MouseInspect = () => {
       sceneChangeController.cancel();
       drawController.cancel();
       clickController.cancel();
-      setInspectObject(null);
+      inspectObject.clear();
     };
 
     return cleanup;
-  }, [
-    isMouseInspectActive,
-    k,
-    setInspectObject,
-    setMouseInspectActive,
-    setRoot,
-  ]);
+  }, [isMouseInspectActive, inspectObject, k, setMouseInspectActive, setRoot]);
 
   return (
     <ToolbarButtonToggle

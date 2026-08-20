@@ -5,7 +5,6 @@ import type { KAPLAYCtxType } from "../kaplay";
 
 export interface AppState {
   root: GameObj;
-  inspectObject: GameObj | null;
   updateInterval: number;
   isVisible: boolean;
   isDrawBBoxActive: boolean;
@@ -14,8 +13,15 @@ export interface AppState {
   searchInputValue: string;
 }
 
+export interface InspectObjectController {
+  get: () => GameObj | null;
+  set: (obj: GameObj | null) => void;
+  clear: (obj?: GameObj) => void;
+}
+
 interface AppContextValue extends AppState {
   k: KAPLAYCtxType;
+  inspectObject: InspectObjectController;
   setRoot: (obj: GameObj) => void;
   searchQuery: string;
   toggleVisibility: () => void;
@@ -24,8 +30,6 @@ interface AppContextValue extends AppState {
   setUpdateInterval: (value: number) => void;
   setDrawBBoxActive: (value: boolean) => void;
   setMouseInspectActive: (value: boolean) => void;
-  setInspectObject: (obj: GameObj | null) => void;
-  clearInspectObject: (obj: GameObj) => void;
 }
 
 export const AppContext = createContext<AppContextValue | null>(null);

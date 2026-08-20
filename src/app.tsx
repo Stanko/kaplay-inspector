@@ -1,7 +1,11 @@
-import { useCallback, useMemo, useState } from "preact/hooks";
+import { useCallback, useMemo, useRef, useState } from "preact/hooks";
 import type { KAPLAYCtxType } from "./kaplay";
 import type { GameObj } from "kaplay";
-import { AppContext, type AppState } from "./lib/app-context";
+import {
+  AppContext,
+  type AppState,
+  type InspectObjectController,
+} from "./lib/app-context";
 import { Inspector } from "./components/inspector";
 
 export interface AppProps {
@@ -41,10 +45,10 @@ const load = () => {
 };
 
 export const App = ({ k }: AppProps) => {
+  const inspectObjectRef = useRef<GameObj | null>(null);
   const [appState, setAppStateRaw] = useState<AppState>({
     // Inspector objects
     root: k.getTreeRoot(),
-    inspectObject: null,
     // Inspector state
     updateInterval: 250,
     isVisible: true,
@@ -55,6 +59,21 @@ export const App = ({ k }: AppProps) => {
     searchInputValue: "",
     ...load(),
   });
+
+  const inspectObject = useMemo<InspectObjectController>(
+    () => ({
+      get: () => inspectObjectRef.current,
+      set: (object) => {
+        inspectObjectRef.current = object;
+      },
+      clear: (object) => {
+        if (object === undefined || inspectObjectRef.current === object) {
+          inspectObjectRef.current = null;
+        }
+      },
+    }),
+    [],
+  );
 
   const searchQuery = useMemo(
     () => appState.searchInputValue.trim(),
@@ -82,14 +101,17 @@ export const App = ({ k }: AppProps) => {
     setAppState({ isVisible: !appState.isVisible });
   }, [appState.isVisible, setAppState]);
 
-  const setRoot = useCallback((object: GameObj) => {
-    setAppState({
-      root: object,
-      inspectObject: null,
-      searchResults: [],
-      searchInputValue: "",
-    });
-  }, []);
+  const setRoot = useCallback(
+    (object: GameObj) => {
+      inspectObject.clear();
+      setAppState({
+        root: object,
+        searchResults: [],
+        searchInputValue: "",
+      });
+    },
+    [inspectObject, setAppState],
+  );
 
   const setSearchResults = useCallback(
     (results: GameObj[]) => {
@@ -126,25 +148,6 @@ export const App = ({ k }: AppProps) => {
     [setAppState],
   );
 
-  const setInspectObject = useCallback((object: GameObj | null) => {
-    setAppStateRaw((prevState) => {
-      // Don't update state for the same object
-      if (prevState.inspectObject === object) {
-        return prevState;
-      }
-
-      return { ...prevState, inspectObject: object };
-    });
-  }, []);
-
-  const clearInspectObject = useCallback((object: GameObj) => {
-    setAppStateRaw((prevState) =>
-      prevState.inspectObject === object
-        ? { ...prevState, inspectObject: null }
-        : prevState,
-    );
-  }, []);
-
   const contextValue = useMemo(
     () => ({
       k,
@@ -156,14 +159,15 @@ export const App = ({ k }: AppProps) => {
       setUpdateInterval,
       setDrawBBoxActive,
       setMouseInspectActive,
-      setInspectObject,
-      clearInspectObject,
+      // Inspect object controller
+      inspectObject,
       // State
       searchQuery,
       ...appState,
     }),
     [
       k,
+      inspectObject,
       setRoot,
       toggleVisibility,
       setSearchResults,
@@ -171,8 +175,6 @@ export const App = ({ k }: AppProps) => {
       setUpdateInterval,
       setDrawBBoxActive,
       setMouseInspectActive,
-      setInspectObject,
-      clearInspectObject,
       appState,
     ],
   );

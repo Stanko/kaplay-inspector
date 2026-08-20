@@ -20,8 +20,7 @@ export const GameObject = ({
   isExpanded: isExpandedExternal = false,
   isRenderRoot,
 }: GameObjectProps) => {
-  const { setRoot, isDrawBBoxActive, setInspectObject, clearInspectObject } =
-    useApp();
+  const { setRoot, isDrawBBoxActive, inspectObject } = useApp();
   const [isExpanded, setIsExpanded] = useState(isExpandedExternal);
 
   const { compsData, tags, compsLabel } = getObjectInfo(obj);
@@ -35,8 +34,8 @@ export const GameObject = ({
   const isInspecting = isRenderRoot && obj.id !== 0;
 
   const cleanup = useCallback(() => {
-    clearInspectObject(obj);
-  }, [clearInspectObject, obj]);
+    inspectObject.clear(obj);
+  }, [inspectObject, obj]);
 
   useEffect(() => cleanup, [cleanup]);
 
@@ -46,7 +45,7 @@ export const GameObject = ({
 
   const handleMouseEnter = () => {
     if (!isRootObject && isDrawBBoxActive && !obj.hidden) {
-      setInspectObject(obj);
+      inspectObject.set(obj);
     }
   };
 

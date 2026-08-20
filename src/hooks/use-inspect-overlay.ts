@@ -1,21 +1,16 @@
-import { useEffect, useRef } from "preact/hooks";
+import { useEffect } from "preact/hooks";
 import { useApp } from "../lib/app-context";
 import { drawBoundingBox } from "../lib/draw-bbox";
-import type { GameObj } from "kaplay";
 
 export const useInspectOverlay = () => {
-  const { k, inspectObject, setInspectObject, isDrawBBoxActive } = useApp();
-  const inspectObjectRef = useRef<GameObj | null>(null);
+  const { k, inspectObject, isDrawBBoxActive } = useApp();
 
-  useEffect(() => {
-    inspectObjectRef.current = inspectObject;
-  }, [inspectObject]);
-
+  // Draw bounding box overlay after everything so it sits on top
   useEffect(() => {
     k.system(
       "kaplay-inspector-overlay",
       () => {
-        const obj = inspectObjectRef.current;
+        const obj = inspectObject.get();
 
         if (!obj || !obj.exists() || obj.hidden) {
           return;
@@ -30,14 +25,13 @@ export const useInspectOverlay = () => {
     );
 
     return () => {
-      inspectObjectRef.current = null;
-      setInspectObject(null);
+      inspectObject.clear();
     };
-  }, [k]);
+  }, [inspectObject, k]);
 
   useEffect(() => {
     if (!isDrawBBoxActive) {
-      setInspectObject(null);
+      inspectObject.clear();
     }
-  }, [isDrawBBoxActive]);
+  }, [inspectObject, isDrawBBoxActive]);
 };
