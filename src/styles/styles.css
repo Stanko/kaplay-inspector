@@ -440,8 +440,10 @@
     position: absolute;
     left: calc(-0.75rem);
     width: 0.75rem;
-    top: 50%;
+    top: 0;
     border-bottom: 1px solid var(--ki-border);
+    border-left: 1px solid var(--ki-border);
+    height: 50%;
   }
 
   /* Header info and actions */

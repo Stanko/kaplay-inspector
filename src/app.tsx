@@ -102,6 +102,13 @@ export const App = ({ k }: AppProps) => {
 
   const setRoot = useCallback(
     (object: GameObj) => {
+      // This is not the cleanest way to get the dom element,
+      // but it is the simplest and it is safe and reliable
+      const element = document.querySelector(".k-inspector__objects");
+      if (element) {
+        element.scrollTo(0, 0);
+      }
+
       inspectObject.clear();
       setAppState({
         root: object,

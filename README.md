@@ -129,6 +129,3 @@ Same as with colors, be sure to have a higher specificity selector if inspector'
 
 - [ ] Textures
 - [ ] Text input CSS polish
-- [ ] Pixel text bounding box
-- [ ] On Inspect click - scroll to top
-- [ ] Tree lines on the left are missing when header is sticky and you scroll all the way down
