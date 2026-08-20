@@ -24,7 +24,7 @@ export const Inspector = () => {
 
   // Force re-render every updateInterval milliseconds
   useEffect(() => {
-    let interval = 0;
+    let interval: ReturnType<typeof setInterval>;
 
     if (isVisible) {
       interval = setInterval(() => {
