@@ -10,7 +10,7 @@ export const PauseGame = () => {
   return (
     <IconButton
       onClick={() => paused.onChange(!paused.checked)}
-      tooltip={paused.checked ? "Play Game" : "Pause Game"}
+      tooltip={paused.checked ? "Resume Game" : "Pause Game"}
     >
       {paused.checked ? <PlayCircle /> : <PauseCircle />}
     </IconButton>
