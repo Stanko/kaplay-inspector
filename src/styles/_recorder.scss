@@ -1,0 +1,14 @@
+.kaplay-inspector {
+  .ki-recording,
+  .ki-recording:not(:disabled):hover {
+    background: var(--ki-red-light);
+  }
+
+  .ki-recording__icon {
+    width: 0.875rem;
+    height: 0.875rem;
+    background-color: var(--ki-red);
+    border-radius: 50%;
+    animation: ki-blink 2s infinite;
+  }
+}

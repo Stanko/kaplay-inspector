@@ -104,7 +104,7 @@ export const App = ({ k }: AppProps) => {
     (object: GameObj) => {
       // This is not the cleanest way to get the dom element,
       // but it is the simplest and it is safe and reliable
-      const element = document.querySelector(".k-inspector__objects");
+      const element = document.querySelector(".ki-objects");
       if (element) {
         element.scrollTo(0, 0);
       }

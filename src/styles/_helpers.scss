@@ -1,0 +1,41 @@
+@keyframes ki-blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+}
+
+.kaplay-inspector {
+  // Colors
+  .green {
+    color: var(--ki-green);
+  }
+  .red {
+    color: var(--ki-red);
+  }
+  .orange {
+    color: var(--ki-orange);
+  }
+
+  // Flex layout for controls
+  .ki-flex {
+    display: flex;
+    gap: 0.25rem;
+    align-items: center;
+  }
+
+  .ki-relative {
+    position: relative;
+  }
+
+  .ki-ellipsis {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}

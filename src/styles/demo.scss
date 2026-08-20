@@ -20,15 +20,15 @@ body {
 canvas {
   margin: 0 auto;
   display: block;
-  max-width: 60rem;
-  height: auto !important;
-  width: 100% !important;
   image-rendering: pixelated;
+  max-width: 100%;
+  height: auto !important;
 }
 
 main {
-  max-width: 24rem;
-  margin: 1rem auto 0;
+  max-width: 26rem;
+  margin: 0 auto;
+  padding: 1rem;
 }
 
 h1 {

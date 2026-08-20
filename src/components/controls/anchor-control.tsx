@@ -21,13 +21,13 @@ export const AnchorControl = ({ className = "", obj }: AnchorControlProps) => {
   const isString = typeof obj.anchor === "string";
 
   return (
-    <div class={cx(className, "anchor-control")}>
+    <div class={cx(className, "ki-anchor-control")}>
       {isString ? (
         <>
-          <div class="anchor-radios">
+          <div class="ki-anchor-control__radios">
             {strings.map((row, i) => {
               return (
-                <div key={i} class="anchor-row">
+                <div key={i} class="ki-anchor-control__row">
                   {row.map((anchor) => {
                     return (
                       <label key={anchor}>

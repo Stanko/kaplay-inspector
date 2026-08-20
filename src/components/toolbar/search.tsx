@@ -9,17 +9,17 @@ export const Search = () => {
   };
 
   return (
-    <div class="k-inspector__search">
+    <div class="ki-search ki-relative">
       <input
         placeholder="Search tags or comps"
         type="text"
-        class="ki-input k-inspector__search-input"
+        class="ki-search__input"
         onInput={handleInput}
         value={searchInputValue}
       />
 
       <button
-        class="k-inspector__search-clear"
+        class="ki-search__clear"
         onClick={() => setSearchInputValue("")}
         aria-label="Clear search"
       >

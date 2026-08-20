@@ -12,9 +12,9 @@ export const TextControl = ({ obj, property = "text" }: TextControlProps) => {
   }
 
   return (
-    <div class={"text-control"}>
+    <div class={"ki-text-control"}>
       <TextInput
-        className="text-control__input ki-input"
+        className="ki-text-control__input"
         placeholder="Enter text"
         value={obj[property]}
         onChange={(text) => (obj[property] = text)}

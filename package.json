@@ -14,9 +14,9 @@
     "start": "vite",
     "dev": "vite",
     "preview": "vite preview",
-    "copy-css": "cp ./src/styles/styles.css ./dist/",
+    "build-css": "sass ./src/styles/styles.scss ./dist/styles.css",
     "build": "tsc -b && rm -rf ./docs && vite build && touch ./docs/.nojekyll",
-    "build-lib": "rm -rf ./dist && tsc -p ./tsconfig-lib.json && npm run copy-css",
+    "build-lib": "rm -rf ./dist && tsc -p ./tsconfig-lib.json && npm run build-css",
     "prepare": "cp ./pre-commit ./.git/hooks/pre-commit && chmod +x ./.git/hooks/pre-commit",
     "prepublish": "npm run build-lib",
     "check": "tsc --noEmit"
@@ -26,7 +26,8 @@
   },
   "dependencies": {
     "lucide-preact": "^1.33.0",
-    "preact": "^10.29.8"
+    "preact": "^10.29.8",
+    "sass": "^1.103.0"
   },
   "devDependencies": {
     "@preact/preset-vite": "^2.10.6",

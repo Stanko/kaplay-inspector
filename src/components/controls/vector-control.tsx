@@ -28,10 +28,10 @@ export const VectorControl = ({
   }
 
   return (
-    <div className={cx(className, "vector-control ki-flex")}>
-      x:{" "}
+    <div className={cx(className, "ki-vector-control ki-flex")}>
+      <div>x:</div>
       <NumberInput
-        className="vector-control__x-input"
+        className="ki-vector-control__x-input"
         obj={obj[property]}
         property="x"
         onChange={(x) => {
@@ -43,7 +43,7 @@ export const VectorControl = ({
         }}
         step={step}
       />
-      y:{" "}
+      <div>y:</div>
       <NumberInput
         obj={obj[property]}
         property="y"

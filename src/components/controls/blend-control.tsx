@@ -15,7 +15,7 @@ const MODES = [
 
 export const BlendControl = ({ className = "", obj }: BlendControlProps) => {
   return (
-    <div class={cx(className, "blend-control")}>
+    <div class={cx(className, "ki-blend-control")}>
       {MODES.map((mode) => (
         <label key={mode.value} class="ki-flex">
           <input

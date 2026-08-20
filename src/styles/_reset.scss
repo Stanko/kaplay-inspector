@@ -1,0 +1,52 @@
+.kaplay-inspector {
+  * {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+  }
+
+  svg {
+    display: block;
+  }
+
+  button,
+  input,
+  select,
+  textarea {
+    accent-color: var(--ki-primary);
+    font: inherit;
+    color: inherit;
+  }
+
+  textarea {
+    field-sizing: content;
+    max-height: 6rem;
+  }
+
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  input[type="number"] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+  }
+
+  button {
+    border: none;
+    cursor: pointer;
+    background: none;
+    outline-offset: 2px;
+  }
+
+  button:focus-visible {
+    outline: 2px solid var(--ki-primary);
+  }
+
+  // TODO this messes up with tooltip anchor positioning
+  // button:active {
+  //   transform: translateY(1px);
+  // }
+}

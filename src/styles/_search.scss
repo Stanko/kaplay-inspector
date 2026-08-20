@@ -1,0 +1,52 @@
+.kaplay-inspector {
+  .ki-search__input {
+    background-color: var(--ki-bg);
+    border: none;
+    padding: 0.375rem 0.5rem;
+    border: 1px solid var(--ki-border-light);
+    font-size: 0.75rem;
+    border-radius: 4px;
+    font-weight: bold;
+  }
+
+  .ki-search__input:focus-visible {
+    outline: 2px solid var(--ki-primary);
+    outline-offset: -1px;
+  }
+
+  .ki-search__input:placeholder-shown + .ki-search__clear {
+    display: none;
+  }
+
+  .ki-search__clear {
+    position: absolute;
+    top: 0;
+    right: 0;
+    border-radius: 4px;
+    aspect-ratio: 1;
+    height: 100%;
+    display: grid;
+    place-items: center;
+    opacity: 0.5;
+    outline-offset: -1px;
+  }
+
+  .ki-search__clear:hover {
+    opacity: 1;
+  }
+
+  .ki-search__clear:focus-visible {
+    opacity: 1;
+  }
+
+  .ki-search__clear .lucide {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  .ki-search__no-results {
+    padding: 1rem 0.5rem;
+    line-height: 1;
+    font-weight: bold;
+  }
+}

@@ -1,0 +1,46 @@
+.kaplay-inspector {
+  color-scheme: light dark;
+
+  --ki-bg: light-dark(rgb(250 250 250), rgb(30 30 30));
+  --ki-fg: light-dark(rgb(25 25 25), rgb(200 200 200));
+  --ki-red: light-dark(#d9174b, #ff4073);
+  --ki-red-light: light-dark(#ffeef1, #22000a);
+  --ki-orange: light-dark(#e67e22, #f39c12);
+  --ki-green: light-dark(#179e50, #2ecc71);
+  --ki-gray-light: light-dark(rgb(238 238 238), rgb(50 50 50));
+  --ki-gray-bg: light-dark(rgb(244 244 244), rgb(40 40 40));
+  --ki-border: light-dark(rgb(170 170 170), rgb(80 80 80));
+  --ki-border-light: light-dark(rgb(210 210 210), rgb(60 60 60));
+
+  --ki-h: 250;
+  --ki-h-secondary: 150;
+
+  --ki-primary: light-dark(
+    oklch(0.62 0.2 var(--ki-h)),
+    oklch(0.7 0.15 var(--ki-h))
+  );
+  --ki-primary-light: light-dark(
+    oklch(0.62 0.2 var(--ki-h) / 0.1),
+    oklch(0.7 0.15 var(--ki-h) / 0.1)
+  );
+  --ki-primary-extra-light: light-dark(
+    oklch(0.62 0.2 var(--ki-h) / 0.05),
+    oklch(0.7 0.15 var(--ki-h) / 0.05)
+  );
+  --ki-secondary: light-dark(
+    oklch(0.62 0.2 var(--ki-h-secondary)),
+    oklch(0.7 0.15 var(--ki-h-secondary))
+  );
+  --ki-secondary-extra-light: light-dark(
+    oklch(0.62 0.2 var(--ki-h-secondary) / 0.05),
+    oklch(0.7 0.15 var(--ki-h-secondary) / 0.05)
+  );
+
+  &.kaplay-inspector--light {
+    color-scheme: only light;
+  }
+
+  &.kaplay-inspector--dark {
+    color-scheme: only dark;
+  }
+}

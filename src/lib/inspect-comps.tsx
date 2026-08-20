@@ -1,6 +1,6 @@
 import type { Comp, GameObj, InternalGameObjRaw } from "kaplay";
 import type { JSX } from "preact";
-import { ChildObjectControl } from "../components/controls/child-object-control";
+import { ChildRefControl } from "../components/controls/object-ref-control";
 import { AnchorControl } from "../components/controls/anchor-control";
 import { BlendControl } from "../components/controls/blend-control";
 import { BooleanControl } from "../components/controls/boolean-control";
@@ -77,7 +77,7 @@ const inferPropertyControl = (
   }
 
   if (isGameObj(value)) {
-    return <ChildObjectControl obj={value} />;
+    return <ChildRefControl obj={value} />;
   }
 
   if (
@@ -99,8 +99,8 @@ const inferPropertyControl = (
       <div>
         {rows.map((row) => {
           return (
-            <div key={`${property}-${row.label}`} class="game-object__comp-row">
-              <b>{row.label}</b>
+            <div key={`${property}-${row.label}`} class="ki-obj__comp-row">
+              <b class="ki-ellipsis">{row.label}</b>
               <div>{row.control}</div>
             </div>
           );
@@ -159,8 +159,8 @@ export const inspectComps = (obj: GameObj) => {
       data.push({
         label: id,
         control: rows.map((row) => (
-          <div key={row.label} class="game-object__comp-row">
-            <b>{row.label}</b>
+          <div key={row.label} class="ki-obj__comp-row">
+            <b class="ki-ellipsis">{row.label}</b>
             <div>{row.control}</div>
           </div>
         )),

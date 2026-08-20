@@ -1,7 +1,7 @@
 import { Image } from "lucide-preact";
 import { useCallback, useId, useState } from "preact/hooks";
 import { useGpuTextures } from "../../hooks/use-gpu-textures";
-import { ToolbarButton } from "../inputs/toolbar-button";
+import { IconButton } from "../inputs/toolbar-button";
 
 export const Textures = () => {
   const dropdownId = useId();
@@ -16,14 +16,14 @@ export const Textures = () => {
 
   return (
     <>
-      <ToolbarButton
+      <IconButton
         popovertarget={dropdownId}
         aria-haspopup="true"
         tooltip={"Display GPU Textures"}
         onClick={handleClick}
       >
         <Image />
-      </ToolbarButton>
+      </IconButton>
 
       <div id={dropdownId} popover="auto" class="ki-dropdown">
         <div class="ki-textures">

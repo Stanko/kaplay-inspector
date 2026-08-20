@@ -21,13 +21,13 @@ const GameObjectDetails = ({ obj }: { obj: GameObj }) => {
     typeof obj.width === "number" && typeof obj.height === "number";
 
   return (
-    <div class="game-object__comps-wrapper">
-      <div class="game-object__comps">
+    <div class="ki-obj__comps-wrapper">
+      <div class="ki-obj__comps">
         <BooleanComp obj={obj} propName="paused" />
         <BooleanComp obj={obj} propName="hidden" />
 
         {hasSize && (
-          <div class="game-object__comps-row">
+          <div class="ki-obj__comps-row">
             <b>size</b>
             <div>
               {obj.width} x {obj.height}
@@ -36,7 +36,7 @@ const GameObjectDetails = ({ obj }: { obj: GameObj }) => {
         )}
 
         {compsData.map((comp) => (
-          <div key={comp.label} class="game-object__comps-row">
+          <div key={comp.label} class="ki-obj__comps-row">
             <b>{comp.label}</b>
             <div>{comp.control}</div>
           </div>
@@ -85,46 +85,44 @@ export const GameObject = ({
 
   return (
     <div
-      class={cx("game-object", className, {
-        "game-object--no-children": !hasChildren,
+      class={cx("ki-obj", className, {
+        "ki-obj--no-children": !hasChildren,
       })}
       key={obj.id}
     >
       {isInspecting && <Breadcrumbs obj={obj} />}
       <div
-        class="game-object__content"
+        class="ki-obj__content"
         onMouseEnter={handleMouseEnter}
         onMouseLeave={cleanup}
       >
-        <div class="game-object__sticky-header">
+        <div class="ki-obj__sticky-header">
           <button
-            class={cx("game-object__header", {
-              "game-object__header--expandable": showExpandTree,
-              "game-object__header--expanded": isExpanded,
+            class={cx("ki-obj__header", {
+              "ki-obj__header--expandable": showExpandTree,
+              "ki-obj__header--expanded": isExpanded,
             })}
             onClick={handleToggleClick}
           >
             {isExpanded ? (
-              <MinusSquare className="game-object__expand-icon" />
+              <MinusSquare className="ki-obj__expand-icon" />
             ) : (
-              <PlusSquare className="game-object__expand-icon" />
+              <PlusSquare className="ki-obj__expand-icon" />
             )}
-            <div class="game-object__id">ID {obj.id}:</div>
+            <div class="ki-obj__id">ID {obj.id}:</div>
             {tags ? (
-              <div class="game-object__tags">
-                {isRootObject ? "Root" : tags}
-              </div>
+              <div class="ki-obj__tags">{isRootObject ? "Root" : tags}</div>
             ) : (
-              <div class="game-object__comp-names">{compsLabel}</div>
+              <div class="ki-obj__comp-names">{compsLabel}</div>
             )}
             {obj.children.length > 0 && <div>({obj.children.length})</div>}
 
             {isObjectDestroyed && (
-              <div class="game-object__destroyed">DESTROYED</div>
+              <div class="ki-obj__destroyed">DESTROYED</div>
             )}
           </button>
 
-          <div class="game-object__buttons">
+          <div class="ki-obj__buttons">
             {!isRenderRoot && (
               <>
                 <button
@@ -148,7 +146,7 @@ export const GameObject = ({
       </div>
       {isExpanded && hasChildren && (
         <div
-          class="game-object__children"
+          class="ki-obj__children"
           style={{ display: isExpanded ? "block" : "none" }}
         >
           {obj.children.map((child) => (

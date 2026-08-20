@@ -1,7 +1,7 @@
 import { useId } from "preact/hooks";
 import type { JSX } from "preact/jsx-runtime";
 import { cx } from "../../lib/cx";
-import { ToolbarButton } from "./toolbar-button";
+import { IconButton } from "./toolbar-button";
 
 interface DropdownItem {
   label: string;
@@ -27,13 +27,13 @@ export const Dropdown = ({
 
   return (
     <>
-      <ToolbarButton
+      <IconButton
         popovertarget={dropdownId}
         aria-haspopup="true"
         tooltip={tooltip}
       >
         {children}
-      </ToolbarButton>
+      </IconButton>
 
       <div id={dropdownId} popover="auto" class="ki-dropdown">
         {items.map((item, index) => (

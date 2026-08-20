@@ -23,8 +23,8 @@ const ColorSlider = ({ onChange, value, channel }: ColorSliderProps) => {
   return (
     <input
       className={cx(
-        "color-control__slider-input",
-        `color-control__slider-input--${channel}`,
+        "ki-color-control__slider-input",
+        `ki-color-control__slider-input--${channel}`,
       )}
       type="range"
       min="0"
@@ -51,9 +51,9 @@ export const ColorControl = ({ obj }: ColorControlProps) => {
   };
 
   return (
-    <div class="color-control">
+    <div class="ki-color-control">
       <div
-        class="color-control__swatch"
+        class="ki-color-control__swatch"
         style={{ background: `rgb(${color.r} ${color.g} ${color.b})` }}
       />
       <div>

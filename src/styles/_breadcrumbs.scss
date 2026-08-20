@@ -1,0 +1,16 @@
+.kaplay-inspector {
+  .ki-breadcrumbs {
+    font-size: 0.75rem;
+    display: flex;
+    margin-bottom: 0.5rem;
+    gap: 0.5rem;
+    align-items: center;
+  }
+
+  .ki-breadcrumbs__item {
+    max-width: 10rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}

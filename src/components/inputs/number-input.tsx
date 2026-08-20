@@ -63,7 +63,7 @@ export const NumberInput = ({
   };
 
   return (
-    <div class={cx(className, "number-input ki-flex")}>
+    <div class={cx(className, "ki-number-input ki-flex")}>
       <HoldButton
         className="ki-btn"
         onClickAndHold={() => handleClickAndHold(-step)}

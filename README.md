@@ -9,22 +9,26 @@ Check the demo: [muffinman.io/kaplay-inspector/](https://muffinman.io/kaplay-ins
 ## Features
 
 - Navigate the game object tree
-- Updates every 100ms (configurable in the toolbar)
-- Hover an object to draw it's area, anchor and bounding box
-- Click objects with an area to inspect them
-- Inspect object's component and custom props
-- Log an object to console
-- Tweak object properties live
-  - position, scale, rotate, skew, z-index
-  - opacity, color, blend mode
-  - text
+- Updates every 250ms (configurable) by polling
+- Use your mouse to select an element directly from the game
+- Draw inspected element's area, anchor and bounding box
+- Inspect components (system and custom) properties and update them live
+- You can tweak pretty much anything, for example:
+  - boolean (hidden, paused)
+  - number (opacity, rotate, z-index)
+  - string (text)
+  - vector (position, scale)
+  - game object (children, object reference)
+  - color
+- Custom controls for certain system components
   - anchor
-  - health
-- Pause objects
-- Hide objects
-- Search for tags or comps
+  - blend mode
+- Log an object to the console
+- Search for tags or components
 - Record video of the game
-- Configurable light/dark/system theme (is this a feature?)
+- See GPU textures
+- Saves basic settings and search term across browse refreshes
+- Light/dark/system theme (is this a feature?)
 
 The layout is made with desktop in mind. That said, it is somewhat usable on phones.
 
@@ -48,13 +52,8 @@ import kaplay from "kaplay";
 // Init you kaplay game
 const k = kaplay({});
 
-if (
-  // Make sure to load it only in development mode
-  import.meta.env.DEV &&
-  // I like to enable it only when ?inspector is available in the URL (this is optional)
-  // This gives you an easy way to enable or disable it
-  new URLSearchParams(window.location.search).get("inspector") !== null
-) {
+// Make sure to load it only in development mode
+if (import.meta.env.DEV) {
   import("@stanko/kaplay-inspector/dist/styles.css");
   import("@stanko/kaplay-inspector").then(({ default: init }) => {
     // Pass the "k" instance to the inspector
@@ -77,7 +76,7 @@ declare module "*.css";
 export interface InspectorOptions {
   /** CSS class to add to the root element */
   className?: string;
-  /** interface theme, default: "system" */
+  /** Interface theme, default: "system" */
   theme?: "light" | "dark" | "system";
 }
 ```
@@ -87,7 +86,7 @@ export interface InspectorOptions {
 Kaplay Inspector defines colors in [OKLCH color space](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/color_value/oklch). This makes changing of the primary and the secondary color pretty straight forward. You only need to update two hue variables like this:
 
 ```css
-.k-inspector.your-custom-class {
+.kaplay-inspector.your-custom-class {
   --ki-h: 300; /* Purple */
   --ki-h-secondary: 200; /* Teal */
 }
@@ -95,7 +94,7 @@ Kaplay Inspector defines colors in [OKLCH color space](https://developer.mozilla
 
 If you load the inspector's CSS dynamically, use `className` to add a class with enough specificity.
 
-If you want to change other colors as well, check the [styles.css](./src/styles/styles.css).
+If you want to change other colors as well, check the [_variables.scss](./src/styles/_variables.scss).
 
 ## Positioning
 
@@ -104,28 +103,28 @@ By default, the inspector has `position: fixed` and sits at the bottom of the sc
 Assuming we have only the canvas and the inspector element on the page, here is an example of what I like to do:
 
 ```css
-body:has(.k-inspector__hide) {
+/* If hide button is shown, it means Kaplay inspector is visible */
+body:has(.ki-hide-inspector) {
   display: grid;
-  grid-template-rows: 60vh 40vh;
+  grid-template-rows: 55vh 45vh;
 
   canvas {
     width: 100% !important;
-    height: 60vh !important;
+    height: 55vh !important;
     object-fit: contain;
     display: block;
   }
 
-  .k-inspector {
+  .kaplay-inspector {
     position: relative;
   }
 }
 ```
 
-This fixed the game canvas in the upper part of the viewport (60% of it) and the bottom part is taken by the inspector. It only applies this layout when inspector is visible (by checking if the hide button is shown).
+This fixed the game canvas in the upper part of the viewport (55% of it) and the bottom part is taken by the inspector. It only applies this layout when inspector is visible (by checking if the hide button is shown).
 
 Same as with colors, be sure to have a higher specificity selector if inspector's CSS is loaded dynamically.
 
 ## TODO
 
-- [ ] CSS refactor
-- [ ] Text input CSS polish
+Done for now :)

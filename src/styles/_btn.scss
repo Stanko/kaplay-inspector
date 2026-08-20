@@ -1,0 +1,21 @@
+.kaplay-inspector {
+  .ki-btn {
+    padding: 0.25rem 0.375rem;
+    font-size: 0.75rem;
+    border-radius: 4px;
+    background-color: var(--ki-gray-light);
+    border: 1px solid var(--ki-border-light);
+  }
+
+  .ki-btn:hover {
+    border: 1px solid var(--ki-primary);
+  }
+
+  .ki-btn--red {
+    color: var(--ki-red);
+  }
+
+  .ki-btn--red:hover {
+    border: 1px solid var(--ki-red);
+  }
+}

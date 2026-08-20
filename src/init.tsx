@@ -5,7 +5,7 @@ import { App } from "./app";
 export interface InspectorOptions {
   /** CSS class to add to the root element */
   className?: string;
-  /** interface theme, default: "system" */
+  /** Interface theme, default: "system" */
   theme?: "light" | "dark" | "system";
 }
 
@@ -13,7 +13,7 @@ export default function init(k: KAPLAYCtxType, props: InspectorOptions = {}) {
   const { className = "", theme = "system" } = props;
 
   const appElement = document.createElement("div");
-  appElement.className = `k-inspector k-inspector--${theme} ${className}`;
+  appElement.className = `kaplay-inspector kaplay-inspector--${theme} ${className}`;
 
   document.body.appendChild(appElement);
 

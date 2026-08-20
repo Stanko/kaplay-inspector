@@ -7,7 +7,7 @@ export interface SearchResultsProps {
 
 export const SearchResults = ({ results }: SearchResultsProps) => {
   if (results.length === 0) {
-    return <div class="search__no-results">No results found.</div>;
+    return <div class="ki-search__no-results">No results found.</div>;
   }
 
   return (
@@ -16,7 +16,7 @@ export const SearchResults = ({ results }: SearchResultsProps) => {
         return (
           <GameObject
             key={result.id}
-            className="game-object--root"
+            className="ki-obj--root"
             obj={result}
             isExpanded={results.length === 1}
           />

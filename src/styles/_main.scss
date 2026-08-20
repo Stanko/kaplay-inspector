@@ -1,0 +1,63 @@
+.kaplay-inspector {
+  // Font rendering
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  // Layout
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  max-height: 45vh;
+  overflow: hidden;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  align-content: flex-start;
+  background-color: var(--ki-bg);
+
+  // Base styles
+  color: var(--ki-fg);
+
+  // Fonts
+  font-family:
+    ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, Consolas,
+    "DejaVu Sans Mono", monospace;
+  font-size: 0.875rem;
+  line-height: 1.2;
+
+  // Main layout
+  .ki-header {
+    display: flex;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    align-items: center;
+    z-index: 2;
+    background-color: var(--ki-bg);
+    border-bottom: 1px solid var(--ki-gray-light);
+    border-top: 1px solid var(--ki-gray-light);
+    flex-wrap: wrap;
+  }
+
+  .ki-objects {
+    min-height: 0;
+    padding: 0 0.5rem;
+    overflow: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--ki-border) transparent;
+  }
+
+  .ki-hide-inspector {
+    margin-left: auto;
+  }
+
+  .ki-show-inspector.ki-icon-btn {
+    position: fixed;
+    bottom: 0.5rem;
+    right: 0.5rem;
+  }
+}

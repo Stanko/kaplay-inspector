@@ -1,0 +1,20 @@
+.kaplay-inspector {
+  .ki-input {
+    background-color: var(--ki-bg);
+    border: none;
+    padding: 0.25rem 0.375rem;
+    border: 1px solid var(--ki-border-light);
+    font-size: 0.75rem;
+    border-radius: 4px;
+  }
+
+  .ki-input:focus-visible {
+    outline: 2px solid var(--ki-primary);
+    outline-offset: -1px;
+  }
+
+  .ki-input--error,
+  .ki-input--error:focus-visible {
+    border-color: var(--ki-red);
+  }
+}

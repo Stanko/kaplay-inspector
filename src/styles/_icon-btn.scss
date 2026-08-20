@@ -1,0 +1,23 @@
+.kaplay-inspector {
+  .ki-icon-btn {
+    position: relative;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 8px;
+    display: grid;
+    place-items: center;
+    background-color: var(--ki-bg);
+  }
+
+  .ki-icon-btn:not(:disabled):hover {
+    background-color: var(--ki-gray-light);
+  }
+
+  .ki-icon-btn:disabled {
+    opacity: 0.4;
+  }
+
+  .ki-icon-btn--checked {
+    color: var(--ki-primary);
+  }
+}

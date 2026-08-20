@@ -1,7 +1,7 @@
 import type { JSX } from "preact/jsx-runtime";
 import { cx } from "../../lib/cx";
 
-interface ToolbarButtonProps {
+interface IconButtonProps {
   className?: string;
   tooltip?: string;
   children: JSX.Element | string | number | (JSX.Element | string | number)[];
@@ -10,24 +10,24 @@ interface ToolbarButtonProps {
   popovertarget?: string;
 }
 
-export const ToolbarButton = ({
+export const IconButton = ({
   tooltip,
   children,
   onClick,
   className = "",
   disabled = false,
   ...props
-}: ToolbarButtonProps) => {
+}: IconButtonProps) => {
   return (
     <button
       {...props}
       type="button"
-      class={cx("ki-toolbar-btn", className)}
+      class={cx("ki-icon-btn", className)}
       onClick={onClick}
       disabled={disabled}
     >
       {children}
-      {tooltip && <span class="ki-toolbar-btn__tooltip">{tooltip}</span>}
+      {tooltip && <span class="ki-tooltip">{tooltip}</span>}
     </button>
   );
 };

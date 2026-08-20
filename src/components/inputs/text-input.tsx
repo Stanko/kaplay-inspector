@@ -37,7 +37,7 @@ export const TextInput = ({
 
   return (
     <textarea
-      class={cx(className, "text-input ki-input")}
+      class={cx(className, "ki-text-input ki-input")}
       value={localValue}
       onInput={handleInput}
       placeholder={placeholder}

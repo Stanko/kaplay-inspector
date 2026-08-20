@@ -1,0 +1,52 @@
+.kaplay-inspector {
+  .ki-tooltip {
+    background: black;
+    color: white;
+    padding: 0.375rem 0.625rem;
+    border-radius: 4px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 300ms ease-out;
+    width: max-content;
+    font-size: 0.875rem;
+    z-index: 10;
+
+    position: fixed;
+    position-anchor: --ki-tooltip;
+    position-area: block-end;
+    position-try: flip-block;
+
+    // Reset the original absolute positioning
+    inset: auto;
+    transform: none;
+
+    margin: 0.25rem;
+    max-inline-size: calc(100vw - 1rem);
+  }
+
+  // Bridge the hover gap whether the tooltip is above or below
+  .ki-tooltip::before {
+    content: "";
+    display: block;
+    position: absolute;
+    width: auto;
+    height: auto;
+    inset: -0.25rem;
+  }
+
+  .ki-icon-btn:not(:disabled):hover .ki-tooltip,
+  .ki-icon-btn:focus-visible .ki-tooltip {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .ki-icon-btn {
+    anchor-name: --ki-tooltip;
+    anchor-scope: --ki-tooltip;
+  }
+
+  // Hide trigger button's tooltip when dropdown is open
+  .ki-icon-btn:has(+ .ki-dropdown:popover-open) .ki-tooltip {
+    opacity: 0;
+  }
+}

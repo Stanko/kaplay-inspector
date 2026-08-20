@@ -2,7 +2,7 @@ import { useEffect } from "preact/hooks";
 import type { GameObj } from "kaplay";
 import { useApp } from "../../lib/app-context";
 import { SquareMousePointer } from "lucide-preact";
-import { ToolbarButtonToggle } from "../inputs/toolbar-toggle-button";
+import { IconToggleButton } from "../inputs/toolbar-toggle-button";
 import type { KAPLAYCtxType } from "../../kaplay";
 import { isFixed } from "../../lib/is-fixed";
 
@@ -137,12 +137,12 @@ export const MouseInspect = () => {
   }, [isMouseInspectActive, inspectObject, k, setMouseInspectActive, setRoot]);
 
   return (
-    <ToolbarButtonToggle
+    <IconToggleButton
       checked={isMouseInspectActive}
       onChange={() => setMouseInspectActive(!isMouseInspectActive)}
       tooltip="Inspect an Object"
     >
       <SquareMousePointer />
-    </ToolbarButtonToggle>
+    </IconToggleButton>
   );
 };

@@ -56,7 +56,7 @@ export const BooleanComp = ({ obj, propName }: CheckboxCompProps) => {
   const id = `${propName}-${obj.id}`;
 
   return (
-    <div class="game-object__comps-row">
+    <div class="ki-obj__comps-row">
       <label for={id}>
         <b>{propName}</b>
       </label>

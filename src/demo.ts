@@ -1,16 +1,16 @@
 import kaplay from "kaplay";
 import init from "./init";
 
-import "./styles/demo.css";
-import "./styles/styles.css";
+import "./styles/demo.scss";
+import "./styles/styles.scss";
 
 const k = kaplay({
   global: false,
-  width: 450,
+  width: 400,
   height: 300,
   pixelDensity: Math.min(window.devicePixelRatio, 2),
   debugKey: "d",
-  scale: 1,
+  scale: 2,
   background: "black",
   texFilter: "nearest",
   debug: true,
@@ -33,11 +33,6 @@ k.loadRoot("./");
 
 k.loadFont("nope8", "fonts/Nope8.woff", {
   filter: "nearest",
-});
-
-k.loadSprite("ship", "sprites/ship.png", {
-  sliceX: 4,
-  sliceY: 3,
 });
 
 // ----- MOON ----- //
@@ -113,11 +108,12 @@ k.add([
   k.color(130, 130, 150),
   k.pos(k.width() / 2, 70),
   k.text(
-    "On the bottom you should see the inspector. You can use it to inspect this game and manipulate objects. Try changing the text or moving things around.",
+    "On the bottom you should see the inspector. You can use it to inspect this game and manipulate objects. Try changing the text or updating the ship's fire rate.\n\nPress SPACE to fire!",
     {
       font: "nope8",
       size: 12,
       width: 202,
+      align: "center",
     },
   ),
 ]);
@@ -149,6 +145,55 @@ k.loadSprite("ship", "sprites/ship.png", {
   sliceY: 3,
 });
 
+k.loadSprite("bullets", "sprites/bullets.png", {
+  sliceX: 4,
+  sliceY: 8,
+});
+
+const fire = (rate = 4, bullets = 1, enabled = true) => {
+  let cooldown = 0;
+
+  return {
+    id: "fire",
+    rate,
+    bullets,
+    enabled,
+    update() {
+      cooldown = Math.max(0, cooldown - k.dt());
+
+      if (
+        !this.enabled ||
+        !k.isKeyDown("space") ||
+        this.rate <= 0 ||
+        cooldown > 0
+      ) {
+        return;
+      }
+
+      const bulletCount = Math.round(k.clamp(this.bullets, 1, 3));
+      const spread =
+        bulletCount === 1 ? [0] : bulletCount === 2 ? [-8, 8] : [-12, 0, 12];
+
+      for (const angle of spread) {
+        const radians = (angle * Math.PI) / 180;
+        const direction = k.vec2(Math.sin(radians), -Math.cos(radians));
+
+        k.add([
+          "bullet",
+          k.sprite("bullets", { frame: 0 }),
+          k.pos(ship.pos.sub(k.vec2(0, 4))),
+          k.anchor("center"),
+          k.rotate(angle),
+          k.move(direction, 300),
+          k.offscreen({ destroy: true }),
+        ]);
+      }
+
+      cooldown = 1 / Math.min(this.rate, 10);
+    },
+  };
+};
+
 const hpLabel = k.add([
   "hp-label",
   k.pos(10, 10),
@@ -174,14 +219,15 @@ const ship = k.add([
     frame: 0,
   }),
   k.health(5, 10),
+  k.z(1),
   k.anchor("center"),
   k.area({
     isSensor: true,
     shape: new k.Polygon([k.vec2(-8, 7), k.vec2(0, -11), k.vec2(8, 7)]),
   }),
+  fire(),
   {
     speed: 200,
-    fire: () => {},
     trail,
   },
   {
@@ -261,8 +307,4 @@ ship.onUpdate(() => {
       trail.play("short");
     }
   }
-});
-
-k.onKeyPress("space", () => {
-  k.add(["ship", k.pos(0, 0)]);
 });

@@ -1,8 +1,8 @@
 import type { JSX } from "preact/jsx-runtime";
 import { cx } from "../../lib/cx";
-import { ToolbarButton } from "./toolbar-button";
+import { IconButton } from "./toolbar-button";
 
-interface ToolbarButtonToggleProps {
+interface IconToggleButtonProps {
   className?: string;
   tooltip?: string;
   children: JSX.Element | string | number | (JSX.Element | string | number)[];
@@ -11,19 +11,19 @@ interface ToolbarButtonToggleProps {
   disabled?: boolean;
 }
 
-export const ToolbarButtonToggle = ({
+export const IconToggleButton = ({
   tooltip,
   children,
   onChange,
   className = "",
   checked,
   disabled = false,
-}: ToolbarButtonToggleProps) => {
+}: IconToggleButtonProps) => {
   return (
-    <ToolbarButton
+    <IconButton
       disabled={disabled}
-      className={cx("ki-toolbar-toggle-btn", className, {
-        "ki-toolbar-toggle-btn--checked": checked,
+      className={cx("ki-icon-btn", className, {
+        "ki-icon-btn--checked": checked,
       })}
       onClick={() => {
         onChange?.(!checked);
@@ -31,6 +31,6 @@ export const ToolbarButtonToggle = ({
       tooltip={tooltip}
     >
       {children}
-    </ToolbarButton>
+    </IconButton>
   );
 };
