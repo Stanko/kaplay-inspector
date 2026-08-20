@@ -66,7 +66,7 @@ if (
 If typescript is complaining about importing CSS files, you probably need to add this to `declaration.d.ts` file in you project's root.
 
 ```ts
-declare module "*.scss";
+declare module "*.css";
 ```
 
 ### Options
