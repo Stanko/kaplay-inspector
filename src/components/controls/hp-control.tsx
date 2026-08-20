@@ -2,20 +2,20 @@ import type { GameObj } from "kaplay";
 import { NumberInput } from "../inputs/number-input";
 
 export interface HpControlProps {
-  className?: string;
   obj: GameObj;
   step?: number;
 }
 
-export const HpControl = ({ className = "", obj, step }: HpControlProps) => {
+export const HpControl = ({ obj, step }: HpControlProps) => {
   if (obj.hp === undefined) {
     return null;
   }
 
   return (
     <div class="hp-control ki-flex">
+      <div>hp:</div>
       <NumberInput
-        className={className}
+        className="hp-control__hp-input"
         obj={obj}
         property="hp"
         step={step}
@@ -23,7 +23,15 @@ export const HpControl = ({ className = "", obj, step }: HpControlProps) => {
           obj.hp = n;
         }}
       />{" "}
-      (Max: {obj.maxHP})
+      <div>max hp:</div>
+      <NumberInput
+        obj={obj}
+        property="maxHP"
+        step={step}
+        onChange={(n) => {
+          obj.maxHP = n;
+        }}
+      />{" "}
     </div>
   );
 };
