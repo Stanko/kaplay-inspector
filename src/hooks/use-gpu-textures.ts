@@ -1,5 +1,6 @@
 import type { Texture } from "kaplay";
 import { useApp } from "../lib/app-context";
+import { useCallback } from "preact/hooks";
 
 const gpuTextureToDataURL = (texture: Texture) => {
   const { gl } = texture.ctx;
@@ -56,7 +57,7 @@ const gpuTextureToDataURL = (texture: Texture) => {
 export const useGpuTextures = () => {
   const { k } = useApp();
 
-  const getTextures = () => {
+  const getTextures = useCallback(() => {
     const { packer } = k._k.assets;
 
     packer.syncIfPending();
@@ -68,36 +69,10 @@ export const useGpuTextures = () => {
       packer?._big.forEach(({ tex }) => textures.add(tex));
     });
 
-    const images = [...textures].map((texture, index) => {
-      const image = document.createElement("img");
-
-      image.alt = `GPU texture ${index + 1}`;
-      image.src = gpuTextureToDataURL(texture);
-      image.style.height = "auto";
-      image.style.display = "block";
-      image.style.maxWidth = "100%";
-      image.style.maxHeight = "calc(100vh - 40px)";
-      image.style.outline = "1px solid rgb(255 255 255 / 0.3)";
-
-      return image;
+    return [...textures].map((texture) => {
+      return gpuTextureToDataURL(texture);
     });
-
-    const wrapper = document.createElement("div");
-    wrapper.style.position = "fixed";
-    wrapper.style.inset = "0";
-    wrapper.style.display = "grid";
-    wrapper.style.placeItems = "center";
-    wrapper.style.gap = "20px";
-    wrapper.style.padding = "20px";
-    wrapper.style.gridTemplateColumns = `repeat(${Math.min(images.length, 2)}, 1fr)`;
-    wrapper.style.zIndex = "10000";
-    wrapper.style.background = "black";
-    wrapper.append(...images);
-
-    document.body.append(wrapper);
-
-    return images;
-  };
+  }, [k]);
 
   return { getTextures };
 };

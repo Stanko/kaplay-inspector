@@ -473,6 +473,25 @@
     font-weight: bold;
   }
 
+  /* Textures */
+  .ki-textures {
+    display: flex;
+    gap: 0.5rem;
+    padding: 0.25rem;
+  }
+
+  .ki-texture {
+    width: 14rem;
+    height: 14rem;
+    border-radius: 2px;
+    display: block;
+    background: var(--ki-gray-bg);
+  }
+
+  .ki-texture:hover {
+    background: var(--ki-primary-extra-light);
+  }
+
   /* Expand tree button */
 
   .game-object__expand-icon {

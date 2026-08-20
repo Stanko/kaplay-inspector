@@ -62,11 +62,12 @@ export const Inspector = () => {
     <>
       <div class="k-inspector__header">
         <PauseGame />
-        <DrawBBox />
         <MouseInspect />
-        <Recorder />
-        <Textures />
+        <DrawBBox />
         <UpdateInterval />
+        <Textures />
+        <Recorder />
+
         <Search />
         <div>
           {objectCount} object{objectCount !== 1 && "s"}

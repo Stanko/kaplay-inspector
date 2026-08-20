@@ -127,5 +127,5 @@ Same as with colors, be sure to have a higher specificity selector if inspector'
 
 ## TODO
 
-- [ ] Textures
+- [ ] CSS refactor
 - [ ] Text input CSS polish
