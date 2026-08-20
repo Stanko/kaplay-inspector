@@ -9,7 +9,6 @@ export interface AppState {
   isVisible: boolean;
   isDrawBBoxActive: boolean;
   isMouseInspectActive: boolean;
-  searchResults: GameObj[];
   searchInputValue: string;
 }
 
@@ -25,7 +24,6 @@ interface AppContextValue extends AppState {
   setRoot: (obj: GameObj) => void;
   searchQuery: string;
   toggleVisibility: () => void;
-  setSearchResults: (results: GameObj[]) => void;
   setSearchInputValue: (value: string) => void;
   setUpdateInterval: (value: number) => void;
   setDrawBBoxActive: (value: boolean) => void;

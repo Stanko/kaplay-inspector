@@ -15,15 +15,8 @@ import { Gamepad2, Minimize2 } from "lucide-preact";
 import { ToolbarButton } from "./inputs/toolbar-button";
 
 export const Inspector = () => {
-  const {
-    k,
-    root,
-    isVisible,
-    toggleVisibility,
-    searchResults,
-    searchQuery,
-    updateInterval,
-  } = useApp();
+  const { k, root, isVisible, toggleVisibility, searchQuery, updateInterval } =
+    useApp();
 
   const [, setRenderIndex] = useState(0);
 
@@ -31,12 +24,16 @@ export const Inspector = () => {
 
   // Force re-render every updateInterval milliseconds
   useEffect(() => {
-    const interval = setInterval(() => {
-      setRenderIndex((index) => index + 1);
-    }, updateInterval);
+    let interval = 0;
+
+    if (isVisible) {
+      interval = setInterval(() => {
+        setRenderIndex((index) => index + 1);
+      }, updateInterval);
+    }
 
     return () => clearInterval(interval);
-  }, [updateInterval]);
+  }, [updateInterval, isVisible]);
 
   if (!isVisible) {
     return (
@@ -52,6 +49,12 @@ export const Inspector = () => {
 
   const fps = Math.round(k.debug.fps());
   const fpsColor = getFpsColor(fps);
+
+  // Unfortunately, liveUpdate queries are only destroyed on scene change,
+  // so they can accumulate and cause memory leaks
+  // Therefore I use regular get instead while polling
+  const searchResults =
+    searchQuery.length > 0 ? k.get(searchQuery, { recursive: true }) : [];
 
   return (
     <>

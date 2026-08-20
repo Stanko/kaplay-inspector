@@ -1,53 +1,8 @@
-import { useEffect, useState } from "preact/hooks";
 import { useApp } from "../../lib/app-context";
 import { X } from "lucide-preact";
 
 export const Search = () => {
-  const {
-    k,
-    searchInputValue,
-    setSearchInputValue,
-    searchQuery,
-    setSearchResults,
-  } = useApp();
-  const [sceneChangeCount, setSceneChangeCount] = useState(0);
-
-  useEffect(() => {
-    let refreshTimeout: ReturnType<typeof setTimeout> | undefined;
-
-    const sceneController = k.onSceneLeave(() => {
-      setSearchResults([]);
-
-      // Kaplay creates the next scene after firing sceneLeave and clearing the current scene events.
-      // Wait until that finishes before subscribing a new live query to the new scene.
-      refreshTimeout = setTimeout(() => {
-        setSceneChangeCount((index) => index + 1);
-      }, 0);
-    });
-
-    return () => {
-      sceneController.cancel();
-      clearTimeout(refreshTimeout);
-    };
-  }, [k, sceneChangeCount]);
-
-  useEffect(() => {
-    if (searchQuery === "") {
-      setSearchResults([]);
-      return;
-    }
-
-    const searchTimeout = setTimeout(() => {
-      setSearchResults(
-        k.get(searchQuery, {
-          recursive: true,
-          liveUpdate: true,
-        }),
-      );
-    }, 250);
-
-    return () => clearTimeout(searchTimeout);
-  }, [k, searchQuery, setSearchResults, sceneChangeCount]);
+  const { searchInputValue, setSearchInputValue } = useApp();
 
   const handleInput = (event: Event) => {
     setSearchInputValue((event.target as HTMLInputElement).value);

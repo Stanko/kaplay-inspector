@@ -55,7 +55,6 @@ export const App = ({ k }: AppProps) => {
     isDrawBBoxActive: true,
     isMouseInspectActive: false,
     // Search
-    searchResults: [],
     searchInputValue: "",
     ...load(),
   });
@@ -106,18 +105,10 @@ export const App = ({ k }: AppProps) => {
       inspectObject.clear();
       setAppState({
         root: object,
-        searchResults: [],
         searchInputValue: "",
       });
     },
     [inspectObject, setAppState],
-  );
-
-  const setSearchResults = useCallback(
-    (results: GameObj[]) => {
-      setAppState({ searchResults: results });
-    },
-    [setAppState],
   );
 
   const setSearchInputValue = useCallback(
@@ -154,7 +145,6 @@ export const App = ({ k }: AppProps) => {
       // Actions
       setRoot,
       toggleVisibility,
-      setSearchResults,
       setSearchInputValue,
       setUpdateInterval,
       setDrawBBoxActive,
@@ -170,7 +160,6 @@ export const App = ({ k }: AppProps) => {
       inspectObject,
       setRoot,
       toggleVisibility,
-      setSearchResults,
       setSearchInputValue,
       setUpdateInterval,
       setDrawBBoxActive,

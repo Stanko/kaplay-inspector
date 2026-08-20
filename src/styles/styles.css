@@ -544,6 +544,7 @@
 
   .child-object .game-object__buttons {
     position: relative;
+    margin-left: auto;
   }
 
   /* Flex layout for controls */

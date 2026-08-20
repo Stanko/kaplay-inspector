@@ -6,6 +6,7 @@ import { Breadcrumbs } from "./breadcrumbs";
 import { BooleanComp } from "./controls/boolean-control";
 import { useApp } from "../lib/app-context";
 import { MinusSquare, PlusSquare } from "lucide-preact";
+import { inspectComps } from "../lib/inspect-comps";
 
 export interface GameObjectProps {
   className?: string;
@@ -13,6 +14,37 @@ export interface GameObjectProps {
   isExpanded?: boolean;
   isRenderRoot?: boolean;
 }
+
+const GameObjectDetails = ({ obj }: { obj: GameObj }) => {
+  const compsData = inspectComps(obj);
+  const hasSize =
+    typeof obj.width === "number" && typeof obj.height === "number";
+
+  return (
+    <div class="game-object__comps-wrapper">
+      <div class="game-object__comps">
+        <BooleanComp obj={obj} propName="paused" />
+        <BooleanComp obj={obj} propName="hidden" />
+
+        {hasSize && (
+          <div class="game-object__comps-row">
+            <b>size</b>
+            <div>
+              {obj.width} x {obj.height}
+            </div>
+          </div>
+        )}
+
+        {compsData.map((comp) => (
+          <div key={comp.label} class="game-object__comps-row">
+            <b>{comp.label}</b>
+            <div>{comp.control}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
 
 export const GameObject = ({
   obj,
@@ -23,14 +55,11 @@ export const GameObject = ({
   const { setRoot, isDrawBBoxActive, inspectObject } = useApp();
   const [isExpanded, setIsExpanded] = useState(isExpandedExternal);
 
-  const { compsData, tags, compsLabel } = getObjectInfo(obj);
+  const { tags, compsLabel, hasComponents } = getObjectInfo(obj);
   const isRootObject = obj.id === 0;
   const isObjectDestroyed = !obj.exists() && !isRootObject;
   const showExpandTree = obj.children.length > 0;
   const hasChildren = obj.children.length > 0;
-  const hasSize =
-    typeof obj.width === "number" && typeof obj.height === "number";
-
   const isInspecting = isRenderRoot && obj.id !== 0;
 
   const cleanup = useCallback(() => {
@@ -50,7 +79,7 @@ export const GameObject = ({
   };
 
   // Skip drawing if there are no components or children to inspect
-  if (compsData.length === 0 && obj.children.length === 0) {
+  if (!hasComponents && obj.children.length === 0) {
     return null;
   }
 
@@ -115,30 +144,7 @@ export const GameObject = ({
           </div>
         </div>
 
-        {isExpanded && (
-          <div class="game-object__comps-wrapper">
-            <div class="game-object__comps">
-              <BooleanComp obj={obj} propName="paused" />
-              <BooleanComp obj={obj} propName="hidden" />
-
-              {hasSize && (
-                <div class="game-object__comps-row">
-                  <b>size</b>
-                  <div>
-                    {obj.width} x {obj.height}
-                  </div>
-                </div>
-              )}
-
-              {compsData.map((comp) => (
-                <div key={comp.label} class="game-object__comps-row">
-                  <b>{comp.label}</b>
-                  <div>{comp.control}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
+        {isExpanded && <GameObjectDetails obj={obj} />}
       </div>
       {isExpanded && hasChildren && (
         <div
