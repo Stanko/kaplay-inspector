@@ -50,6 +50,8 @@ export const Inspector = () => {
   const fps = Math.round(k.debug.fps());
   const fpsColor = getFpsColor(fps);
 
+  const objectCount = k.debug.numObjects();
+
   // Unfortunately, liveUpdate queries are only destroyed on scene change,
   // so they can accumulate and cause memory leaks
   // Therefore I use regular get instead while polling
@@ -66,7 +68,9 @@ export const Inspector = () => {
         <Textures />
         <UpdateInterval />
         <Search />
-        <div>{k.get("*", { recursive: true }).length} objects</div>
+        <div>
+          {objectCount} object{objectCount !== 1 && "s"}
+        </div>
         <div class={fpsColor}>{fps} fps</div>
 
         <ToolbarButton

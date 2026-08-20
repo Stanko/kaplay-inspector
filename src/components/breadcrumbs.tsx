@@ -41,6 +41,7 @@ export const Breadcrumbs = ({ obj }: BreadcrumbsProps) => {
       Back to
       {breadcrumbs.map((breadcrumb) => (
         <button
+          key={breadcrumb.id}
           class="ki-btn breadcrumbs__item"
           onClick={() => setRoot(breadcrumb.object)}
         >

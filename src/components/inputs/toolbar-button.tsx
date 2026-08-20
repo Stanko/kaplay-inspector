@@ -21,6 +21,7 @@ export const ToolbarButton = ({
   return (
     <button
       {...props}
+      type="button"
       class={cx("ki-toolbar-btn", className)}
       onClick={onClick}
       disabled={disabled}

@@ -1,5 +1,6 @@
 import type { Anchor, GameObj } from "kaplay";
 import type { KAPLAYCtxType } from "../kaplay";
+import { isFixed } from "./is-fixed";
 
 const anchorMap: Record<Anchor, [x: number, y: number]> = {
   topleft: [-1, -1],
@@ -14,8 +15,13 @@ const anchorMap: Record<Anchor, [x: number, y: number]> = {
 };
 
 export const drawBoundingBox = (obj: GameObj, k: KAPLAYCtxType) => {
-  if (obj.renderArea) {
-    const localArea = obj.renderArea();
+  const hasSize =
+    typeof obj.width === "number" && typeof obj.height === "number";
+  const localArea =
+    obj.renderArea?.() ??
+    (hasSize ? new k.Rect(k.vec2(0), obj.width, obj.height) : null);
+
+  if (localArea) {
     const transform = obj.transform.clone();
     let anchor = obj.anchor || "topleft";
 
@@ -39,6 +45,7 @@ export const drawBoundingBox = (obj: GameObj, k: KAPLAYCtxType) => {
       pos: worldBBox.pos,
       width: worldBBox.width,
       height: worldBBox.height,
+      fixed: isFixed(obj),
       fill: false,
       outline: {
         width: 1,

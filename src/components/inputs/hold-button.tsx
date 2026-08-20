@@ -20,7 +20,7 @@ export const HoldButton = ({
 }: HoldButtonProps) => {
   const buttonRef = useRef<HTMLButtonElement>(null);
   const timerRef = useRef<ReturnType<typeof setTimeout>>();
-  const pointerIdRef = useRef<number>(0);
+  const pointerIdRef = useRef<number | null>(null);
   const onClickAndHoldRef = useRef(onClickAndHold);
   const onHoldEndRef = useRef(onHoldEnd);
 
@@ -43,9 +43,14 @@ export const HoldButton = ({
     clearTimeout(timerRef.current);
     clearInterval(timerRef.current);
 
-    if (buttonRef.current?.hasPointerCapture(pointerIdRef.current)) {
+    if (
+      pointerIdRef.current !== null &&
+      buttonRef.current?.hasPointerCapture(pointerIdRef.current)
+    ) {
       buttonRef.current.releasePointerCapture(pointerIdRef.current);
     }
+
+    pointerIdRef.current = null;
   }, []);
 
   // Clear timer on unmount
@@ -62,7 +67,7 @@ export const HoldButton = ({
 
   const handlePointerDown = useCallback(
     (e: PointerEvent) => {
-      if (e.button !== 0) {
+      if (e.button !== 0 || pointerIdRef.current !== null) {
         return;
       }
       stopTimer();
@@ -74,20 +79,27 @@ export const HoldButton = ({
     [startTimer, stopTimer],
   );
 
-  const handlePointerEnd = useCallback(() => {
-    stopTimer();
-    onHoldEndRef.current?.();
-  }, [stopTimer]);
+  const handlePointerEnd = useCallback(
+    (e: PointerEvent) => {
+      if (pointerIdRef.current !== e.pointerId) {
+        return;
+      }
+
+      stopTimer();
+      onHoldEndRef.current?.();
+    },
+    [stopTimer],
+  );
 
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
-    if (e.key === "Enter") {
+    if (e.key === "Enter" || e.key === " ") {
       onClickAndHoldRef.current();
       e.preventDefault();
     }
   }, []);
 
   const handleKeyboardEnd = useCallback((e: KeyboardEvent) => {
-    if (e.key === "Enter") {
+    if (e.key === "Enter" || e.key === " ") {
       onHoldEndRef.current?.();
     }
   }, []);

@@ -422,9 +422,15 @@
     background-color: var(--ki-primary-light);
   }
 
+  .game-object__header:focus-visible {
+    background-color: var(--ki-primary-extra-light);
+    outline-offset: -2px;
+  }
+
   .game-object__header--expanded {
     background-color: var(--ki-primary-extra-light);
   }
+
   .game-object__header--expanded:has(.game-object__comp-names) {
     background-color: var(--ki-secondary-extra-light);
   }

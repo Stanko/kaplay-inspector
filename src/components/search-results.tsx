@@ -15,6 +15,7 @@ export const SearchResults = ({ results }: SearchResultsProps) => {
       {results.map((result) => {
         return (
           <GameObject
+            key={result.id}
             className="game-object--root"
             obj={result}
             isExpanded={results.length === 1}

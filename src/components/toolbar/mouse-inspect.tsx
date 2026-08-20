@@ -4,10 +4,7 @@ import { useApp } from "../../lib/app-context";
 import { SquareMousePointer } from "lucide-preact";
 import { ToolbarButtonToggle } from "../inputs/toolbar-toggle-button";
 import type { KAPLAYCtxType } from "../../kaplay";
-
-const isFixed = (obj: GameObj): boolean => {
-  return Boolean(obj.fixed) || Boolean(obj.parent && isFixed(obj.parent));
-};
+import { isFixed } from "../../lib/is-fixed";
 
 const isHidden = (obj: GameObj): boolean => {
   return (
