@@ -1,6 +1,6 @@
 # Kaplay Inspector
 
-A dev tool for [Kaplay](https://kaplayjs.com/) which allows you to explore and inspect the game object tree real time.
+A dev tool for [Kaplay](https://kaplayjs.com/) which allows you to explore and inspect the game object tree in real time.
 
 Check the demo: [muffinman.io/kaplay-inspector/](https://muffinman.io/kaplay-inspector/).
 
@@ -11,8 +11,8 @@ Check the demo: [muffinman.io/kaplay-inspector/](https://muffinman.io/kaplay-ins
 - Navigate the game object tree
 - Updates every 250ms (configurable) by polling
 - Use your mouse to select an element directly from the game
-- Draw inspected element's area, anchor and bounding box
-- Inspect components (system and custom) properties and update them live
+- Draw the inspected element's area, anchor and bounding box
+- Inspect system and custom component properties and update them live
 - You can tweak pretty much anything, for example:
   - boolean (hidden, paused)
   - number (opacity, rotate, z-index)
@@ -20,14 +20,12 @@ Check the demo: [muffinman.io/kaplay-inspector/](https://muffinman.io/kaplay-ins
   - vector (position, scale)
   - game object (children, object reference)
   - color
-- Custom controls for certain system components
-  - anchor
-  - blend mode
+- Custom controls for certain system components like anchor, blend mode or sprite
 - Log an object to the console
 - Search for tags or components
 - Record video of the game
 - See GPU textures
-- Saves basic settings and search term across browse refreshes
+- Saves basic settings and search term across browser refreshes
 - Light/dark/system theme (is this a feature?)
 
 The layout is made with desktop in mind. That said, it is somewhat usable on phones.
@@ -40,16 +38,16 @@ Install it:
 npm install @stanko/kaplay-inspector
 ```
 
-This is a dev tool, so I strongly recommend you import it only in development mode. This will prevent from the inspector showing up when you ship your game to players.
+This is a dev tool, so I strongly recommend you import it only in development mode. This will prevent the inspector from showing up when you ship your game to players.
 
-If you are using vite, it exposes the dev flag in `import.meta.env.DEV`. For other bundlers check their documentation.
+If you are using Vite, it exposes the dev flag in `import.meta.env.DEV`. For other bundlers, check their documentation.
 
-You'll need to import the CSS and `init` method, here is an example using vite:
+You'll need to import the CSS and `init` method. Here's an example using Vite:
 
 ```ts
 import kaplay from "kaplay";
 
-// Init you kaplay game
+// Init your Kaplay game
 const k = kaplay({});
 
 // Make sure to load it only in development mode
@@ -62,7 +60,7 @@ if (import.meta.env.DEV) {
 }
 ```
 
-If typescript is complaining about importing CSS files, you probably need to add this to `declaration.d.ts` file in you project's root.
+If TypeScript is complaining about importing CSS files, you probably need to add this to the `declaration.d.ts` file in your project's root.
 
 ```ts
 declare module "*.css";
@@ -83,7 +81,7 @@ export interface InspectorOptions {
 
 ## Customizing colors
 
-Kaplay Inspector defines colors in [OKLCH color space](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/color_value/oklch). This makes changing of the primary and the secondary color pretty straight forward. You only need to update two hue variables like this:
+Kaplay Inspector defines colors in [OKLCH color space](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/color_value/oklch). This makes changing the primary and secondary colors pretty straightforward. You only need to update two hue variables like this:
 
 ```css
 .kaplay-inspector.your-custom-class {
@@ -100,10 +98,10 @@ If you want to change other colors as well, check the [_variables.scss](./src/st
 
 By default, the inspector has `position: fixed` and sits at the bottom of the screen. Use `className` to add a class and position it differently.
 
-Assuming we have only the canvas and the inspector element on the page, here is an example of what I like to do:
+Assuming there are only the canvas and the inspector element on the page, here's an example of what I like to do:
 
 ```css
-/* If hide button is shown, it means Kaplay inspector is visible */
+/* If the hide button is shown, it means the Kaplay inspector is visible */
 body:has(.ki-hide-inspector) {
   display: grid;
   grid-template-rows: 55vh 45vh;
@@ -121,9 +119,9 @@ body:has(.ki-hide-inspector) {
 }
 ```
 
-This fixed the game canvas in the upper part of the viewport (55% of it) and the bottom part is taken by the inspector. It only applies this layout when inspector is visible (by checking if the hide button is shown).
+This fixes the game canvas in the upper part of the viewport (55% of it), and the bottom part is taken by the inspector. It only applies this layout when the inspector is visible (by checking if the hide button is shown).
 
-Same as with colors, be sure to have a higher specificity selector if inspector's CSS is loaded dynamically.
+As with colors, be sure to use a higher-specificity selector if the inspector's CSS is loaded dynamically.
 
 ## TODO
 

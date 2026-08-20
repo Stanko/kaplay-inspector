@@ -10,7 +10,6 @@ const isHidden = (obj: GameObj): boolean => {
   return (
     Boolean(obj.hidden) ||
     Boolean(obj.parent && isHidden(obj.parent)) ||
-    // TODO not sure if this should be ignored
     obj.opacity === 0
   );
 };
