@@ -68,6 +68,10 @@
     }
   }
 
+  .ki-obj__header:active {
+    transform: translateY(1px);
+  }
+
   .ki-obj__header:hover {
     background-color: var(--ki-primary-light);
   }
@@ -121,25 +125,6 @@
   .ki-obj__destroyed {
     color: var(--ki-red);
     font-weight: bold;
-  }
-
-  // Textures
-  .ki-textures {
-    display: flex;
-    gap: 0.5rem;
-    padding: 0.25rem;
-  }
-
-  .ki-texture {
-    width: 14rem;
-    height: 14rem;
-    border-radius: 2px;
-    display: block;
-    background: var(--ki-gray-bg);
-  }
-
-  .ki-texture:hover {
-    background: var(--ki-primary-extra-light);
   }
 
   // Expand tree button

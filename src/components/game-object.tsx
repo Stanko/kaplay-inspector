@@ -58,7 +58,6 @@ export const GameObject = ({
   const { tags, compsLabel, hasComponents } = getObjectInfo(obj);
   const isRootObject = obj.id === 0;
   const isObjectDestroyed = !obj.exists() && !isRootObject;
-  const showExpandTree = obj.children.length > 0;
   const hasChildren = obj.children.length > 0;
   const isInspecting = isRenderRoot && obj.id !== 0;
 
@@ -99,7 +98,6 @@ export const GameObject = ({
         <div class="ki-obj__sticky-header">
           <button
             class={cx("ki-obj__header", {
-              "ki-obj__header--expandable": showExpandTree,
               "ki-obj__header--expanded": isExpanded,
             })}
             onClick={handleToggleClick}

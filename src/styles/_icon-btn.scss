@@ -9,6 +9,10 @@
     background-color: var(--ki-bg);
   }
 
+  .ki-icon-btn:active svg {
+    transform: translateY(1px);
+  }
+
   .ki-icon-btn:not(:disabled):hover {
     background-color: var(--ki-gray-light);
   }

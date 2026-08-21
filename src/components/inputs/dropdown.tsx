@@ -35,7 +35,7 @@ export const Dropdown = ({
         {children}
       </IconButton>
 
-      <div id={dropdownId} popover="auto" class="ki-dropdown">
+      <div id={dropdownId} popover="auto" class="ki-dropdown ki-dropdown--list">
         {items.map((item, index) => (
           <button
             class={cx("ki-dropdown-item", {

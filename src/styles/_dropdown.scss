@@ -2,21 +2,23 @@
   .ki-dropdown {
     // Reset browser popover positioning
     inset: auto;
-    margin: 0;
+    margin: 0.25rem;
 
     // The popover target is automatically its anchor
     position-area: block-end span-inline-end;
     position-try: flip-block;
-    margin-block-start: 0.25rem;
 
     min-width: 6rem;
     max-width: calc(100vw - 1rem);
-    padding: 0.25rem;
     border: 1px solid var(--ki-border-light);
     border-radius: 6px;
     background: var(--ki-bg);
     color: var(--ki-fg);
     box-shadow: 0 4px 16px rgb(0 0 0 / 0.1);
+  }
+
+  .ki-dropdown--list {
+    padding: 0.25rem;
   }
 
   .ki-dropdown-item {

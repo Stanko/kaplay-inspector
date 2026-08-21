@@ -1,4 +1,4 @@
-import { Image } from "lucide-preact";
+import { Image, RefreshCcw } from "lucide-preact";
 import { useCallback, useId, useState } from "preact/hooks";
 import { useGpuTextures } from "../../hooks/use-gpu-textures";
 import { IconButton } from "../inputs/toolbar-button";
@@ -12,6 +12,10 @@ export const Textures = () => {
     if (!textures.length) {
       setTextures(getTextures());
     }
+  }, [getTextures, textures]);
+
+  const handleRefresh = useCallback(() => {
+    setTextures(getTextures());
   }, [getTextures]);
 
   return (
@@ -25,7 +29,11 @@ export const Textures = () => {
         <Image />
       </IconButton>
 
-      <div id={dropdownId} popover="auto" class="ki-dropdown">
+      <div
+        id={dropdownId}
+        popover="auto"
+        class="ki-dropdown ki-dropdown--textures"
+      >
         <div class="ki-textures">
           {textures.map((texture, index) => (
             <button
@@ -40,6 +48,14 @@ export const Textures = () => {
             </button>
           ))}
         </div>
+        <button
+          type="button"
+          class="ki-btn ki-flex ki-textures__refresh"
+          onClick={handleRefresh}
+        >
+          <RefreshCcw />
+          Refresh
+        </button>
       </div>
     </>
   );

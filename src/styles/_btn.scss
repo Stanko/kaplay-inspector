@@ -7,6 +7,10 @@
     border: 1px solid var(--ki-border-light);
   }
 
+  .ki-btn:active {
+    transform: translateY(1px);
+  }
+
   .ki-btn:hover {
     border: 1px solid var(--ki-primary);
   }

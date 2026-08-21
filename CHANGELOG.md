@@ -1,5 +1,9 @@
 # Changelog
 
+## Version 0.4.4
+
+- Added texture refresh control and refined dropdown styling
+
 ## Version 0.4.3
 
 ### Added
