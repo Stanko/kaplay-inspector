@@ -3,6 +3,20 @@ import { useCallback, useId, useState } from "preact/hooks";
 import { useGpuTextures } from "../../hooks/use-gpu-textures";
 import { IconButton } from "../inputs/toolbar-button";
 
+const openTexture = (dataUrl: string) => {
+  const [encodedData] = dataUrl.split(",", 2);
+  const mimeType = "image/png";
+  const bytes = Uint8Array.from(atob(encodedData), (character) =>
+    character.charCodeAt(0),
+  );
+  const objectUrl = URL.createObjectURL(new Blob([bytes], { type: mimeType }));
+
+  window.open(objectUrl, "_blank", "noopener,noreferrer");
+
+  // Give the new tab enough time to load the object URL before releasing it.
+  window.setTimeout(() => URL.revokeObjectURL(objectUrl), 5_000);
+};
+
 export const Textures = () => {
   const dropdownId = useId();
   const { getTextures } = useGpuTextures();
@@ -40,9 +54,7 @@ export const Textures = () => {
               type="button"
               key={index}
               title="Open texture in new tab"
-              onClick={() =>
-                window.open(texture, "_blank", "noopener,noreferrer")
-              }
+              onClick={() => openTexture(texture)}
             >
               <img class="ki-texture" src={texture} alt="" />
             </button>

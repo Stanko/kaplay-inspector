@@ -11,9 +11,9 @@ const mimeTypes = [
 // medium 0.10,
 // high 0.16,
 // veryHigh 0.24,
-const BITS_PER_PIXEL_PER_FRAME = 0.32;
+const BITS_PER_PIXEL_PER_FRAME = 0.8;
 const FPS = 60;
-const MAX_VIDEO_BITS_PER_SECOND = 40_000_000; // ~40 mbps
+const MAX_VIDEO_BITS_PER_SECOND = 50_000_000; // ~50 mbps
 
 export const recorder = (k: KAPLAYCtxType) => {
   const mimeType = mimeTypes.find((type) =>
