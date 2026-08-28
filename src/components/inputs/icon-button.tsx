@@ -1,9 +1,11 @@
 import type { JSX } from "preact/jsx-runtime";
+import type { TargetedFocusEvent, TargetedPointerEvent } from "preact";
 import { cx } from "../../lib/cx";
+import { useCallback, useRef } from "preact/hooks";
 
 interface IconButtonProps {
   className?: string;
-  tooltip?: string;
+  tooltip: string;
   children: JSX.Element | string | number | (JSX.Element | string | number)[];
   onClick?: () => void;
   disabled?: boolean;
@@ -18,6 +20,40 @@ export const IconButton = ({
   disabled = false,
   ...props
 }: IconButtonProps) => {
+  const ref = useRef<HTMLSpanElement>(null);
+
+  const hideTooltip = useCallback(() => {
+    if (ref.current && ref.current.matches(":popover-open")) {
+      ref.current.hidePopover();
+    }
+  }, []);
+
+  const handlePointerEnter = useCallback(
+    (event: TargetedPointerEvent<HTMLButtonElement>) => {
+      if (
+        event.pointerType === "mouse" &&
+        ref.current &&
+        !ref.current.matches(":popover-open")
+      ) {
+        ref.current.showPopover();
+      }
+    },
+    [],
+  );
+
+  const handleFocus = useCallback(
+    (event: TargetedFocusEvent<HTMLButtonElement>) => {
+      if (
+        event.currentTarget.matches(":focus-visible") &&
+        ref.current &&
+        !ref.current.matches(":popover-open")
+      ) {
+        ref.current.showPopover();
+      }
+    },
+    [],
+  );
+
   return (
     <button
       {...props}
@@ -26,9 +62,16 @@ export const IconButton = ({
       aria-label={tooltip}
       onClick={onClick}
       disabled={disabled}
+      onPointerEnter={handlePointerEnter}
+      onPointerLeave={hideTooltip}
+      onFocus={handleFocus}
+      onBlur={hideTooltip}
     >
       {children}
-      {tooltip && <span class="ki-tooltip">{tooltip}</span>}
+
+      <span ref={ref} popover="manual" class="ki-tooltip">
+        {tooltip}
+      </span>
     </button>
   );
 };

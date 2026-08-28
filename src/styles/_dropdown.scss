@@ -3,11 +3,8 @@
     // Reset browser popover positioning
     inset: auto;
     margin: 0.25rem;
-
-    // The popover target is automatically its anchor
     position-area: block-end span-inline-end;
     position-try: flip-block;
-
     min-width: 6rem;
     max-width: calc(100vw - 1rem);
     border: 1px solid var(--ki-border-light);

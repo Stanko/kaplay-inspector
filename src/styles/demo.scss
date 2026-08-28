@@ -18,7 +18,8 @@ body {
 }
 
 canvas {
-  margin: 0 auto;
+  margin: 1rem auto;
+  border-radius: 20px;
   display: block;
   image-rendering: pixelated;
   max-width: 100%;

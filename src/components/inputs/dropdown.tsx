@@ -9,7 +9,7 @@ interface DropdownItem {
 }
 
 interface DropdownProps {
-  tooltip?: string;
+  tooltip: string;
   items: DropdownItem[];
   children: JSX.Element | string | number | (JSX.Element | string | number)[];
   onChange: (value: number) => void;

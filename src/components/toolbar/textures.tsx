@@ -4,17 +4,19 @@ import { useGpuTextures } from "../../hooks/use-gpu-textures";
 import { IconButton } from "../inputs/icon-button";
 
 const openTexture = (dataUrl: string) => {
-  const [encodedData] = dataUrl.split(",", 2);
-  const mimeType = "image/png";
-  const bytes = Uint8Array.from(atob(encodedData), (character) =>
-    character.charCodeAt(0),
-  );
-  const objectUrl = URL.createObjectURL(new Blob([bytes], { type: mimeType }));
+  const newTab = window.open("", "_blank");
 
-  window.open(objectUrl, "_blank", "noopener,noreferrer");
+  if (!newTab) {
+    return;
+  }
 
-  // Give the new tab enough time to load the object URL before releasing it.
-  window.setTimeout(() => URL.revokeObjectURL(objectUrl), 5_000);
+  newTab.opener = null;
+  newTab.document.title = "Kaplay GPU Texture";
+
+  const image = newTab.document.createElement("img");
+  image.src = dataUrl;
+  image.style.maxWidth = "100%";
+  newTab.document.body.append(image);
 };
 
 export const Textures = () => {

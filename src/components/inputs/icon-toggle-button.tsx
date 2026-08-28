@@ -4,7 +4,7 @@ import { IconButton } from "./icon-button";
 
 interface IconToggleButtonProps {
   className?: string;
-  tooltip?: string;
+  tooltip: string;
   children: JSX.Element | string | number | (JSX.Element | string | number)[];
   onChange: (checked: boolean) => void;
   checked: boolean;

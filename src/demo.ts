@@ -7,7 +7,7 @@ import "./styles/styles.scss";
 const k = kaplay({
   global: false,
   width: 400,
-  height: 300,
+  height: 260,
   pixelDensity: Math.min(window.devicePixelRatio, 2),
   debugKey: "d",
   scale: 2,
@@ -108,7 +108,7 @@ k.add([
   k.color(130, 130, 150),
   k.pos(k.width() / 2, 70),
   k.text(
-    "On the bottom you should see the inspector. You can use it to inspect this game and manipulate objects. Try changing the text or updating the ship's fire rate.\n\nPress SPACE to fire!",
+    "On the bottom you should see the inspector. You can use it to inspect this game and manipulate objects. Try changing the text or updating the ship's fire rate.\n\nPress SPACE or CLICK/TOUCH to fire!",
     {
       font: "nope8",
       size: 12,
@@ -163,7 +163,7 @@ const fire = (rate = 4, bullets = 1, enabled = true) => {
 
       if (
         !this.enabled ||
-        !k.isKeyDown("space") ||
+        !(k.isKeyDown("space") || k.isMouseDown()) ||
         this.rate <= 0 ||
         cooldown > 0
       ) {
@@ -212,7 +212,7 @@ const hpLabel = k.add([
 
 const ship = k.add([
   "ship",
-  k.pos(k.width() / 2, 220),
+  k.pos(k.width() / 2, 200),
   k.scale(),
   k.blend(0),
   k.sprite("ship", {
