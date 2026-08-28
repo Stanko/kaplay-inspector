@@ -9,6 +9,13 @@
     background-color: var(--ki-bg);
   }
 
+  // Keep the trigger hovered while the pointer crosses the positioning gap.
+  .ki-icon-btn::before {
+    content: "";
+    position: absolute;
+    inset: -0.25rem;
+  }
+
   .ki-icon-btn:active svg {
     transform: translateY(1px);
   }

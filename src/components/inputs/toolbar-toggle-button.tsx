@@ -6,8 +6,8 @@ interface IconToggleButtonProps {
   className?: string;
   tooltip?: string;
   children: JSX.Element | string | number | (JSX.Element | string | number)[];
-  onChange?: (checked: boolean) => void;
-  checked?: boolean;
+  onChange: (checked: boolean) => void;
+  checked: boolean;
   disabled?: boolean;
 }
 
@@ -26,7 +26,7 @@ export const IconToggleButton = ({
         "ki-icon-btn--checked": checked,
       })}
       onClick={() => {
-        onChange?.(!checked);
+        onChange(!checked);
       }}
       tooltip={tooltip}
     >

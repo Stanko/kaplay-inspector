@@ -23,6 +23,7 @@ export const IconButton = ({
       {...props}
       type="button"
       class={cx("ki-icon-btn", className)}
+      aria-label={tooltip}
       onClick={onClick}
       disabled={disabled}
     >

@@ -138,7 +138,7 @@ export const MouseInspect = () => {
   return (
     <IconToggleButton
       checked={isMouseInspectActive}
-      onChange={() => setMouseInspectActive(!isMouseInspectActive)}
+      onChange={setMouseInspectActive}
       tooltip="Inspect an Object"
     >
       <SquareMousePointer />
