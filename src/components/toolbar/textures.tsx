@@ -1,7 +1,7 @@
 import { Image, RefreshCcw } from "lucide-preact";
 import { useCallback, useId, useState } from "preact/hooks";
 import { useGpuTextures } from "../../hooks/use-gpu-textures";
-import { IconButton } from "../inputs/toolbar-button";
+import { IconButton } from "../inputs/icon-button";
 
 const openTexture = (dataUrl: string) => {
   const [encodedData] = dataUrl.split(",", 2);

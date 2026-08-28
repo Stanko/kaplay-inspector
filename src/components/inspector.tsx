@@ -12,7 +12,7 @@ import { MouseInspect } from "./toolbar/mouse-inspect";
 import { useInspectOverlay } from "../hooks/use-inspect-overlay";
 import { PauseGame } from "./toolbar/pause-game";
 import { Gamepad2, Minimize2 } from "lucide-preact";
-import { IconButton } from "./inputs/toolbar-button";
+import { IconButton } from "./inputs/icon-button";
 
 export const Inspector = () => {
   const { k, root, isVisible, toggleVisibility, searchQuery, updateInterval } =

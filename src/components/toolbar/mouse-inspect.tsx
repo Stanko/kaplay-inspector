@@ -2,7 +2,7 @@ import { useEffect } from "preact/hooks";
 import type { GameObj } from "kaplay";
 import { useApp } from "../../lib/app-context";
 import { SquareMousePointer } from "lucide-preact";
-import { IconToggleButton } from "../inputs/toolbar-toggle-button";
+import { IconToggleButton } from "../inputs/icon-toggle-button";
 import type { KAPLAYCtxType } from "../../kaplay";
 import { isFixed } from "../../lib/is-fixed";
 

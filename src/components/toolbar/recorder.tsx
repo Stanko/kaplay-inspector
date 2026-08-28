@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "preact/hooks";
 import { recorder } from "../../lib/video-recorder";
-import { IconButton } from "../inputs/toolbar-button";
+import { IconButton } from "../inputs/icon-button";
 import { useApp } from "../../lib/app-context";
 import { Video } from "lucide-preact";
 

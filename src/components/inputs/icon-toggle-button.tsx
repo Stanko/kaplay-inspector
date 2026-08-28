@@ -1,6 +1,6 @@
 import type { JSX } from "preact/jsx-runtime";
 import { cx } from "../../lib/cx";
-import { IconButton } from "./toolbar-button";
+import { IconButton } from "./icon-button";
 
 interface IconToggleButtonProps {
   className?: string;

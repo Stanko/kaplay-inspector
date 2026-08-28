@@ -1,7 +1,7 @@
 import { PauseCircle, PlayCircle } from "lucide-preact";
 import { useApp } from "../../lib/app-context";
 import { useObjectBoolean } from "../controls/boolean-control";
-import { IconButton } from "../inputs/toolbar-button";
+import { IconButton } from "../inputs/icon-button";
 
 export const PauseGame = () => {
   const { k } = useApp();
