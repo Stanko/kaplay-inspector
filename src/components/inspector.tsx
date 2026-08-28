@@ -13,6 +13,7 @@ import { useInspectOverlay } from "../hooks/use-inspect-overlay";
 import { PauseGame } from "./toolbar/pause-game";
 import { Gamepad2, Minimize2 } from "lucide-preact";
 import { IconButton } from "./inputs/icon-button";
+import { ResizeBar } from "./resize-bar";
 
 export const Inspector = () => {
   const { k, root, isVisible, toggleVisibility, searchQuery, updateInterval } =
@@ -61,6 +62,8 @@ export const Inspector = () => {
   return (
     <>
       <div class="ki-header">
+        <ResizeBar />
+
         <PauseGame />
         <MouseInspect />
         <DrawBBox />

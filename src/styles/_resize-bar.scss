@@ -1,0 +1,19 @@
+.kaplay-inspector {
+  .ki-resize-bar {
+    position: absolute;
+    inset: 0 0 auto;
+    height: 6px;
+    background-color: var(--ki-blue);
+    cursor: row-resize;
+    user-select: none;
+    opacity: 0;
+    transition: opacity 300ms;
+  }
+
+  .ki-resize-bar:hover,
+  .ki-resize-bar:focus-visible {
+    opacity: 1;
+    z-index: 1;
+    outline: none;
+  }
+}

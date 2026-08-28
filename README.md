@@ -96,19 +96,22 @@ If you want to change other colors as well, check the [_variables.scss](./src/st
 
 ## Positioning
 
-By default, the inspector has `position: fixed` and sits at the bottom of the screen. Use `className` to add a class and position it differently.
+By default, the inspector has `position: fixed` and sits at the bottom of the screen. Dragging its top edge resizes it by updating the `--ki-height` CSS variable. You can pass a `className` and use CSS to update the positioning.
 
 Assuming there are only the canvas and the inspector element on the page, here's an example of what I like to do:
 
 ```css
 /* If the hide button is shown, it means the Kaplay inspector is visible */
 body:has(.ki-hide-inspector) {
+  --ki-height: 45vh;
+  --game-height: calc(100vh - var(--ki-height));
+
   display: grid;
-  grid-template-rows: 55vh 45vh;
+  grid-template-rows: var(--game-height) var(--ki-height);
 
   canvas {
     width: 100% !important;
-    height: 55vh !important;
+    height: var(--game-height) !important;
     object-fit: contain;
     display: block;
   }
@@ -119,7 +122,7 @@ body:has(.ki-hide-inspector) {
 }
 ```
 
-This fixes the game canvas in the upper part of the viewport (55% of it), and the bottom part is taken by the inspector. It only applies this layout when the inspector is visible (by checking if the hide button is shown).
+This initially gives the game canvas the upper 55% of the viewport and the inspector the remaining 45%. Dragging the inspector's top edge updates both regions through `--ki-height`. It only applies this layout when the inspector is visible (by checking if the hide button is shown).
 
 As with colors, be sure to use a higher-specificity selector if the inspector's CSS is loaded dynamically.
 

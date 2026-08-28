@@ -1,5 +1,13 @@
 # Changelog
 
+## Version 0.5.0
+
+- Added drag-to-resize
+
+## Version 0.4.4
+
+- Minor fixes around GPU texture export and tooltips
+
 ## Version 0.4.4
 
 - Added texture refresh control and refined dropdown styling
