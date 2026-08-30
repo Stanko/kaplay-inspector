@@ -39,6 +39,7 @@ export const Inspector = () => {
   if (!isVisible) {
     return (
       <IconButton
+        id="ki-show-inspector"
         className="ki-show-inspector"
         onClick={toggleVisibility}
         tooltip="Show Kaplay Inspector"

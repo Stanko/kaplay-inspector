@@ -4,6 +4,7 @@ import { cx } from "../../lib/cx";
 import { useCallback, useRef } from "preact/hooks";
 
 interface IconButtonProps {
+  id?: string;
   className?: string;
   tooltip: string;
   children: JSX.Element | string | number | (JSX.Element | string | number)[];

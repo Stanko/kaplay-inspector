@@ -35,6 +35,7 @@ export const Recorder = () => {
 
   return (
     <IconButton
+      id="ki-record-video"
       tooltip={isRecording ? "Stop Recording" : "Record Video"}
       className={isRecording ? "ki-recording" : ""}
       onClick={() => {
