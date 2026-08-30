@@ -1,5 +1,9 @@
 # Changelog
 
+## Version 0.5.1
+
+- Added destroy button when inspecting a non-root game object
+
 ## Version 0.5.0
 
 - Added drag-to-resize
