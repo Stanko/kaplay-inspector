@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef } from "preact/hooks";
+import { useCallback, useEffect, useLayoutEffect, useRef } from "preact/hooks";
 import type { JSX } from "preact/jsx-runtime";
 
 export type HoldButtonProps = {
@@ -19,7 +19,7 @@ export const HoldButton = ({
   onHoldEnd,
 }: HoldButtonProps) => {
   const buttonRef = useRef<HTMLButtonElement>(null);
-  const timerRef = useRef<ReturnType<typeof setTimeout>>();
+  const timerRef = useRef<ReturnType<typeof setTimeout>>(0);
   const pointerIdRef = useRef<number | null>(null);
   const onClickAndHoldRef = useRef(onClickAndHold);
   const onHoldEndRef = useRef(onHoldEnd);
@@ -53,8 +53,8 @@ export const HoldButton = ({
     pointerIdRef.current = null;
   }, []);
 
-  // Clear timer on unmount
-  useEffect(() => stopTimer, [stopTimer]);
+  // Stop repeating immediately on unmount, before passive effect cleanup.
+  useLayoutEffect(() => stopTimer, [stopTimer]);
 
   // Keep references updated to the latest callbacks
   // This ensures the interval always calls the latest version
