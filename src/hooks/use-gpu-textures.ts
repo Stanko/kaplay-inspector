@@ -1,4 +1,4 @@
-import type { Texture } from "kaplay";
+import type { TexPacker, Texture } from "kaplay";
 import { useApp } from "../lib/app-context";
 import { useCallback } from "preact/hooks";
 
@@ -58,7 +58,7 @@ export const useGpuTextures = () => {
   const { k } = useApp();
 
   const getTextures = useCallback(() => {
-    const { packer } = k._k.assets;
+    const { packer }: { packer: TexPacker } = k._k.assets;
 
     packer.syncIfPending();
 

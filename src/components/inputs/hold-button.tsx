@@ -19,7 +19,7 @@ export const HoldButton = ({
   onHoldEnd,
 }: HoldButtonProps) => {
   const buttonRef = useRef<HTMLButtonElement>(null);
-  const timerRef = useRef<ReturnType<typeof setTimeout>>(0);
+  const timerRef = useRef<number>(0);
   const pointerIdRef = useRef<number | null>(null);
   const onClickAndHoldRef = useRef(onClickAndHold);
   const onHoldEndRef = useRef(onHoldEnd);
@@ -29,11 +29,11 @@ export const HoldButton = ({
     onClickAndHoldRef.current();
 
     // Wait before repeating
-    timerRef.current = setTimeout(() => {
+    timerRef.current = window.setTimeout(() => {
       // Repeat
       onClickAndHoldRef.current();
 
-      timerRef.current = setInterval(() => {
+      timerRef.current = window.setInterval(() => {
         onClickAndHoldRef.current();
       }, interval);
     }, startRepeatingDelay);

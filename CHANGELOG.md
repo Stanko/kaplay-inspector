@@ -1,5 +1,9 @@
 # Changelog
 
+## Version 0.5.2 and 0.5.3
+
+- Fixed minor type def issues
+
 ## Version 0.5.1
 
 - Added destroy button when inspecting a non-root game object
